@@ -1,0 +1,87 @@
+doctype html
+// redirect_html_static
+head
+    meta(http-equiv='content-type' content='text/html; charset=utf-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1.0')
+    meta(name='description' content=url_description)
+    meta(name='image' content=url_picture)
+    link(rel='image_src' href=url_picture)
+    meta(property='og:image' content=url_picture)
+    meta(property='og:image:width' content='1200')
+    meta(property='og:image:height' content='1200')
+    meta(property='og:title' content=url_title)
+    meta(property='og:description' content=url_description)
+    meta(property="og:url" content=url_short_url) 
+    meta(name='twitter:image:src' content=url_picture)
+    meta(name='author' content='24h.pchome.com.tw')
+    meta(name='twitter:card' content='summary_large_image')
+    meta(name='twitter:site' content='24h.pchome.com.tw')
+    meta(name='twitter:title' content=url_title)
+    meta(name='twitter:description' content=url_description)
+    meta(name='twitter:domain' content='24h.pchome.com.tw')
+    meta(itemprop='name' content=url_title)
+    meta(itemprop='image' content=url_picture)
+    meta(itemprop='description' content=url_description)
+    title= url_title
+    style(type='text/css').
+        body{
+        margin: 0px;
+        padding: 0px;
+        }
+        a, a:link, a:hover{
+        text-decoration: none;
+        color: #06F;
+        }
+        .navigation{
+        background-color: #fff;
+        padding: 10px;
+        }
+        .logo{
+        height: 40px;
+        width: 40px;
+        display: inline-block;
+        background-size: cover;
+        }
+        .navigation a{
+        color: #090f2d;
+        font-weight: bold;
+        text-decoration: none;
+        font-size: 25px;
+        text-align: center;
+        font-style: italic;
+        }
+        p img{
+        width: 100%;
+        }
+        .suggest{
+        background-color: #EFEFEF;
+        }
+        .thumbnail{
+        width: 400px;
+        height: 250px;
+        display: block;
+        background-size: cover;
+        background-position: center;
+        }
+        .footer{
+        background-color: #182e4e;
+        display: block;
+        height: 50px;
+        color: #FFF;
+        }
+body
+    #box
+    .navigation
+    a(href='./')
+    .logo(style='background-image:url(https://statics.518.com.tw/img/startup/picsee/logo1.png)' title='pchome.link') 
+    |pchome.link
+    h1=url_title
+    p
+        a(href=url_long_url)
+        img(title=url_title src=url_picture alt=url_title border='0')
+        br 
+        =url_description 
+    .suggest
+    .footer
+    a(href='https://picsee.co/' target='_blank') PicSee
+    | - Shorten URL customize/big preview image (thumbnails) of share link, large preview of YouTube on Facebook, 自訂分享連結圖片短網址，YouTube大圖顯示在Facebook上 短网址on Twitter, LinkedIn

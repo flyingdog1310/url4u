@@ -8,8 +8,8 @@ import express from "express";
 import cors from "cors";
 const app = express();
 
+app.set("view engine", "pug");
 app.set("trust proxy", true);
-// app.set('trust proxy', 'loopback');
 app.set("json spaces", 2);
 
 app.use(express.static("public"));
@@ -20,7 +20,13 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 //Temp main page
-app.get("/", (req, res) => res.json("Hello World!"));
+app.get("/", function (req, res) {
+  res.json("Hello World!");
+});
+
+//route under root
+import root from "./server/routes/root.js";
+app.use("/", root);
 
 // API routes
 
