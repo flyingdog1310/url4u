@@ -1,6 +1,7 @@
 import { getUrl } from "../models/url_model.js";
 
 const redirectUrl = async (req, res) => {
+  const url = await getUrl("test");
   console.log(
     "user-agent:",
     req.headers["user-agent"],
@@ -9,8 +10,9 @@ const redirectUrl = async (req, res) => {
     "ip:",
     req.ip
   );
-  res.status(307).redirect("https://school.appworks.tw/");
+  res.status(307).redirect(url[0].picture);
 };
+
 const previewUrl = async (req, res) => {
   const url = await getUrl("test");
   console.log(
@@ -30,4 +32,23 @@ const previewUrl = async (req, res) => {
   });
 };
 
-export { redirectUrl, previewUrl };
+const isUserAgent = (req) => {
+  if (
+    req.headers["user-agent"].startsWith("facebookexternalhit/") ||
+    req.headers["user-agent"].startsWith("Facebot")
+  ) {
+    return true;
+  }
+  return false;
+};
+
+const visitUrl = async (req, res) => {
+  if (isUserAgent(req, res)) {
+    previewUrl(req, res);
+  } else {
+    //FIXME:called twice
+    redirectUrl(req, res);
+  }
+};
+
+export { visitUrl };
