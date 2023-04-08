@@ -10,7 +10,7 @@ const redirectUrl = async (req, res) => {
     "user-agent:",
     req.headers["user-agent"],
     "referrer:",
-    req.referrer,
+    req.headers.referrer,
     "ip:",
     req.ip
   );
@@ -23,7 +23,7 @@ const previewUrl = async (req, res) => {
     "user-agent:",
     req.headers["user-agent"],
     "referrer:",
-    req.referrer,
+    req.headers.referrer,
     "ip:",
     req.ip
   );
