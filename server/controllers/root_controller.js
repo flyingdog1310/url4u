@@ -47,7 +47,7 @@ const isUserAgent = (req) => {
 };
 
 const visitUrl = async (req, res) => {
-  if (isUserAgent(req, res)||true) {
+  if (isUserAgent(req, res)) {
     previewUrl(req, res);
   } else {
     //FIXME:called twice
