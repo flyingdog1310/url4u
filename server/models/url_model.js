@@ -16,7 +16,7 @@ const updateCustomUrl = async (
   description
 ) => {
   const [url] = await pool.query(
-    "REPLACE INTO urls SET short_url = ? ,long_url = ? , picture = ? , title = ? ,description = ? WHERE id = ? ",
+    "UPDATE urls SET short_url = ? ,long_url = ? , picture = ? , title = ? ,description = ? WHERE id = ? ",
     [short_url, long_url, picture, title, description, url_id]
   );
   return url;

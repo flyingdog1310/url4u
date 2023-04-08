@@ -24,5 +24,6 @@ const updateShortUrl = async (req, res) => {
     title,
     description
   );
+  return res.status(200).redirect("/");
 };
 export { createShortUrl, updateShortUrl };
