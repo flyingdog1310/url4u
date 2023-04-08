@@ -1,7 +1,7 @@
 import { getUrl } from "../models/url_model.js";
 
 const redirectUrl = async (req, res) => {
-  const url = await getUrl(req.url.substring(1));
+  const url = await getUrl(req.url.split('?')[0].substring(1));
   if (!url[0]) {
     //when short url not found
     return res.status(404).render("notfound");
@@ -18,7 +18,7 @@ const redirectUrl = async (req, res) => {
 };
 
 const previewUrl = async (req, res) => {
-  const url = await getUrl(req.url.substring(1));
+  const url = await getUrl(req.url.split('?')[0].substring(1));
   console.log(
     "user-agent:",
     req.headers["user-agent"],
