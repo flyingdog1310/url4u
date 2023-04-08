@@ -19,13 +19,13 @@ app.use(express.urlencoded({ extended: true }));
 // CORS allow all
 app.use(cors());
 
-
 //route under root
-import  root  from "./server/routes/root.js";
+import root from "./server/routes/root.js";
 app.use("/", root);
+import api from "./server/routes/api.js";
+app.use(`/api/${API_VERSION}/`, api);
 
 // API routes
-
 
 // Page not found
 app.use(function (req, res, next) {

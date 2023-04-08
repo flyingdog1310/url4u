@@ -1,0 +1,29 @@
+extends layout.pug
+
+block content
+  h4 Modify your short url now
+    form(action="/api/1.0/modify_url" method="post" enctype='application/json' id="update-short-url") 
+      div
+        label(for="url_id") url id:
+        input(id="url_id" name="url_id" required) 
+      div 
+        label(for="short_url") short url: 
+        input(id="short_url" name="short_url"  ) 
+      div
+        label(for="long_url") long url:
+        input(id="long_url" name="long_url" ) 
+      div
+        label(for="picture") picture:
+        input(id="picture" name="picture"  ) 
+      div
+        label(for="title") title:
+        input(id="title" name="title") 
+      div
+        label(for="description") description:
+        input(id="description" name="description"  ) 
+      div(id="submit") 
+        button(type="submit" class="btn") Modify Url
+
+    
+    script.
+      import(`/public/js/short_url.js`)

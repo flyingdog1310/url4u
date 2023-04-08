@@ -6,9 +6,15 @@ import { wrapAsync } from "../../util/util.js";
 
 router.route("/").get(
   wrapAsync(async (req, res) => {
-    res.json("hello");
+    res.render("index");
   })
 );
+router.route("/modify_url").get(
+  wrapAsync(async (req, res) => {
+    res.render("modify");
+  })
+);
+
 router.route("/*").get(wrapAsync(visitUrl));
 
 export default router;

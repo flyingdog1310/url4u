@@ -3,7 +3,7 @@ import { getUrl } from "../models/url_model.js";
 const redirectUrl = async (req, res) => {
   const url = await getUrl(req.url.substring(1));
   if (!url[0]) {
-    //short url not found
+    //when short url not found
     return res.status(404).render("notfound");
   }
   console.log(
