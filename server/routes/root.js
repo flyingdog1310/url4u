@@ -9,6 +9,6 @@ router.route("/").get(
     res.json("hello");
   })
 );
-router.route("/url").get(wrapAsync(visitUrl));
+router.route("/*").get(wrapAsync(visitUrl));
 
 export default router;

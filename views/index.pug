@@ -1,3 +1,22 @@
 extends layout.pug
 
 block content
+  h4 Get your short url now
+    form(action="/admin/create_campaign" method="POST" enctype="multipart/form-data" id="create-campaign") 
+      div
+        label(for="product_id") product id:
+        input(id="product_id" name="product_id" required) 
+      div 
+        label(for="picture") picture: 
+        input(id="picture" name="picture" type="file" accept="image/png, image/jpeg, image/jpg" required ) 
+      div
+        label(for="story") story:
+        textarea(id="story" name="story" placeholder="" maxlength="255" required ) 
+
+
+      div(id="submit") 
+        button(type="submit" class="btn") Create Campaign
+    script.
+      import(`/public/js/short_url.js`)
+
+
