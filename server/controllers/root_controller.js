@@ -18,7 +18,7 @@ const redirectUrl = async (req, res) => {
 };
 
 const previewUrl = async (req, res) => {
-  const url = await getUrl(req.url);
+  const url = await getUrl(req.url.substring(1));
   console.log(
     "user-agent:",
     req.headers["user-agent"],
@@ -47,7 +47,7 @@ const isUserAgent = (req) => {
 };
 
 const visitUrl = async (req, res) => {
-  if (isUserAgent(req, res)) {
+  if (isUserAgent(req, res)||true) {
     previewUrl(req, res);
   } else {
     //FIXME:called twice
