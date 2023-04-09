@@ -1,6 +1,6 @@
 import { getUrl } from "../models/url_model.js";
 import geoip from 'geoip-lite'
-const geo =geoip.lookup(ip)
+
 
 const redirectUrl = async (req, res) => {
   const url = await getUrl(req.url.split("?")[0].substring(1));
@@ -14,7 +14,7 @@ const redirectUrl = async (req, res) => {
     "referrer:",
     req.headers["referer"],
     "ip:",
-    geo(req.ip)
+    geoip.lookup(req.ip)
   );
   return res.status(307).redirect(url[0].long_url);
 };
