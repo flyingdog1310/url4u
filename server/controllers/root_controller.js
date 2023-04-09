@@ -1,5 +1,5 @@
 import { getUrl } from "../models/url_model.js";
-import {geoip} from 'geoip-lite'
+import geoip from 'geoip-lite'
 const geo =geoip.lookup(ip)
 
 const redirectUrl = async (req, res) => {
