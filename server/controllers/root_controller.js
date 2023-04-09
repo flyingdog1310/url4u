@@ -1,6 +1,5 @@
 import { getUrl } from "../models/url_model.js";
-import geoip from 'geoip-lite'
-
+import geoip from "geoip-lite";
 
 const redirectUrl = async (req, res) => {
   const url = await getUrl(req.url.split("?")[0].substring(1));

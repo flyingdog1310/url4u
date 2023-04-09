@@ -2,7 +2,7 @@ extends layout.pug
 
 block content
   h4 Modify your short url now
-    form(action="/api/1.0/modify_url" method="post" enctype='application/json' id="update-short-url") 
+    form(action="/api/1.0/modify_url" method="post" enctype="multipart/form-data" id="update-short-url") 
       div
         label(for="url_id") url id:
         input(id="url_id" name="url_id" required) 
@@ -14,7 +14,7 @@ block content
         input(id="long_url" name="long_url" ) 
       div
         label(for="picture") picture:
-        input(id="picture" name="picture"  ) 
+        input(id="picture" name="picture" type="file" accept="image/png, image/jpeg, image/jpg" ) 
       div
         label(for="title") title:
         input(id="title" name="title") 
