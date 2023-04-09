@@ -22,8 +22,8 @@ function renderTable(rawUrls) {
     <th>Short Url</th>
     <th>Long Url</th>
     <th>Picture</th>
-    <th>title</th>
-    <th>description</th>
+    <th>Title</th>
+    <th>Description</th>
   `;
 
   for (let i = 0; i < rawUrls.length; i++) {
