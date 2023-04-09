@@ -10,7 +10,7 @@ xhr.onreadystatechange = function () {
     console.log(xhr.status);
   }
 };
-xhr.open("POST", "/api/1.0/urls");
+xhr.open("GET", "/api/1.0/urls");
 xhr.setRequestHeader("Authorization", `Bearer ${null}`);
 xhr.send();
 
@@ -27,11 +27,12 @@ function renderTable(rawUrls) {
   `;
 
   for (let i = 0; i < rawUrls.length; i++) {
+    const pwd = window.location.origin;
     const url = rawUrls[i];
     const row = table.insertRow();
     row.innerHTML = `
       <td>${url.id}</td>
-      <td>${url.short_url}</td>
+      <td><a href=${pwd}/url/${url.short_url}>${url.short_url}</a></td>
       <td>${url.long_url}</td>
       <td>${url.picture}</td>
       <td>${url.title}</td>

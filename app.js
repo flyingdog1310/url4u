@@ -20,10 +20,16 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 //route under root
+
+
 import root from "./server/routes/root.js";
 app.use("/", root);
+
 import api from "./server/routes/api.js";
 app.use(`/api/${API_VERSION}/`, api);
+
+import all from "./server/routes/all.js"
+app.use("/", all);
 
 // API routes
 

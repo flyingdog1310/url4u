@@ -3,7 +3,7 @@ import multer from "multer";
 import multerS3 from "multer-s3";
 import path from "path";
 import dotenv from "dotenv";
-dotenv.config({ path: "../.env" });
+dotenv.config({ path: process.env.ENV });
 
 const bucketName = process.env.AWS_BUCKET_NAME;
 const region = process.env.AWS_BUCKET_REGION;

@@ -1,7 +1,5 @@
 import express from "express";
 const router = express.Router();
-
-import { visitUrl } from "../controllers/root_controller.js";
 import { wrapAsync } from "../../util/util.js";
 
 router.route("/").get(
@@ -9,19 +7,17 @@ router.route("/").get(
     res.render("index");
   })
 );
+
 router.route("/list").get(
   wrapAsync(async (req, res) => {
     res.render("list");
   })
 );
 
-
-router.route("/modify_url").get(
+router.route("/url/*").get(
   wrapAsync(async (req, res) => {
     res.render("modify");
   })
 );
-
-router.route("/*").get(wrapAsync(visitUrl));
 
 export default router;
