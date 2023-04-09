@@ -1,5 +1,3 @@
-
-
 import {
   createUrl,
   updateCustomUrl,
@@ -30,4 +28,13 @@ const updateShortUrl = async (req, res) => {
   );
   return res.status(200).redirect("/");
 };
-export { createShortUrl, updateShortUrl };
+
+const getShortUrlList = async (req, res) => {
+  console.log(req.body);
+  const company_id=1
+  const url = await getUrlsByCompany(company_id);
+  return res.status(200).json(url);
+};
+
+
+export { createShortUrl, updateShortUrl ,getShortUrlList};

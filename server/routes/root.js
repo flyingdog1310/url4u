@@ -9,6 +9,13 @@ router.route("/").get(
     res.render("index");
   })
 );
+router.route("/list").get(
+  wrapAsync(async (req, res) => {
+    res.render("list");
+  })
+);
+
+
 router.route("/modify_url").get(
   wrapAsync(async (req, res) => {
     res.render("modify");
