@@ -1,3 +1,6 @@
+import dotenv from "dotenv";
+dotenv.config({ path: process.ENV });
+
 import { getUrl } from "../models/url_model.js";
 import geoip from "geoip-lite";
 
@@ -31,7 +34,7 @@ const previewUrl = async (req, res) => {
   res.status(200).render("crawler", {
     url_title: url[0].title,
     url_short_url: url[0].short_url,
-    url_picture: url[0].picture,
+    url_picture: `${process.env.AWS_CLOUDFRONT}${url[0].picture}`,
     url_description: url[0].description,
     url_long_url: url[0].long_url,
   });
