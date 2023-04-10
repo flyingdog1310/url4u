@@ -26,7 +26,7 @@ app.use("/", root);
 
 import api_url from "./server/routes/api_url.js";
 import api_click from "./server/routes/api_click.js";
-app.use(`/api/${API_VERSION}/`, [api_url,api_click]);
+app.use(`/api/${API_VERSION}/`, [api_url, api_click]);
 
 import redirect from "./server/routes/redirect.js";
 app.use("/", redirect);

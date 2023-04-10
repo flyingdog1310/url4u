@@ -2,7 +2,7 @@ import {
   createUrl,
   updateCustomUrl,
   getUrlsByCompany,
-  getUrl,
+  getUrlById,
 } from "../models/url_model.js";
 import { shortUrlGenerator } from "../../util/shortUrlGenerator.js";
 
@@ -36,7 +36,7 @@ const getShortUrlList = async (req, res) => {
 
 const getShortUrl = async (req, res) => {
   const url_id = req.originalUrl.split("/")[4];
-  const url = await getUrl(url_id);
+  const url = await getUrlById(url_id);
   return res.status(200).json(url);
 };
 

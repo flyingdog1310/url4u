@@ -1,11 +1,11 @@
 import dotenv from "dotenv";
 dotenv.config({ path: process.ENV });
-import { getUrl } from "../models/url_model.js";
+import { getUrlByShortUrl } from "../models/url_model.js";
 import { createClick } from "../models/ad_model.js";
 import geoip from "geoip-lite";
 
 const redirectUrl = async (req, res) => {
-  const url = await getUrl(req.url.split("?")[0].substring(1));
+  const url = await getUrlByShortUrl(req.url.split("?")[0].substring(1));
   const device = req.headers["user-agent"].split("(")[1].split(";")[0];
   const ip = geoip.lookup(req.ip) || {};
 
@@ -40,8 +40,7 @@ const redirectUrl = async (req, res) => {
 };
 
 const previewUrl = async (req, res) => {
-  const url = await getUrl(req.url.split("?")[0].substring(1));
-
+  const url = await getUrlByShortUrl(req.url.split("?")[0].substring(1));
   console.log(
     "user-agent:",
     req.headers["user-agent"],
