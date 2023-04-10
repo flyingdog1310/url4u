@@ -6,7 +6,10 @@ import geoIp from "geoip-lite";
 
 const redirectUrl = async (req, res) => {
   const url = await getUrlByShortUrl(req.url.split("?")[0].substring(1));
-  const device = req.headers["user-agent"].split("(")[1].split(";")[0];
+  const device = "";
+  if (req.headers["user-agent"]) {
+    device = req.headers["user-agent"].split("(")[1].split(";")[0];
+  }
   const ip = geoIp.lookup(req.ip) || {};
 
   if (!url[0]) {
