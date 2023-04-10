@@ -2,7 +2,7 @@ import { pool } from "./mysql.js";
 
 const createUrl = async (company_id, short_url, long_url) => {
   const [url_id] = await pool.query(
-    "INSERT INTO urls SET company_id=?,short_url=? ,long_url=?",
+    "INSERT INTO urls SET company_id = ? ,short_url = ? ,long_url = ? ",
     [company_id, short_url, long_url]
   );
   return url_id;

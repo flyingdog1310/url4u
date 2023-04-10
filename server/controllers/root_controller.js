@@ -1,6 +1,5 @@
 import dotenv from "dotenv";
 dotenv.config({ path: process.ENV });
-
 import { getUrl } from "../models/url_model.js";
 import { createClick } from "../models/ad_model.js";
 import geoip from "geoip-lite";
