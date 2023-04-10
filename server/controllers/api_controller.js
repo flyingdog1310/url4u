@@ -17,7 +17,7 @@ const updateShortUrl = async (req, res) => {
   const url_id = req.originalUrl.split("/")[4];
   const { short_url, long_url, title, description } = req.body;
   let picture = "";
-  if (req.file.key) {
+  if (req.file) {
     picture = req.file.key;
   }
   const url = await updateCustomUrl(
