@@ -2,12 +2,12 @@ import dotenv from "dotenv";
 dotenv.config({ path: process.ENV });
 import { getUrlByShortUrl } from "../models/url_model.js";
 import { createClick } from "../models/ad_model.js";
-import geoip from "geoip-lite";
+import geoIp from "geoip-lite";
 
 const redirectUrl = async (req, res) => {
   const url = await getUrlByShortUrl(req.url.split("?")[0].substring(1));
   const device = req.headers["user-agent"].split("(")[1].split(";")[0];
-  const ip = geoip.lookup(req.ip) || {};
+  const ip = geoIp.lookup(req.ip) || {};
 
   if (!url[0]) {
     //when short url not found
@@ -35,19 +35,22 @@ const redirectUrl = async (req, res) => {
     `${ip.region}/${ip.city}`,
     1
   );
-
   return res.status(307).redirect(url[0].long_url);
 };
 
 const previewUrl = async (req, res) => {
   const url = await getUrlByShortUrl(req.url.split("?")[0].substring(1));
+  if (!url[0]) {
+    //when short url not found
+    return res.status(404).render("notfound");
+  }
   console.log(
     "user-agent:",
     req.headers["user-agent"],
     "referrer:",
     req.headers["referer"],
     "ip:",
-    geoip.lookup(req.ip)
+    geoIp.lookup(req.ip)
   );
   res.status(200).render("crawler", {
     url_title: url[0].title,
@@ -60,11 +63,9 @@ const previewUrl = async (req, res) => {
 
 const isUserAgent = (req) => {
   if (
-    req.headers["user-agent"].startsWith("facebookexternalhit/") ||
+    req.headers["user-agent"].startsWith("facebookexternalhit") ||
     req.headers["user-agent"].startsWith("Facebot") ||
-    req.headers["user-agent"].startsWith(
-      "Mozilla/5.0 (compatible; Discordbot/2.0; +https://discordapp.com)"
-    ) ||
+    req.headers["user-agent"].startsWith("Mozilla/5.0 (compatible; Discord") ||
     req.headers["user-agent"].startsWith("node-fetch")
   ) {
     return true;
@@ -76,7 +77,8 @@ const visitUrl = async (req, res) => {
   if (isUserAgent(req, res)) {
     previewUrl(req, res);
   } else {
-    redirectUrl(req, res);
+    //redirectUrl(req, res);
+    previewUrl(req, res);
   }
 };
 

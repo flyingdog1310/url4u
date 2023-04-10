@@ -20,7 +20,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 //route under root
-
 import root from "./server/routes/root.js";
 app.use("/", root);
 
