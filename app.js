@@ -24,14 +24,12 @@ app.use(cors());
 import root from "./server/routes/root.js";
 app.use("/", root);
 
-import api from "./server/routes/api.js";
-app.use(`/api/${API_VERSION}/`, api);
+import api_url from "./server/routes/api_url.js";
+import api_click from "./server/routes/api_click.js";
+app.use(`/api/${API_VERSION}/`, [api_url,api_click]);
 
-import api_ad from "./server/routes/api_ad.js";
-app.use(`/api/${API_VERSION}/`, api_ad);
-
-import all from "./server/routes/all.js";
-app.use("/", all);
+import redirect from "./server/routes/redirect.js";
+app.use("/", redirect);
 
 // Page not found
 app.use(function (req, res, next) {

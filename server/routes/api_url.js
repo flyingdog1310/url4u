@@ -10,10 +10,10 @@ import {
 } from "../controllers/api_controller.js";
 import { wrapAsync } from "../../util/util.js";
 
-router.route("/urls").get(wrapAsync(getShortUrlList));
+router.route("/company/*").get(wrapAsync(getShortUrlList));
 router.route("/url/*").get(wrapAsync(getShortUrl));
 router.route("/url").post(wrapAsync(createShortUrl));
 
-router.route("/url").post(upload.single("picture"), wrapAsync(updateShortUrl));
+router.route("/url/*").post(upload.single("picture"), wrapAsync(updateShortUrl));
 
 export default router;

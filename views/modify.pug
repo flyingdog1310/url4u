@@ -2,7 +2,7 @@ extends layout.pug
 
 block content
   h4 Modify your short url now
-    form(action="/api/1.0/modify_url" method="post" enctype="multipart/form-data" id="update-short-url") 
+    form(action="/api/1.0/url" method="post" enctype="multipart/form-data" id="update-short-url") 
       div 
         label(for="short_url") short url: 
         input(id="short_url" name="short_url"  ) 

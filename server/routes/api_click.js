@@ -5,7 +5,7 @@ import {
   getUrlClicks,
   getUrlClickByDevice,
   getUrlClickByRegion,
-  getUrlClickByReferrer
+  getUrlClickByReferrer,
 } from "../controllers/api_ad_controller.js";
 import { wrapAsync } from "../../util/util.js";
 

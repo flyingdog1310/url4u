@@ -8,7 +8,7 @@ router.route("/").get(
   })
 );
 
-router.route("/list").get(
+router.route("/company/*").get(
   wrapAsync(async (req, res) => {
     res.render("list");
   })

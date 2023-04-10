@@ -29,9 +29,9 @@ const getUrlsByCompany = async (company_id) => {
   return urls;
 };
 
-const getUrl = async (short_url) => {
-  const [url] = await pool.query("SELECT * FROM urls WHERE short_url= ? ", [
-    short_url,
+const getUrl = async (url_id) => {
+  const [url] = await pool.query("SELECT * FROM urls WHERE id = ? ", [
+    url_id,
   ]);
   return url;
 };
