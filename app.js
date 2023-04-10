@@ -21,17 +21,17 @@ app.use(cors());
 
 //route under root
 
-
 import root from "./server/routes/root.js";
 app.use("/", root);
 
 import api from "./server/routes/api.js";
 app.use(`/api/${API_VERSION}/`, api);
 
-import all from "./server/routes/all.js"
-app.use("/", all);
+import api_ad from "./server/routes/api_ad.js";
+app.use(`/api/${API_VERSION}/`, api_ad);
 
-// API routes
+import all from "./server/routes/all.js";
+app.use("/", all);
 
 // Page not found
 app.use(function (req, res, next) {

@@ -20,4 +20,10 @@ router.route("/url/*").get(
   })
 );
 
+router.route("/dashboard/*").get(
+  wrapAsync(async (req, res) => {
+    res.render("dashboard");
+  })
+);
+
 export default router;

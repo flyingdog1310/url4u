@@ -31,7 +31,7 @@ function renderTable(rawUrls) {
     const url = rawUrls[i];
     const row = table.insertRow();
     row.innerHTML = `
-      <td>${url.id}</td>
+      <td><a href=${pwd}/dashboard/${url.id}>${url.id}</td>
       <td><a href=${pwd}/url/${url.short_url}>${url.short_url}</a></td>
       <td>${url.long_url}</td>
       <td>${url.picture}</td>

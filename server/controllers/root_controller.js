@@ -2,10 +2,13 @@ import dotenv from "dotenv";
 dotenv.config({ path: process.ENV });
 
 import { getUrl } from "../models/url_model.js";
+import { createClick } from "../models/ad_model.js";
 import geoip from "geoip-lite";
 
 const redirectUrl = async (req, res) => {
   const url = await getUrl(req.url.split("?")[0].substring(1));
+  const device = req.headers["user-agent"].split("(")[1].split(";")[0];
+  const ip = geoip.lookup(req.ip) || {};
 
   if (!url[0]) {
     //when short url not found
@@ -14,11 +17,26 @@ const redirectUrl = async (req, res) => {
   console.log(
     "user-agent:",
     req.headers["user-agent"],
+    "device",
+    device,
     "referrer:",
     req.headers["referer"],
     "ip:",
-    geoip.lookup(req.ip)
+    ip
   );
+  if (!ip.regin) {
+    ip.region = "";
+    ip.city = "";
+  }
+  createClick(
+    url[0].id,
+    "1995-01-01 00:00:00",
+    req.headers["referer"],
+    device,
+    `${ip.region}/${ip.city}`,
+    1
+  );
+
   return res.status(307).redirect(url[0].long_url);
 };
 
@@ -31,7 +49,7 @@ const previewUrl = async (req, res) => {
     "referrer:",
     req.headers["referer"],
     "ip:",
-    req.ip
+    geoip.lookup(req.ip)
   );
   res.status(200).render("crawler", {
     url_title: url[0].title,
@@ -60,7 +78,6 @@ const visitUrl = async (req, res) => {
   if (isUserAgent(req, res)) {
     previewUrl(req, res);
   } else {
-    //FIXME:called twice
     redirectUrl(req, res);
   }
 };
