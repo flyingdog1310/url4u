@@ -31,12 +31,14 @@ function renderTable(rawUrls) {
     const url = rawUrls[i];
     const row = table.insertRow();
     row.innerHTML = `
-      <td><a href=${pwd}/dashboard/${url.id}>${url.id}</td>
-      <td><a href=${pwd}/url/${url.id}>${url.short_url}</a></td>
+      <td>${url.id}</td>
+      <td>https://url4u.today/${url.short_url}</a></td>
       <td>${url.long_url}</td>
       <td>${url.picture}</td>
       <td>${url.title}</td>
       <td>${url.description}</td>
+      <a href=${pwd}/url/${url.id}><p>modify</p></a>
+      <a href=${pwd}/dashboard/${url.id}><p>info</p></a>
     `;
   }
 
