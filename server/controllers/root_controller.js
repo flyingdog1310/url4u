@@ -77,8 +77,7 @@ const visitUrl = async (req, res) => {
   if (isUserAgent(req, res)) {
     previewUrl(req, res);
   } else {
-    //redirectUrl(req, res);
-    previewUrl(req, res);
+    redirectUrl(req, res);
   }
 };
 
