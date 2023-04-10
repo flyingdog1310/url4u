@@ -6,7 +6,7 @@ import geoip from "geoip-lite";
 
 const redirectUrl = async (req, res) => {
   const url = await getUrl(req.url.split("?")[0].substring(1));
-  
+
   if (!url[0]) {
     //when short url not found
     return res.status(404).render("notfound");
@@ -24,7 +24,6 @@ const redirectUrl = async (req, res) => {
 
 const previewUrl = async (req, res) => {
   const url = await getUrl(req.url.split("?")[0].substring(1));
-  
 
   console.log(
     "user-agent:",
@@ -49,7 +48,8 @@ const isUserAgent = (req) => {
     req.headers["user-agent"].startsWith("Facebot") ||
     req.headers["user-agent"].startsWith(
       "Mozilla/5.0 (compatible; Discordbot/2.0; +https://discordapp.com)"
-    )
+    ) ||
+    req.headers["user-agent"].startsWith("node-fetch")
   ) {
     return true;
   }
