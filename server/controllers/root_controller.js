@@ -24,7 +24,7 @@ const redirectUrl = async (req, res) => {
     "ip:",
     ip
   );
-  if (!ip.regin) {
+  if (!ip.region) {
     ip.region = "";
     ip.city = "";
   }
