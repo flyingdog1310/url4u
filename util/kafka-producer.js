@@ -6,7 +6,7 @@ async function clickEvent() {
   const producer = kafka.producer();
   await producer.connect();
   await producer.send({
-    topic: "clicks",
+    topic: "test",
     messages: [{ value: "Hello KafkaJS user!" }],
   });
   await producer.disconnect();
