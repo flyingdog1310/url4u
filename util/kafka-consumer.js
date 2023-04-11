@@ -14,5 +14,5 @@ async function clickConsumer() {
     },
   });
 }
-clickConsumer()
+clickConsumer();
 export { clickConsumer };

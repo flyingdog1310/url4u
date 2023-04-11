@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-dotenv.config({ path: process.env.ENV });
+dotenv.config({ path: "../.env" });
 import { Kafka } from "kafkajs";
 import { createMechanism } from "@jm18457/kafkajs-msk-iam-authentication-mechanism";
 

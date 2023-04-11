@@ -11,5 +11,5 @@ async function clickEvent() {
   });
   await producer.disconnect();
 }
-clickEvent()
+clickEvent();
 export { clickEvent };
