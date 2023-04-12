@@ -3,8 +3,11 @@ html(lang="en")
   head
     meta(charset='UTF-8')
     title  URL4U
-    link(rel="shortcut icon" href="/image/favicon.ico") 
-  body
-    include includes/header.pug
-    block content
-    include includes/footer.pug
+    link(rel="shortcut icon" href="/image/favicon.ico")
+    script(src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js")
+    link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css") 
+  body(class="sidebar-mini" style="height: auto;")
+    div(class="wrapper")
+      include includes/header.pug
+      block content
+      include includes/footer.pug

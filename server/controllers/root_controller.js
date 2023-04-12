@@ -44,10 +44,10 @@ const redirectUrl = async (req, res) => {
     `${ip.region}/${ip.city}`,
     1
   );
-  clickEvent(
-    "clicks",
-    `${url.id}/${time}/${req.headers["referer"]}/${req.headers["user-agent"]}/${ip}`
-  );
+  // clickEvent(
+  //   "clicks",
+  //   `${url.id}/${time}/${req.headers["referer"]}/${req.headers["user-agent"]}/${ip}`
+  // );
   return res.status(307).redirect(url[0].long_url);
 };
 

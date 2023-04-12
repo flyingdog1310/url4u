@@ -1,7 +1,12 @@
 extends layout.pug
 
 block content
-  h4 Modify your short url now
+  div(class="content-wrapper")
+    div(class="content-header")
+      div(class="container-fluid")
+        div(class="row mb-2")
+          div(class="col-sm-6")
+            h1(class="m-0") Modify your short-url now
     form(method="post" enctype="multipart/form-data" id="update-short-url") 
       div 
         label(for="short_url") short url: 
@@ -19,7 +24,7 @@ block content
         label(for="description") description:
         input(id="description" name="description"  ) 
       div(id="submit") 
-        button(type="submit" class="btn") Modify Url
+        button(type="submit" class="btn  btn-primary btn-sm") Modify Url
 
     
     script.

@@ -1,7 +1,12 @@
 extends layout.pug
 
 block content
-  h4 Get your short url now
+  div(class="content-wrapper")
+    div(class="content-header")
+      div(class="container-fluid")
+        div(class="row mb-2")
+          div(class="col-sm-6")
+            h1(class="m-0") Get your short url now
     form(action="/api/1.0/url" method="POST" enctype='application/json' id="create-short-url") 
       div
         label(for="company_id") company id:
@@ -11,7 +16,7 @@ block content
         input(id="long_url" name="long_url" required ) 
 
       div(id="submit") 
-        button(type="submit" class="btn") Create Url
+        button(type="submit" class="btn  btn-primary btn-sm") Create Url
   
     script.
       import(`/js/index.js`)
