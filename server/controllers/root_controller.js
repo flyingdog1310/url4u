@@ -9,7 +9,7 @@ const redirectUrl = async (req, res) => {
   
   if (!url[0]) {
     //when short url not found
-    console.log('ip:',ip,'notfound url:',req.url)
+    console.log('ip:',req.ip,'notfound url:',req.url)
     return res.status(404).render("notfound");
   }
   const device = req.headers["user-agent"].split("(")[1].split(";")[0] || "";
