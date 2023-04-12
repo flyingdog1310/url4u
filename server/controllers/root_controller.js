@@ -6,16 +6,17 @@ import geoIp from "geoip-lite";
 
 const redirectUrl = async (req, res) => {
   const url = await getUrlByShortUrl(req.url.split("?")[0].substring(1));
+  
+  if (!url[0]) {
+    //when short url not found
+    console.log('ip:',ip,'notfound url:',req.url)
+    return res.status(404).render("notfound");
+  }
   const device = req.headers["user-agent"].split("(")[1].split(";")[0] || "";
   if (!req.headers["referer"]) {
     req.headers["referer"] = "native";
   }
   const ip = geoIp.lookup(req.ip) || {};
-
-  if (!url[0]) {
-    //when short url not found
-    return res.status(404).render("notfound");
-  }
   console.log(
     "user-agent:",
     req.headers["user-agent"],
