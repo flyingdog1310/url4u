@@ -2,14 +2,15 @@ import dotenv from "dotenv";
 dotenv.config({ path: process.ENV });
 import { getUrlByShortUrl } from "../models/url_model.js";
 import { createClick } from "../models/ad_model.js";
+import { clickEvent } from "../../util/kafka-producer.js";
 import geoIp from "geoip-lite";
 
 const redirectUrl = async (req, res) => {
   const url = await getUrlByShortUrl(req.url.split("?")[0].substring(1));
-  
+
   if (!url[0]) {
     //when short url not found
-    console.log('ip:',req.ip,'notfound url:',req.url)
+    console.log("ip:", req.ip, "notfound url:", req.url);
     return res.status(404).render("notfound");
   }
   const device = req.headers["user-agent"].split("(")[1].split(";")[0] || "";
@@ -17,6 +18,8 @@ const redirectUrl = async (req, res) => {
     req.headers["referer"] = "native";
   }
   const ip = geoIp.lookup(req.ip) || {};
+  const time = new Date().toISOString();
+
   console.log(
     "user-agent:",
     req.headers["user-agent"],
@@ -25,7 +28,9 @@ const redirectUrl = async (req, res) => {
     "referrer:",
     req.headers["referer"],
     "ip:",
-    ip
+    ip,
+    "time",
+    time
   );
   if (!ip.region) {
     ip.region = "";
@@ -38,6 +43,10 @@ const redirectUrl = async (req, res) => {
     device,
     `${ip.region}/${ip.city}`,
     1
+  );
+  clickEvent(
+    "clicks",
+    `${url.id}/${time}/${req.headers["referer"]}/${req.headers["user-agent"]}/${ip}`
   );
   return res.status(307).redirect(url[0].long_url);
 };
