@@ -1,24 +1,18 @@
 extends layout.pug
 
 block content
-  div(class="content-wrapper")
-    div(class="content-header")
-      div(class="container-fluid")
-        div(class="row mb-2")
-          div(class="col-sm-6")
-            h1(class="m-0") Get your short url now
-    form(action="/api/1.0/url" method="POST" enctype='application/json' id="create-short-url") 
-      div
-        label(for="company_id") company id:
-        input(id="company_id" name="company_id" required) 
-      div
-        label(for="long_url") long url:
-        input(id="long_url" name="long_url" required ) 
-
-      div(id="submit") 
-        button(type="submit" class="btn  btn-primary btn-sm") Create Url
-  
+  div(class="content-wrapper center")
+    div(class="col-sm-6 row")  
+      h2(class="m-0") Shorten Your Url Now!
+        form(action="/api/1.0/url" method="POST" enctype='application/json' id="create-short-url") 
+          div
+            img(src="/image/favicon.jpg" width="24")
+            input(id="long_url" name="long_url" type="url" placeholder="https://" class="input-round" required )                  
+          div(id="submit") 
+            button(type="submit" class="btn  btn-primary btn-sm") Shorten
     script.
       import(`/js/index.js`)
+
+ 
 
 

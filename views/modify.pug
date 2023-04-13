@@ -2,30 +2,25 @@ extends layout.pug
 
 block content
   div(class="content-wrapper")
-    div(class="content-header")
-      div(class="container-fluid")
-        div(class="row mb-2")
-          div(class="col-sm-6")
-            h1(class="m-0") Modify your short-url now
-    form(method="post" enctype="multipart/form-data" id="update-short-url") 
-      div 
-        label(for="short_url") short url: 
-        input(id="short_url" name="short_url"  ) 
-      div
-        label(for="long_url") long url:
-        input(id="long_url" name="long_url" ) 
-      div
-        label(for="picture") picture:
-        input(id="picture" name="picture" type="file" accept="image/png, image/jpeg, image/jpg" ) 
-      div
-        label(for="title") title:
-        input(id="title" name="title") 
-      div
-        label(for="description") description:
-        input(id="description" name="description"  ) 
-      div(id="submit") 
-        button(type="submit" class="btn  btn-primary btn-sm") Modify Url
-
-    
+    div(class="col-sm-6")
+      h2(class="m-0") Modify your short-url
+      form(method="post" enctype="multipart/form-data" id="update-short-url") 
+        div 
+          label(for="short_url") short url: 
+          input(id="short_url" name="short_url"  ) 
+        div
+          label(for="long_url") long url:
+          input(id="long_url" name="long_url" ) 
+        div
+          label(for="picture") picture:
+          input(id="picture" name="picture" type="file" accept="image/png, image/jpeg, image/jpg" ) 
+        div
+          label(for="title") title:
+          input(id="title" name="title") 
+        div
+          label(for="description") description:
+          input(id="description" name="description"  ) 
+        div(id="submit") 
+          button(type="submit" class="btn  btn-primary btn-sm") Modify
     script.
       import(`/js/modify.js`)

@@ -16,14 +16,16 @@ xhr.send();
 
 function renderTable(rawUrls) {
   const table = document.createElement("table");
+  table.classList.add("table");
+  table.classList.add("table-hover");
+  table.classList.add("text-nowrap");
   const header = table.createTHead().insertRow();
   header.innerHTML = `
-    <th>ID</th>
-    <th>Short Url</th>
-    <th>Long Url</th>
+    <th>Url</th>
     <th>Picture</th>
     <th>Title</th>
     <th>Description</th>
+    <th>Create Time</th>
   `;
 
   for (let i = 0; i < rawUrls.length; i++) {
@@ -31,14 +33,15 @@ function renderTable(rawUrls) {
     const url = rawUrls[i];
     const row = table.insertRow();
     row.innerHTML = `
-      <td>${url.id}</td>
-      <td>https://url4u.today/${url.short_url}</a></td>
-      <td>${url.long_url}</td>
-      <td>${url.picture}</td>
+      <td>${url.long_url}<br>
+      https://url4u.today/${url.short_url}
+      </td>
+      <td><img src=https://d2zbleiceefv1c.cloudfront.net/${url.picture} height="70px" width="100px"></td>
       <td>${url.title}</td>
       <td>${url.description}</td>
-      <a href=${pwd}/url/${url.id}><p>modify</p></a>
-      <a href=${pwd}/dashboard/${url.id}><p>info</p></a>
+      <td>${url.create_time}</td>
+      <button type="button" class="btn btn-primary btn-xs" onclick="location.href='/url/${url.id}'">Modify</button><br>
+      <button type="button" class="btn btn-primary btn-xs" onclick="location.href='/dashboard/${url.id}>'">Info</button>
     `;
   }
 
