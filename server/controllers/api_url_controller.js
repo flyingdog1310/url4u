@@ -1,9 +1,4 @@
-import {
-  createUrl,
-  updateCustomUrl,
-  getUrlsByCompany,
-  getUrlById,
-} from "../models/url_model.js";
+import { createUrl, updateCustomUrl, getUrlById } from "../models/url_model.js";
 import { shortUrlGenerator } from "../../util/shortUrlGenerator.js";
 
 const createShortUrl = async (req, res) => {
@@ -35,16 +30,10 @@ const updateShortUrl = async (req, res) => {
   return res.status(200).redirect("/");
 };
 
-const getShortUrlList = async (req, res) => {
-  const company_id = req.originalUrl.split("/")[4];
-  const url = await getUrlsByCompany(company_id);
-  return res.status(200).json(url);
-};
-
 const getShortUrl = async (req, res) => {
   const url_id = req.originalUrl.split("/")[4];
   const url = await getUrlById(url_id);
   return res.status(200).json(url);
 };
 
-export { createShortUrl, updateShortUrl, getShortUrlList, getShortUrl };
+export { createShortUrl, updateShortUrl, getShortUrl };

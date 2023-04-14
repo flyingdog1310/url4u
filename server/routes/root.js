@@ -8,21 +8,33 @@ router.route("/").get(
   })
 );
 
+router.route("/user").get(
+  wrapAsync(async (req, res) => {
+    res.render("user");
+  })
+);
+
+router.route("/user/*").get(
+  wrapAsync(async (req, res) => {
+    res.render("user_company");
+  })
+);
+
 router.route("/company/*").get(
   wrapAsync(async (req, res) => {
-    res.render("list");
+    res.render("company_url");
   })
 );
 
-router.route("/url/*").get(
+router.route("/url/modify/*").get(
   wrapAsync(async (req, res) => {
-    res.render("modify");
+    res.render("url_modify");
   })
 );
 
-router.route("/dashboard/*").get(
+router.route("/url/analytic/*").get(
   wrapAsync(async (req, res) => {
-    res.render("dashboard");
+    res.render("url_analytic");
   })
 );
 

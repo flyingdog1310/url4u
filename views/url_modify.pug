@@ -7,10 +7,10 @@ block content
       form(method="post" enctype="multipart/form-data" id="update-short-url") 
         div 
           label(for="short_url") short url: 
-          input(id="short_url" name="short_url"  ) 
+          input(id="short_url" name="short_url" type="url") 
         div
           label(for="long_url") long url:
-          input(id="long_url" name="long_url" ) 
+          input(id="long_url" name="long_url" type="url") 
         div
           label(for="picture") picture:
           input(id="picture" name="picture" type="file" accept="image/png, image/jpeg, image/jpg" ) 
@@ -23,4 +23,4 @@ block content
         div(id="submit") 
           button(type="submit" class="btn  btn-primary btn-sm") Modify
     script.
-      import(`/js/modify.js`)
+      import(`/js/url_modify.js`)

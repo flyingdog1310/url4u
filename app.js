@@ -23,9 +23,12 @@ app.use(cors());
 import root from "./server/routes/root.js";
 app.use("/", root);
 
+import api_user from "./server/routes/api_user.js";
+import api_company from "./server/routes/api_company.js";
 import api_url from "./server/routes/api_url.js";
-import api_click from "./server/routes/api_click.js";
-app.use(`/api/${API_VERSION}/`, [api_url, api_click]);
+import api_analytic from "./server/routes/api_analytic.js";
+
+app.use(`/api/${API_VERSION}/`, [api_user, api_company, api_url, api_analytic]);
 
 import redirect from "./server/routes/redirect.js";
 app.use("/", redirect);

@@ -1,18 +1,21 @@
 const xhr = new XMLHttpRequest();
-xhr.onreadystatechange = function () {
-  if (this.readyState === 4 && this.status === 200) {
-    // handle success response
-    console.log(xhr.responseText);
-    const rawUrls = JSON.parse(xhr.responseText);
-    renderTable(rawUrls);
-  } else if (this.readyState === 4) {
-    // handle error response
-    console.log(xhr.status);
-  }
-};
-xhr.open("GET", `/api/1.0/company/${window.location.pathname.split("/")[2]}`);
-xhr.setRequestHeader("Authorization", `Bearer ${null}`);
-xhr.send();
+function getCompanyUrl() {
+  const pwd = window.location.pathname.split("/")[2];
+  xhr.onreadystatechange = function () {
+    if (this.readyState === 4 && this.status === 200) {
+      // handle success response
+      console.log(xhr.responseText);
+      const rawUrls = JSON.parse(xhr.responseText);
+      renderTable(rawUrls);
+    } else if (this.readyState === 4) {
+      // handle error response
+      console.log(xhr.status);
+    }
+  };
+  xhr.open("GET", `/api/1.0/company/${pwd}`);
+  xhr.setRequestHeader("Authorization", `Bearer ${null}`);
+  xhr.send();
+}
 
 function renderTable(rawUrls) {
   const table = document.createElement("table");
@@ -41,9 +44,11 @@ function renderTable(rawUrls) {
       <td>${url.description}</td>
       <td>${url.create_time}</td>
       <button type="button" class="btn btn-primary btn-xs" onclick="location.href='/url/${url.id}'">Modify</button><br>
-      <button type="button" class="btn btn-primary btn-xs" onclick="location.href='/dashboard/${url.id}>'">Info</button>
+      <button type="button" class="btn btn-primary btn-xs" onclick="location.href='/dashboard/${url.id}>'">Analytics</button>
     `;
   }
 
   document.getElementById("lists").appendChild(table);
 }
+
+getCompanyUrl()

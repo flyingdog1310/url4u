@@ -5,12 +5,10 @@ import { upload } from "../../util/multer.js";
 import {
   createShortUrl,
   updateShortUrl,
-  getShortUrlList,
   getShortUrl,
-} from "../controllers/api_controller.js";
+} from "../controllers/api_url_controller.js";
 import { wrapAsync } from "../../util/util.js";
 
-router.route("/company/*").get(wrapAsync(getShortUrlList));
 router.route("/url").post(wrapAsync(createShortUrl));
 router.route("/url/*").get(wrapAsync(getShortUrl));
 router
