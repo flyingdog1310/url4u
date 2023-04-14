@@ -2,6 +2,7 @@ import {
   createCompany,
   getCompany,
   getUrlsByCompany,
+  getUsersByCompany,
 } from "../models/company_model.js";
 
 const createUserCompany = async (req, res) => {
@@ -30,4 +31,10 @@ const getShortUrlList = async (req, res) => {
   return res.status(200).json(url);
 };
 
-export { createUserCompany, getUserCompany, getShortUrlList };
+const getCompanyUser = async (req, res) => {
+  const company_id = req.originalUrl.split("/")[4];
+  const user = await getUsersByCompany(company_id);
+  return res.status(200).json(user);
+};
+
+export { createUserCompany, getUserCompany, getShortUrlList, getCompanyUser };

@@ -20,11 +20,19 @@ router.route("/user/*").get(
   })
 );
 
+router.route("/company/*/user").get(
+  wrapAsync(async (req, res) => {
+    res.render("company_user");
+  })
+);
+
 router.route("/company/*").get(
   wrapAsync(async (req, res) => {
     res.render("company_url");
   })
 );
+
+
 
 router.route("/url/modify/*").get(
   wrapAsync(async (req, res) => {

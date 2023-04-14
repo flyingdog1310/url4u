@@ -43,8 +43,8 @@ function renderTable(rawUrls) {
       <td>${url.title}</td>
       <td>${url.description}</td>
       <td>${url.create_time}</td>
-      <button type="button" class="btn btn-primary btn-xs" onclick="location.href='/url/${url.id}'">Modify</button><br>
-      <button type="button" class="btn btn-primary btn-xs" onclick="location.href='/dashboard/${url.id}>'">Analytics</button>
+      <button type="button" class="btn btn-primary btn-xs" onclick="location.href='/url/modify/${url.id}'">Modify</button><br>
+      <button type="button" class="btn btn-primary btn-xs" onclick="location.href='/url/analytic/${url.id}>'">Analytics</button>
     `;
   }
 

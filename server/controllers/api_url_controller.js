@@ -9,7 +9,7 @@ const createShortUrl = async (req, res) => {
   const company_id = 1;
   const short_url = shortUrlGenerator();
   const url = await createUrl(company_id, short_url, long_url);
-  return res.status(200).redirect(`/url/${url.insertId}`);
+  return res.status(200).redirect(`/url/modify/${url.insertId}`);
 };
 
 const updateShortUrl = async (req, res) => {

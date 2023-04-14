@@ -10,7 +10,7 @@ xhr.onreadystatechange = function () {
     console.log(xhr.status);
   }
 };
-xhr.open("GET", `/api/1.0${window.location.pathname}`);
+xhr.open("GET", `/api/1.0/url/${window.location.pathname.split("/")[3]}`);
 xhr.setRequestHeader("Authorization", `Bearer ${null}`);
 xhr.send();
 

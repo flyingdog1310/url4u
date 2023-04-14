@@ -30,4 +30,17 @@ const getUrlsByCompany = async (company_id) => {
   return urls;
 };
 
-export { createCompany, getCompany, getUrlsByCompany };
+const getUsersByCompany = async (company_id) => {
+  const [users] = await pool.query(
+    `SELECT role.user_id ,role.user_role ,user.name ,user.email
+     FROM role 
+     LEFT JOIN user 
+     ON role.user_id = user.id
+     WHERE company_id= ?`, 
+  [
+    company_id,
+  ]);
+  return users;
+};
+
+export { createCompany, getCompany, getUrlsByCompany ,getUsersByCompany};
