@@ -2,6 +2,7 @@ const xhr1 = new XMLHttpRequest();
 const xhr2 = new XMLHttpRequest();
 const xhr3 = new XMLHttpRequest();
 const xhr4 = new XMLHttpRequest();
+const xhr5 = new XMLHttpRequest();
 
 function getTotalClick() {
   xhr1.onreadystatechange = function () {
@@ -19,7 +20,8 @@ function getTotalClick() {
     "GET",
     `/api/1.0/total_click/${window.location.pathname.split("/")[3]}`
   );
-  xhr1.setRequestHeader("Authorization", `Bearer ${null}`);
+  let token = localStorage.getItem("jwtToken");
+  xhr1.setRequestHeader("Authorization", `Bearer ${token}`);
   xhr1.send();
 }
 function renderTotalClicks(totalClicks) {
@@ -44,7 +46,8 @@ function getDeviceClick() {
     "GET",
     `/api/1.0/device_click/${window.location.pathname.split("/")[3]}`
   );
-  xhr2.setRequestHeader("Authorization", `Bearer ${null}`);
+  let token = localStorage.getItem("jwtToken");
+  xhr2.setRequestHeader("Authorization", `Bearer ${token}`);
   xhr2.send();
 }
 function renderTopDevice(totalDeviceClicks) {
@@ -109,7 +112,8 @@ function getRegionClick() {
     "GET",
     `/api/1.0/region_click/${window.location.pathname.split("/")[3]}`
   );
-  xhr3.setRequestHeader("Authorization", `Bearer ${null}`);
+  let token = localStorage.getItem("jwtToken");
+  xhr3.setRequestHeader("Authorization", `Bearer ${token}`);
   xhr3.send();
 }
 function renderTopLocation(totalRegionClicks) {
@@ -174,7 +178,8 @@ function getReferrerClick() {
     "GET",
     `/api/1.0/referrer_click/${window.location.pathname.split("/")[3]}`
   );
-  xhr4.setRequestHeader("Authorization", `Bearer ${null}`);
+  let token = localStorage.getItem("jwtToken");
+  xhr4.setRequestHeader("Authorization", `Bearer ${token}`);
   xhr4.send();
 }
 function renderTopReferer(totalReferrerClicks) {
@@ -222,32 +227,49 @@ function renderRefererPieChart(referer) {
   new Chart(refererPieChart, config);
 }
 
-getTotalClick();
-getDeviceClick();
-getRegionClick();
-getReferrerClick();
-
-function renderAreaChart() {
+function getTimeClick() {
+  xhr5.onreadystatechange = function () {
+    if (this.readyState === 4 && this.status === 200) {
+      // handle success response
+      console.log(xhr5.responseText);
+      const totalTimeClicks = JSON.parse(xhr5.responseText);
+      renderAreaChart(totalTimeClicks);
+    } else if (this.readyState === 4) {
+      // handle error response
+      console.log(xhr5.status);
+    }
+  };
+  xhr5.open(
+    "POST",
+    `/api/1.0/time_click/${window.location.pathname.split("/")[3]}`
+  );
+  let token = localStorage.getItem("jwtToken");
+  xhr5.setRequestHeader("Authorization", `Bearer ${token}`);
+  xhr5.send(JSON.stringify());
+}
+let timeChart;
+function renderAreaChart(totalTimeClicks) {
   const areaChart = document.getElementById("areaChart");
-  const DATA_COUNT = 7;
-  const NUMBER_CFG = { count: DATA_COUNT, min: 0, max: 100 };
-
-  const labels = [1, 2, 3, 4, 5, 6, 7, 8];
+  const labels = [];
   const data = {
     labels: labels,
     datasets: [
       {
-        label: "Url 1",
-        data: [1, 2, 3, 4, 5, 6, 7, 5000],
-        borderColor: "rgb(54, 162, 235)",
-      },
-      {
-        label: "Url 2",
-        data: [1, 2, 3, 4, 5, 3000, 7, 8],
-        borderColor: "rgb(201, 203, 207)",
+        label: "Url clicks",
+        data: [],
+        borderColor: "#2085ec",
       },
     ],
   };
+  for (let i = 0; i < totalTimeClicks.length; i++) {
+    data.labels.push(totalTimeClicks[i].time);
+    let total = 0;
+    if (totalTimeClicks[i].total !== null) {
+      total = Number(totalTimeClicks[i].total);
+    }
+    data.datasets[0].data.push(total);
+  }
+
   const config = {
     type: "line",
     data: data,
@@ -260,7 +282,30 @@ function renderAreaChart() {
       },
     },
   };
-  new Chart(areaChart, config);
+  timeChart = new Chart(areaChart, config);
 }
 
-renderAreaChart();
+getTotalClick();
+getDeviceClick();
+getRegionClick();
+getReferrerClick();
+getTimeClick();
+
+$("#time-clicks").submit(function (e) {
+  e.preventDefault();
+  $.ajax({
+    url: `/api/1.0/time_click/${window.location.pathname.split("/")[3]}`,
+    type: "post",
+    data: $("#time-clicks").serialize(),
+    beforeSend: function (xhr) {
+      let token = localStorage.getItem("jwtToken");
+      xhr.setRequestHeader("Authorization", `Bearer ${token}`);
+    },
+    success: function (data) {
+      if (timeChart) {
+        timeChart.destroy();
+        renderAreaChart(data);
+      }
+    },
+  });
+});

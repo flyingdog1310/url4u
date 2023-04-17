@@ -37,16 +37,28 @@ block content
                 span(class="info-box-text") Top Referer
                 span(class="info-box-number" id="top-referer") /
         div(class="row")      
-          div(class="col-md-4")
+          div(class="col-md-6")
             div(class="card")
               div(class="card-header")
-                h3(class="card-title") Time-Clicks
-                div(class="class-tools")
+                h3(class="card-title") Time-Clicks                
+                div(class="class-tools")  
+                  form(id="time-clicks" enctype='application/json')
+                    //-label(for="start") from 
+                    //-input(type="date" name="start" id="start")
+                    //-label(for="stop") to
+                    input(type="date" name="stop" id="stop")
+                    div(class="btn-group" id="scope" data-toggle="btn-toggle")
+                      input(type="radio" class="btn btn-default btn-sm active" name="method" value="day" id="day")
+                      label(for="day") day 
+                      input(type="radio" class="btn btn-default btn-sm active" name="method" value="hour" id="hour") 
+                      label(for="hour") hour 
+                    button(type="submit" class="btn btn-secondary btn-sm") Search
               div(class="card-body")
                 div(class="chartjs-size-monitor")
                   div(class="chartjs-size-monitor-expand")
                   div(class="chartjs-size-monitor-shrink")
                   canvas(id="areaChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 667px;" width="667" height="250" class="chartjs-render-monitor")
+        div(class="row")    
           div(class="col-md-2")
             div(class="card")
               div(class="card-header")

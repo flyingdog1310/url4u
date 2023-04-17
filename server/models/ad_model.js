@@ -68,10 +68,25 @@ const getReferrerClick = async (urls_id) => {
   return referrer;
 };
 
+const getTimeClick = async (urls_id, time) => {
+  const referer = [];
+  for (let i = 0; i < time.length; i++) {
+    const [total] = await pool.query(
+      "SELECT SUM(count) AS total FROM click Where url_id=? AND time_range BETWEEN ? AND ? ",
+      [urls_id, time[i].start, time[i].stop]
+    );
+    referer[i] = {};
+    referer[i].total = total[0]["total"];
+    referer[i].time = time[i].start;
+  }
+  return referer;
+};
+
 export {
   createClick,
   getTotalClick,
   getDeviceClick,
   getRegionClick,
   getReferrerClick,
+  getTimeClick,
 };
