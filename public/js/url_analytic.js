@@ -309,3 +309,6 @@ $("#time-clicks").submit(function (e) {
     },
   });
 });
+
+const today = new Date().toISOString().split("T")[0];
+document.getElementById("stop").setAttribute("max", today);
