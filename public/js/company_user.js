@@ -44,4 +44,4 @@ function renderTable(users) {
   document.getElementById("lists").appendChild(table);
 }
 
-getCompanyUser()
+getCompanyUser();

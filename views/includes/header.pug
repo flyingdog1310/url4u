@@ -7,15 +7,12 @@ header
             ul(class="navbar-nav")
                 li(class="nav-item d-none d-sm-inline-block")
                     a(href="/" class="nav-link") Create Link
+                li(class="nav-item d-none d-sm-inline-block" id="my-links")
+                    a(href="/user" class="nav-link") My Links
                 li(class="nav-item d-none d-sm-inline-block")
-                    a(href="/company/1" class="nav-link") My Links
-                li(class="nav-item d-none d-sm-inline-block")
-                    a(href="/user/1" class="nav-link") Pricing
+                    a(href="/user" class="nav-link") Pricing
             ul(class="navbar-nav ml-auto")
                 li(class="nav-item dropdown")
                     a(class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false") User
                     div(class="dropdown-menu" aria-labelledby="navbarDropdown")
-                        a(class="dropdown-item" href="/user/1") My Companies       
-                        div(class="dropdown-divider")
-                        a(class="dropdown-item" href="/company/1") Company 1
-                        a(class="dropdown-item" href="/company/2") Company 2 
+                        a(class="dropdown-item" href="/user/company") My Companies 

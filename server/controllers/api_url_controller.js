@@ -2,11 +2,14 @@ import { createUrl, updateCustomUrl, getUrlById } from "../models/url_model.js";
 import { shortUrlGenerator } from "../../util/shortUrlGenerator.js";
 
 const createShortUrl = async (req, res) => {
-  const {
-    //company_id,
-    long_url,
-  } = req.body;
-  const company_id = 1;
+  const { long_url } = req.body;
+  let company_id = 1;
+  if (req.body.company_id) {
+    company_id = req.body.company_id;
+  }
+  if (req.headers["referer"].split("/")[4]) {
+    company_id = req.headers["referer"].split("/")[4];
+  }
   const short_url = shortUrlGenerator();
   const url = await createUrl(company_id, short_url, long_url);
   return res.status(200).redirect(`/url/modify/${url.insertId}`);

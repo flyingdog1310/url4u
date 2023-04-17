@@ -7,6 +7,7 @@ import {
 const createUserCompany = async (req, res) => {
   const { company_name } = req.body;
   const user_id = res.locals.decoded.userId;
+  console.log(res.locals.decoded)
   const url = await createCompany(user_id, company_name);
   return res.status(200).redirect(`/company/${url.insertId}`);
 };

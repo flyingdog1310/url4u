@@ -13,7 +13,7 @@ if (localStorage.getItem("jwtToken") !== null) {
   })
     .done(function (response) {
       console.log(response);
-      const companies = JSON.parse(response);
+      const companies = response;
       renderTable(companies);
     })
     .fail(function (err) {
@@ -57,6 +57,7 @@ $("#create-company").submit(function (e) {
     type: "post",
     data: $("#create-company").serialize(),
     beforeSend: function (xhr) {
+      let token = localStorage.getItem("jwtToken");
       xhr.setRequestHeader("Authorization", `Bearer ${token}`);
     },
     success: function (data) {

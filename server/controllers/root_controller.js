@@ -18,7 +18,7 @@ const redirectUrl = async (req, res) => {
     req.headers["referer"] = "native";
   }
   const ip = geoIp.lookup(req.ip) || {};
-  const time = new Date().toISOString();
+  const time = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
   console.log(
     "user-agent:",
@@ -38,7 +38,7 @@ const redirectUrl = async (req, res) => {
   }
   createClick(
     url[0].id,
-    "1995-01-01 00:00:00",
+    time,
     req.headers["referer"],
     device,
     `${ip.region}/${ip.city}`,

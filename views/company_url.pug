@@ -13,6 +13,11 @@ block content
                 div(class="input-group-append")
                   button(type="submit" class="btn btn-default")
                     i(class="fas fa-search")
+          div
+            form(action="#" method="POST" enctype='application/json' id="add-company-url") 
+              div 
+                input(name="long_url" placeholder="https://" class="input-round" type="url" required )                
+                button(type="submit" class="btn  btn-primary btn-sm") Add Url
           div(class="card-body table-responsive p-0" id="lists")
     script.
       import(`/js/company_url.js`)

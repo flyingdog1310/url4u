@@ -51,4 +51,20 @@ function renderTable(rawUrls) {
   document.getElementById("lists").appendChild(table);
 }
 
-getCompanyUrl()
+getCompanyUrl();
+
+$("#add-company-url").submit(function (e) {
+  e.preventDefault();
+  $.ajax({
+    url: "/api/1.0/url",
+    type: "post",
+    data: $("#add-company-url").serialize(),
+    beforeSend: function (xhr) {
+      let token = localStorage.getItem("jwtToken");
+      xhr.setRequestHeader("Authorization", `Bearer ${token}`);
+    },
+    success: function (data) {
+      location.reload();
+    },
+  });
+});

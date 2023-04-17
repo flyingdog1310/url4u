@@ -15,7 +15,9 @@ xhr.setRequestHeader("Authorization", `Bearer ${null}`);
 xhr.send();
 
 function insertDefault(url) {
-  document.getElementById("update-short-url").action=`/api/1.0/url/${url[0].id}`
+  document.getElementById(
+    "update-short-url"
+  ).action = `/api/1.0/url/${url[0].id}`;
   document.getElementById("short_url").value = url[0].short_url;
   document.getElementById("long_url").value = url[0].long_url;
   document.getElementById("title").value = url[0].title;
