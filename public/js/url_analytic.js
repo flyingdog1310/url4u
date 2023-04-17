@@ -70,9 +70,12 @@ function renderDevicePieChart(devices) {
         label: "Device Clicks",
         data: [],
         backgroundColor: [
-          "rgb(255, 99, 132)",
-          "rgb(54, 162, 235)",
-          "rgb(255, 205, 86)",
+          "#2085ec",
+          "#72b4eb",
+          "#0a417a",
+          "#8464a0",
+          "#cea9bc",
+          "#323232",
         ],
         hoverOffset: 4,
       },
@@ -132,9 +135,12 @@ function renderLocationPieChart(locations) {
         label: "Region Clicks",
         data: [],
         backgroundColor: [
-          "rgb(255, 99, 132)",
-          "rgb(54, 162, 235)",
-          "rgb(255, 205, 86)",
+          "#2085ec",
+          "#72b4eb",
+          "#0a417a",
+          "#8464a0",
+          "#cea9bc",
+          "#323232",
         ],
         hoverOffset: 4,
       },
@@ -157,7 +163,7 @@ function getReferrerClick() {
       // handle success response
       console.log(xhr4.responseText);
       const totalReferrerClicks = JSON.parse(xhr4.responseText);
-      renderTopReferer(totalReferrerClicks)
+      renderTopReferer(totalReferrerClicks);
       renderRefererPieChart(totalReferrerClicks);
     } else if (this.readyState === 4) {
       // handle error response
@@ -194,9 +200,12 @@ function renderRefererPieChart(referer) {
         label: "Referer Clicks",
         data: [],
         backgroundColor: [
-          "rgb(255, 99, 132)",
-          "rgb(54, 162, 235)",
-          "rgb(255, 205, 86)",
+          "#2085ec",
+          "#72b4eb",
+          "#0a417a",
+          "#8464a0",
+          "#cea9bc",
+          "#323232",
         ],
         hoverOffset: 4,
       },

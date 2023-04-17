@@ -42,8 +42,9 @@ function renderTable(companies) {
       <td>${company.name}</td>
       <td>${company.level}</td>
       <td>${company.user_role}</td>
-      <button type="button" class="btn btn-primary btn-xs" onclick="location.href='/company/${company.id}/user'">Manage</button><br>
-      <button type="button" class="btn btn-primary btn-xs" onclick="location.href='/company/${company.id}'">Url</button><br>
+      <button type="button" class="btn btn-primary btn-xs" onclick="location.href='/company/${company.id}'">Url List</button><br>
+      <button type="button" class="btn btn-primary btn-xs" onclick="location.href='/company/${company.id}/user'">Manage User</button><br>
+      
     `;
   }
 
