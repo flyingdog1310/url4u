@@ -3,46 +3,47 @@ extends layout.pug
 block content
   div(class="register-page" style="min-height: 542px;")
     div(class="register-box")
-      div(class="class card-outline card-primary")
+      div(class="card")
         div(class="class-header text-center")
           a(href="/" class="h1")
             b URL4U 
-      div(class="card-body")
-        p(class="login-box-msg") Register a new membership
-        form(action="/api/1.0/user/register" method="post" id="register")
-          div(class="input-group mb-3")
-            input(type="text" class="form-control" placeholder="Name" name="name")
-            div(class="input-ground-append")
-              div(class="input-group-text")
-                span(class="fas fa-user")
-          div(class="input-group mb-3")
-            input(type="email" class="form-control" placeholder="Email" name="email")
-            div(class="input-ground-append")
-              div(class="input-group-text")
-                span(class="fas fa-envelope")
-          div(class="input-group mb-3")
-            input(type="password" class="form-control" placeholder="Password" name="password")
-            div(class="input-ground-append")
-              div(class="input-group-text")
-                span(class="fas fa-lock")
-          div(class="input-group mb-3")
-            input(type="password" class="form-control" placeholder="Retype Password" name="retype_password")
-            div(class="input-ground-append")
-              div(class="input-group-text")
-                span(class="fas fa-lock")
-          div(class="row")
-            div(class="col-8")
-              div(class="icheck-primary")
-                input(type="checkbox" id="agreeTerms" name="terms" value="agree")
-                label(for="agreeTerms") I agree to the 
-                  a(href="#") terms
-            div(class="col-4")
-              button(type="submit" class="btn btn-primary btn-block") Register
-        div(class="social-auth-links text-center mt-2 mb-3")
-          a(href="#" class="btn btn-block btn-primary")  
-            i(class="fab fa-facebook mr-2") Sign up with Facebook 
-        p(class="mb-1")
-          a(href="/user") I already have a membership
+        div(class="card-body")
+          p(class="login-box-msg") Register a new membership
+          form(action="/api/1.0/user/register" method="post" id="register")
+            div(class="input-group mb-3")
+              input(type="text" class="form-control" placeholder="Name" name="name")
+              div(class="input-group-append")
+                div(class="input-group-text")
+                  span(class="fas fa-user")
+            div(class="input-group mb-3")
+              input(type="email" class="form-control" placeholder="Email" name="email")
+              div(class="input-group-append")
+                div(class="input-group-text")
+                  span(class="fas fa-envelope")
+            div(class="input-group mb-3")
+              input(type="password" class="form-control" placeholder="Password" name="password")
+              div(class="input-group-append")
+                div(class="input-group-text")
+                  span(class="fas fa-lock")
+            div(class="input-group mb-3")
+              input(type="password" class="form-control" placeholder="Retype Password" name="retype_password")
+              div(class="input-group-append")
+                div(class="input-group-text")
+                  span(class="fas fa-lock")
+            div(class="row")
+              div(class="col-8")
+                div(class="icheck-primary")
+                  input(type="checkbox" id="agreeTerms" name="terms" value="agree")
+                  label(for="agreeTerms") I agree to the 
+                    a(href="#") terms
+              div(class="col-4")
+                button(type="submit" class="btn btn-primary btn-block") Register
+          div(class="social-auth-links text-center mt-2 mb-3")
+            a(href="#" class="btn btn-block btn-primary")  
+              i(class="fab fa-facebook mr-2") 
+              |Sign up with Facebook 
+          p(class="mb-1")
+            a(href="/user") I already have a membership
 
   script.
       import(`/js/user_register.js`)
