@@ -16,7 +16,7 @@ function getTotalClick() {
   };
   xhr1.open(
     "GET",
-    `/api/1.0/total_click/${window.location.pathname.split("/")[2]}`
+    `/api/1.0/total_click/${window.location.pathname.split("/")[3]}`
   );
   xhr1.setRequestHeader("Authorization", `Bearer ${null}`);
   xhr1.send();
@@ -35,7 +35,7 @@ function getDeviceClick() {
   };
   xhr2.open(
     "GET",
-    `/api/1.0/device_click/${window.location.pathname.split("/")[2]}`
+    `/api/1.0/device_click/${window.location.pathname.split("/")[3]}`
   );
   xhr2.setRequestHeader("Authorization", `Bearer ${null}`);
   xhr2.send();
@@ -54,7 +54,7 @@ function getRegionClick() {
   };
   xhr3.open(
     "GET",
-    `/api/1.0/region_click/${window.location.pathname.split("/")[2]}`
+    `/api/1.0/region_click/${window.location.pathname.split("/")[3]}`
   );
   xhr3.setRequestHeader("Authorization", `Bearer ${null}`);
   xhr3.send();
@@ -73,7 +73,7 @@ function getReferrerClick() {
   };
   xhr4.open(
     "GET",
-    `/api/1.0/referrer_click/${window.location.pathname.split("/")[2]}`
+    `/api/1.0/referrer_click/${window.location.pathname.split("/")[3]}`
   );
   xhr4.setRequestHeader("Authorization", `Bearer ${null}`);
   xhr4.send();
