@@ -12,17 +12,6 @@ const createCompany = async (user_id, company_name) => {
   return company_id;
 };
 
-const getCompany = async (user_id) => {
-  const [user_company] = await pool.query(
-    `SELECT role.user_id, role.user_role ,company.id ,company.name,company.level
-        FROM role 
-        LEFT JOIN company 
-        ON role.company_id = company.id
-        WHERE user_id = ? `,
-    [user_id]
-  );
-  return user_company;
-};
 const getUrlsByCompany = async (company_id) => {
   const [urls] = await pool.query("SELECT * FROM url WHERE company_id= ?", [
     company_id,
@@ -36,11 +25,10 @@ const getUsersByCompany = async (company_id) => {
      FROM role 
      LEFT JOIN user 
      ON role.user_id = user.id
-     WHERE company_id= ?`, 
-  [
-    company_id,
-  ]);
+     WHERE company_id= ?`,
+    [company_id]
+  );
   return users;
 };
 
-export { createCompany, getCompany, getUrlsByCompany ,getUsersByCompany};
+export { createCompany, getUrlsByCompany, getUsersByCompany };

@@ -1,7 +1,15 @@
 import express from "express";
 const router = express.Router();
-import { getUserCompany } from "../controllers/api_company_controller.js";
 import { wrapAsync } from "../../util/util.js";
+import {
+  getUserCompany,
+  createNewUser,
+  checkUser,
+} from "../controllers/api_user_controller.js";
+import { verifyJWT } from "../../util/token.js";
 
-router.route("/user/*").get(wrapAsync(getUserCompany));
+router.route("/user").get(verifyJWT, wrapAsync(getUserCompany));
+router.route("/user").post(wrapAsync(checkUser));
+router.route("/user/register").post(wrapAsync(createNewUser));
+
 export default router;

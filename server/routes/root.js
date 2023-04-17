@@ -14,7 +14,13 @@ router.route("/user").get(
   })
 );
 
-router.route("/user/*").get(
+router.route("/user/register").get(
+  wrapAsync(async (req, res) => {
+    res.render("user_register");
+  })
+);
+
+router.route("/user/company").get(
   wrapAsync(async (req, res) => {
     res.render("user_company");
   })
@@ -31,8 +37,6 @@ router.route("/company/*").get(
     res.render("company_url");
   })
 );
-
-
 
 router.route("/url/modify/*").get(
   wrapAsync(async (req, res) => {

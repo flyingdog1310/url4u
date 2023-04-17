@@ -1,18 +1,27 @@
-const xhr = new XMLHttpRequest();
-xhr.onreadystatechange = function () {
-  if (this.readyState === 4 && this.status === 200) {
-    // handle success response
-    console.log(xhr.responseText);
-    const companies = JSON.parse(xhr.responseText);
-    renderTable(companies);
-  } else if (this.readyState === 4) {
-    // handle error response
-    console.log(xhr.status);
-  }
-};
-xhr.open("GET", `/api/1.0/user/${window.location.pathname.split("/")[2]}`);
-xhr.setRequestHeader("Authorization", `Bearer ${null}`);
-xhr.send();
+if (localStorage.getItem("jwtToken") == null) {
+  window.location.href = "/user";
+}
+
+if (localStorage.getItem("jwtToken") !== null) {
+  let token = localStorage.getItem("jwtToken");
+  $.ajax({
+    type: "GET",
+    url: "/api/1.0/user",
+    beforeSend: function (xhr) {
+      xhr.setRequestHeader("Authorization", `Bearer ${token}`);
+    },
+  })
+    .done(function (response) {
+      console.log(response);
+      const companies = JSON.parse(response);
+      renderTable(companies);
+    })
+    .fail(function (err) {
+      localStorage.removeItem("jwtToken");
+      console.log(err.responseJSON);
+      location.reload();
+    });
+}
 
 function renderTable(companies) {
   const table = document.createElement("table");
@@ -40,3 +49,18 @@ function renderTable(companies) {
 
   document.getElementById("lists").appendChild(table);
 }
+
+$("#create-company").submit(function (e) {
+  e.preventDefault();
+  $.ajax({
+    url: "/api/1.0/company",
+    type: "post",
+    data: $("#create-company").serialize(),
+    beforeSend: function (xhr) {
+      xhr.setRequestHeader("Authorization", `Bearer ${token}`);
+    },
+    success: function (data) {
+      location.reload();
+    },
+  });
+});

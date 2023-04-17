@@ -1,3 +1,6 @@
+
+
+
 const xhr1 = new XMLHttpRequest();
 const xhr2 = new XMLHttpRequest();
 const xhr3 = new XMLHttpRequest();
