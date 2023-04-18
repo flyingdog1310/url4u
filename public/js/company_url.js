@@ -13,7 +13,8 @@ function getCompanyUrl() {
     }
   };
   xhr.open("GET", `/api/1.0/company/${pwd}`);
-  xhr.setRequestHeader("Authorization", `Bearer ${null}`);
+  let token = localStorage.getItem("jwtToken");
+  xhr.setRequestHeader("Authorization", `Bearer ${token}`);
   xhr.send();
 }
 
@@ -34,6 +35,9 @@ function renderTable(rawUrls) {
   for (let i = 0; i < rawUrls.length; i++) {
     const pwd = window.location.origin;
     const url = rawUrls[i];
+    if (!url.picture){
+      url.picture="pic-undefined.jpg"
+    }
     const row = table.insertRow();
     row.innerHTML = `
       <td>${url.long_url}<br>

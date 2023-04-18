@@ -73,12 +73,12 @@ function renderDevicePieChart(devices) {
         label: "Device Clicks",
         data: [],
         backgroundColor: [
-          "#2085ec",
-          "#72b4eb",
-          "#0a417a",
-          "#8464a0",
-          "#cea9bc",
-          "#323232",
+          "#086391",
+          "#44abdf",
+          "#8fb3c7",
+          "#4e6f9c",
+          "#969ca1",
+          "#c2c2c2",
         ],
         hoverOffset: 4,
       },
@@ -139,12 +139,12 @@ function renderLocationPieChart(locations) {
         label: "Region Clicks",
         data: [],
         backgroundColor: [
-          "#2085ec",
-          "#72b4eb",
-          "#0a417a",
-          "#8464a0",
-          "#cea9bc",
-          "#323232",
+          "#086391",
+          "#44abdf",
+          "#8fb3c7",
+          "#4e6f9c",
+          "#969ca1",
+          "#c2c2c2",
         ],
         hoverOffset: 4,
       },
@@ -205,12 +205,12 @@ function renderRefererPieChart(referer) {
         label: "Referer Clicks",
         data: [],
         backgroundColor: [
-          "#2085ec",
-          "#72b4eb",
-          "#0a417a",
-          "#8464a0",
-          "#cea9bc",
-          "#323232",
+          "#086391",
+          "#44abdf",
+          "#8fb3c7",
+          "#4e6f9c",
+          "#969ca1",
+          "#c2c2c2",
         ],
         hoverOffset: 4,
       },
@@ -250,14 +250,13 @@ function getTimeClick() {
 let timeChart;
 function renderAreaChart(totalTimeClicks) {
   const areaChart = document.getElementById("areaChart");
-  const labels = [];
   const data = {
-    labels: labels,
+    labels: [],
     datasets: [
       {
         label: "Url clicks",
         data: [],
-        borderColor: "#2085ec",
+        borderColor: "#086391",
       },
     ],
   };

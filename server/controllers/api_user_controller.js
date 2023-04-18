@@ -6,6 +6,7 @@ import {
   userSignIn,
   getCompanyByUser,
 } from "../models/user_model.js";
+import { createCompany } from "../models/company_model.js";
 
 const createNewUser = async function (req, res) {
   let provider = "";
@@ -29,6 +30,7 @@ const createNewUser = async function (req, res) {
     const newUser = await createUser(provider, name, email, hashedPassword);
     if (newUser) {
       const userId = newUser.insertId;
+      const createDefaultCompany = await createCompany(userId, "My Urls");
       const access_token = await issueJWT(userId, provider);
       console.log({ data: { access_token, access_expired: 3600 } });
       res.status(200).json({ data: { access_token, access_expired: 3600 } });
