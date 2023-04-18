@@ -18,7 +18,7 @@ const redirectUrl = async (req, res) => {
     req.headers["referer"] = "native";
   }
   const ip = geoIp.lookup(req.ip) || {};
-  const time = new Date().toISOString().slice(0, 19).replace('T', ' ');
+  const time = new Date().toISOString().slice(0, 19).replace("T", " ");
 
   console.log(
     "user-agent:",
@@ -32,8 +32,8 @@ const redirectUrl = async (req, res) => {
     "time",
     time
   );
-  if (!ip.region) {
-    ip.region = "";
+  if (!ip.country) {
+    ip.country = "";
     ip.city = "";
   }
   createClick(
@@ -41,7 +41,7 @@ const redirectUrl = async (req, res) => {
     time,
     req.headers["referer"],
     device,
-    `${ip.region}/${ip.city}`,
+    `${ip.country}/${ip.city}`,
     1
   );
   // clickEvent(
