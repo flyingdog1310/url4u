@@ -1,5 +1,6 @@
 import { createUrl, updateCustomUrl, getUrlById } from "../models/url_model.js";
 import { shortUrlGenerator } from "../../util/shortUrlGenerator.js";
+import { crawImgs } from "../../util/crawler.js";
 
 const createShortUrl = async (req, res) => {
   const { long_url } = req.body;
@@ -36,7 +37,9 @@ const updateShortUrl = async (req, res) => {
 const getShortUrl = async (req, res) => {
   const url_id = req.originalUrl.split("/")[4];
   const url = await getUrlById(url_id);
-  return res.status(200).json(url);
+  const imgs = await crawImgs(url[0].long_url);
+  url[0].imgs = imgs;
+  res.status(200).json(url);
 };
 
 export { createShortUrl, updateShortUrl, getShortUrl };

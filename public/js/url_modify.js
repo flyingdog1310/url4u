@@ -5,6 +5,7 @@ xhr.onreadystatechange = function () {
     console.log(xhr.responseText);
     const url = JSON.parse(xhr.responseText);
     insertDefault(url);
+    addCrawImgs(url);
   } else if (this.readyState === 4) {
     // handle error response
     console.log(xhr.status);
@@ -22,4 +23,14 @@ function insertDefault(url) {
   document.getElementById("long_url").value = url[0].long_url;
   document.getElementById("title").value = url[0].title;
   document.getElementById("description").value = url[0].description;
+}
+
+function addCrawImgs(url) {
+  const imgs = document.createElement("div");
+  let imgsHTML = "";
+  for (let i = 0; i < url[0].imgs.length; i++) {
+    imgsHTML += `<img src=${url[0].imgs[i]} width="200px">`;
+  }
+  imgs.innerHTML = imgsHTML;
+  document.getElementById("craw-img-list").appendChild(imgs);
 }
