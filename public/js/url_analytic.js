@@ -248,6 +248,28 @@ function getTimeClick() {
   xhr5.send(JSON.stringify());
 }
 let timeChart;
+const today = new Date().toISOString().split("T")[0];
+document.getElementById("stop").setAttribute("max", today);
+
+$("#time-clicks").submit(function (e) {
+  e.preventDefault();
+  $.ajax({
+    url: `/api/1.0/time_click/${window.location.pathname.split("/")[3]}`,
+    type: "post",
+    data: $("#time-clicks").serialize(),
+    beforeSend: function (xhr) {
+      let token = localStorage.getItem("jwtToken");
+      xhr.setRequestHeader("Authorization", `Bearer ${token}`);
+    },
+    success: function (data) {
+      if (timeChart) {
+        timeChart.destroy();
+        renderAreaChart(data);
+      }
+    },
+  });
+});
+
 function renderAreaChart(totalTimeClicks) {
   const areaChart = document.getElementById("areaChart");
   const data = {
@@ -260,13 +282,30 @@ function renderAreaChart(totalTimeClicks) {
       },
     ],
   };
-  for (let i = 0; i < totalTimeClicks.length; i++) {
-    data.labels.push(totalTimeClicks[i].time);
+
+  if (totalTimeClicks[1]) {
+    data.datasets.push({
+      label: "Compare Url clicks",
+      data: [],
+      borderColor: "#44abdf",
+    });
+  }
+
+  for (let i = 0; i < totalTimeClicks[0].length; i++) {
+    data.labels.push(totalTimeClicks[0][i].time);
     let total = 0;
-    if (totalTimeClicks[i].total !== null) {
-      total = Number(totalTimeClicks[i].total);
+    if (totalTimeClicks[0][i].total !== null) {
+      total = Number(totalTimeClicks[0][i].total);
     }
     data.datasets[0].data.push(total);
+
+    if (totalTimeClicks[1]) {
+      let total1 = 0;
+      if (totalTimeClicks[1][i].total !== null) {
+        total1 = Number(totalTimeClicks[1][i].total);
+      }
+      data.datasets[1].data.push(total1);
+    }
   }
 
   const config = {
@@ -290,24 +329,38 @@ getRegionClick();
 getReferrerClick();
 getTimeClick();
 
-$("#time-clicks").submit(function (e) {
-  e.preventDefault();
+if (localStorage.getItem("jwtToken") !== null) {
+  let token = localStorage.getItem("jwtToken");
   $.ajax({
-    url: `/api/1.0/time_click/${window.location.pathname.split("/")[3]}`,
-    type: "post",
-    data: $("#time-clicks").serialize(),
+    type: "GET",
+    url: `/api/1.0/company/url/${window.location.pathname.split("/")[3]}`,
     beforeSend: function (xhr) {
-      let token = localStorage.getItem("jwtToken");
       xhr.setRequestHeader("Authorization", `Bearer ${token}`);
     },
-    success: function (data) {
-      if (timeChart) {
-        timeChart.destroy();
-        renderAreaChart(data);
-      }
-    },
-  });
-});
+  })
+    .done(function (response) {
+      console.log(response);
+      const urls = response;
+      renderDropdown(urls);
+    })
+    .fail(function (err) {
+      localStorage.removeItem("jwtToken");
+      console.log(err.responseJSON);
+      location.reload();
+    });
+}
 
-const today = new Date().toISOString().split("T")[0];
-document.getElementById("stop").setAttribute("max", today);
+function renderDropdown(urls) {
+  const select = document.createElement("select");
+  select.classList.add("select");
+  select.name = "url_id";
+  for (let i = 0; i < urls.length; i++) {
+    const url = urls[i];
+    const option = document.createElement("option");
+    option.value = url.id;
+    option.textContent = url.short_url;
+    select.appendChild(option);
+  }
+
+  document.getElementById("compare-url").appendChild(select);
+}

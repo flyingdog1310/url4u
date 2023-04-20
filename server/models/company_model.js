@@ -13,9 +13,22 @@ const createCompany = async (user_id, company_name) => {
 };
 
 const getUrlsByCompany = async (company_id) => {
-  const [urls] = await pool.query("SELECT * FROM url WHERE company_id= ?", [
-    company_id,
-  ]);
+  const [urls] = await pool.query(
+    `
+  SELECT * FROM url WHERE company_id= ?`,
+    [company_id]
+  );
+  return urls;
+};
+
+const getUrlsByUrl = async (url_id) => {
+  const [urls] = await pool.query(
+    `
+  SELECT * FROM url 
+  WHERE company_id = 
+  (SELECT company_id FROM url WHERE id = ?)`,
+    [url_id]
+  );
   return urls;
 };
 
@@ -31,4 +44,4 @@ const getUsersByCompany = async (company_id) => {
   return users;
 };
 
-export { createCompany, getUrlsByCompany, getUsersByCompany };
+export { createCompany, getUrlsByCompany, getUrlsByUrl, getUsersByCompany };

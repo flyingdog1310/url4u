@@ -30,10 +30,9 @@ const getUrlClickByReferrer = async (req, res) => {
 
 const getUrlClickByTime = async (req, res) => {
   const url_id = req.originalUrl.split("/")[4];
+
   let method = "day";
   let lastDay = new Date();
-  if (req.body.start) {
-  }
   if (req.body.stop) {
     lastDay = new Date(req.body.stop);
   }
@@ -68,29 +67,35 @@ const getUrlClickByTime = async (req, res) => {
 
   const time = timeReverse.reverse();
   const urlCount = await getTimeClick(url_id, time);
+  timeModify(urlCount, method);
+  //compare url if exist
+  let compareUrlCount;
+  if (req.body.url_id) {
+    let compareUrl = req.body.url_id;
+    compareUrlCount = await getTimeClick(compareUrl, time);
+    timeModify(compareUrlCount, method);
+  }
+  console.log([urlCount,compareUrlCount])
+  return res.status(200).json([urlCount,compareUrlCount]);
+};
 
+function timeModify(arr, method) {
   if (method == "day") {
-    for (let i = 0; i < urlCount.length; i++) {
-      const time = `${urlCount[i].time.split("-")[1]}/${
-        urlCount[i].time.split("-")[2]
-      }`;
+    for (let i = 0; i < arr.length; i++) {
+      const time = `${arr[i].time.split("-")[1]}/${arr[i].time.split("-")[2]}`;
       const finalTime = time.split(" ")[0];
-      urlCount[i].time = finalTime;
+      arr[i].time = finalTime;
     }
   }
 
   if (method == "hour") {
-    for (let i = 0; i < urlCount.length; i++) {
-      const time = `${urlCount[i].time.split("-")[1]}/${
-        urlCount[i].time.split("-")[2]
-      }`;
+    for (let i = 0; i < arr.length; i++) {
+      const time = `${arr[i].time.split("-")[1]}/${arr[i].time.split("-")[2]}`;
       const finalTime = time.split(":")[0];
-      urlCount[i].time = finalTime;
+      arr[i].time = finalTime;
     }
   }
-
-  return res.status(200).json(urlCount);
-};
+}
 
 export {
   getUrlClicks,
