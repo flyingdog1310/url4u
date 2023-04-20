@@ -12,27 +12,52 @@ async function crawImgs(url) {
   });
   const $ = cheerio.load(pageHTML.data);
   const images = await collectImages(url, $);
-  console.log(images);
-  return images;
+  const meta = collectTitleDescription($);
+  meta.images = images;
+  return meta;
 }
 
 function collectImages(url, $) {
-  const images = $("img")
+  let images = $("meta[property = 'og:image']")
     .map(function () {
-      let image = $(this).prop("src");
-      if (image.startsWith("//")) {
-        image = "https:" + image;
-      }
-      if (image.startsWith("/")) {
-        if (url.endsWith("/")) {
-          url = url.slice(0, -1);
-        }
-        image = url + image;
-      }
+      let image = $(this).prop("content");
       return image;
     })
     .get();
+
+  $("img").map(function () {
+    let image = $(this).prop("src");
+    if (image.startsWith("//")) {
+      image = "https:" + image;
+    }
+    if (image.startsWith("/")) {
+      if (url.endsWith("/")) {
+        url = url.slice(0, -1);
+      }
+      image = url + image;
+    }
+    images.push(image);
+  });
+
   return images;
+}
+
+function collectTitleDescription($) {
+  let titles = $("meta[property = 'og:title']")
+    .map(function () {
+      let title = $(this).prop("content");
+      return title;
+    })
+    .get();
+
+  let descriptions = $("meta[property = 'og:description']")
+    .map(function () {
+      let description = $(this).prop("content");
+      return description;
+    })
+    .get();
+
+  return { title: titles, description: descriptions };
 }
 
 export { crawImgs };

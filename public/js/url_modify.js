@@ -6,6 +6,7 @@ xhr.onreadystatechange = function () {
     const url = JSON.parse(xhr.responseText);
     insertDefault(url);
     addCrawImgs(url);
+    insertSuggestion(url)
   } else if (this.readyState === 4) {
     // handle error response
     console.log(xhr.status);
@@ -28,9 +29,18 @@ function insertDefault(url) {
 function addCrawImgs(url) {
   const imgs = document.createElement("div");
   let imgsHTML = "";
-  for (let i = 0; i < url[0].imgs.length; i++) {
-    imgsHTML += `<img src=${url[0].imgs[i]} width="200px">`;
+  for (let i = 0; i < url[0].meta.images.length; i++) {
+    imgsHTML += `<img src=${url[0].meta.images[i]} width="200px">`;
   }
   imgs.innerHTML = imgsHTML;
   document.getElementById("craw-img-list").appendChild(imgs);
+}
+
+function insertSuggestion(url) {
+  if (!document.getElementById("title").value) {
+    document.getElementById("title").value = url[0].meta.title;
+  }
+  if (!document.getElementById("description").value) {
+    document.getElementById("description").value = url[0].meta.description;
+  }
 }

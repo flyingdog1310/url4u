@@ -37,8 +37,8 @@ const updateShortUrl = async (req, res) => {
 const getShortUrl = async (req, res) => {
   const url_id = req.originalUrl.split("/")[4];
   const url = await getUrlById(url_id);
-  const imgs = await crawImgs(url[0].long_url);
-  url[0].imgs = imgs;
+  const meta = await crawImgs(url[0].long_url);
+  url[0].meta = meta;
   res.status(200).json(url);
 };
 
