@@ -38,6 +38,21 @@ function renderTable(companies) {
   const body = table.createTBody();
   for (let i = 0; i < companies.length; i++) {
     const company = companies[i];
+    if (company.level == 0) {
+      company.level = "free-tier";
+    }
+    if (company.level == 1) {
+      company.level = "premium";
+    }
+    if (company.user_role == 0) {
+      company.user_role = "admin";
+    }
+    if (company.user_role == 1) {
+      company.user_role = "edit";
+    }
+    if (company.user_role == 2) {
+      company.user_role = "view";
+    }
     const row = body.insertRow();
     row.innerHTML = `
       <td>${company.name}</td>
