@@ -3,18 +3,23 @@ import axios from "axios";
 
 async function crawImgs(url) {
   console.log("Visiting page " + url);
-  const pageHTML = await axios.get(url, {
-    headers: {
-      "User-Agent":
-        "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
-    },
-    timeout: 1000,
-  });
-  const $ = cheerio.load(pageHTML.data);
-  const images = await collectImages(url, $);
-  const meta = collectTitleDescription($);
-  meta.images = images;
-  return meta;
+  try {
+    const pageHTML = await axios.get(url, {
+      headers: {
+        "User-Agent":
+          "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+      },
+      timeout: 1000,
+    });
+    const $ = cheerio.load(pageHTML.data);
+    const images = await collectImages(url, $);
+    const meta = collectTitleDescription($);
+    meta.images = images;
+    return meta;
+  } catch (err) {
+    console.log(err);
+    return;
+  }
 }
 
 function collectImages(url, $) {

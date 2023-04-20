@@ -5,10 +5,4 @@
   align-items: center;
   justify-content: center;
 }
-.row {
-  display: flex;
-  flex-direction: row;
-  text-align: center;
-  align-items: center;
-  justify-content: center;
-}
+

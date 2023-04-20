@@ -2,9 +2,16 @@ extends layout.pug
 
 block content
   div(class="content-wrapper")
+    div(class="row align-items-center")
+      div(class="col-md-1")
+      div(class="col-md-6")
+        h4(class="mb-0")
+          i(class="fas fa-edit")
+          |Edit Preview
+    hr
     div(class="row")
-      div(class="col-sm-6")
-        h2(class="m-0") Modify your short-url
+      div(class="col-md-1")
+      div(class="col-md-5")
         form(method="post" enctype="multipart/form-data" id="update-short-url") 
           div 
             label(for="short_url") short url: 
@@ -13,7 +20,7 @@ block content
             label(for="long_url") long url:
             input(id="long_url" name="long_url" type="url") 
           div
-            label(for="picture") picture:
+            img(id="picturePreview")
             input(id="picture" name="picture" type="file" accept="image/png, image/jpeg, image/jpg" ) 
           div
             label(for="title") title:
@@ -23,7 +30,11 @@ block content
             input(id="description" name="description"  ) 
           div(id="submit") 
             button(type="submit" class="btn  btn-primary btn-sm") Modify
-      div(class="col-sm-6")
-        div(id="craw-img-list")
+      div(class="option col-md-6")
+        div(class="mb-3")
+          i(class="fas fa-search") 
+          |Default Images
+        div(class="default-container-wrapper")
+          div(class="default-container" id="craw-img-list")
     script.
       import(`/js/url_modify.js`)

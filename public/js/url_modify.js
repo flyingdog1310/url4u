@@ -4,9 +4,12 @@ xhr.onreadystatechange = function () {
     // handle success response
     console.log(xhr.responseText);
     const url = JSON.parse(xhr.responseText);
+    if (!url[0].picture) {
+      url[0].picture = "pic-undefined.jpg";
+    }
     insertDefault(url);
     addCrawImgs(url);
-    insertSuggestion(url)
+    insertSuggestion(url);
   } else if (this.readyState === 4) {
     // handle error response
     console.log(xhr.status);
@@ -21,6 +24,9 @@ function insertDefault(url) {
     "update-short-url"
   ).action = `/api/1.0/url/${url[0].id}`;
   document.getElementById("short_url").value = url[0].short_url;
+  document.getElementById(
+    "picturePreview"
+  ).src = `https://d2zbleiceefv1c.cloudfront.net/${url[0].picture}`;
   document.getElementById("long_url").value = url[0].long_url;
   document.getElementById("title").value = url[0].title;
   document.getElementById("description").value = url[0].description;
