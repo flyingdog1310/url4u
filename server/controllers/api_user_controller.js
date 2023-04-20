@@ -1,6 +1,8 @@
 import { emailValidator } from "../../util/validator.js";
 import { hashPassword, verifyPassword } from "../../util/password.js";
 import { issueJWT, verifyJWT } from "../../util/token.js";
+import dotenv from "dotenv";
+dotenv.config({ path: "../../.env" });
 import {
   createUser,
   userSignIn,
@@ -43,7 +45,7 @@ const createNewUser = async function (req, res) {
 };
 
 const checkUser = async function (req, res) {
-  const { email, password } = req.body;
+  const { email, password, remember } = req.body;
   const lookup = await userSignIn(email);
   if (!lookup) {
     res.status(400).json("Email is not registered");
@@ -55,9 +57,15 @@ const checkUser = async function (req, res) {
   if (verify) {
     const userId = lookup[0].id;
     const provider = lookup[0].provider;
-    const access_token = await issueJWT(userId, provider);
-    console.log({ data: { access_token, access_expired: 3600 } });
-    res.status(200).json({ data: { access_token, access_expired: 3600 } });
+    const access_token = await issueJWT(userId, provider, remember);
+    let access_expired = process.env.JWT_SHORT_EXPIRE;
+    if (remember == "on") {
+      access_expired = process.env.JWT_LONG_EXPIRE;
+    }
+    console.log({ data: { access_token, access_expired: access_expired } });
+    res
+      .status(200)
+      .json({ data: { access_token, access_expired: access_expired } });
     return;
   } else {
     res.status(403).json("Password is wrong");

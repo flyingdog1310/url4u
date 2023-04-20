@@ -2,10 +2,15 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 dotenv.config({ path: process.env.ENV });
 
-async function issueJWT(userId, provider) {
+async function issueJWT(userId, provider, remember) {
+  let access_expired = process.env.JWT_SHORT_EXPIRE;
+  if (remember == "on") {
+    access_expired = process.env.JWT_LONG_EXPIRE;
+  }
   const token = jwt.sign({ userId, provider }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_LONG_EXPIRE,
+    expiresIn: access_expired,
   });
+
   return token;
 }
 
