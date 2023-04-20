@@ -40,12 +40,12 @@ function renderTable(rawUrls) {
     }
     const row = table.insertRow();
     row.innerHTML = `
-      <td>${url.long_url}<br>
+      <td class='td'><a href=${url.long_url}>${url.long_url}</a><br>
       https://url4u.today/${url.short_url}
       </td>
       <td><img src=https://d2zbleiceefv1c.cloudfront.net/${url.picture} height="70px" width="100px"></td>
-      <td>${url.title}</td>
-      <td>${url.description}</td>
+      <td class='td'>${url.title}</td>
+      <td class='td'>${url.description}</td>
       <td>${url.create_time}</td>
       <button type="button" class="btn btn-primary btn-xs" onclick="location.href='/url/modify/${url.id}'">Modify</button><br>
       <button type="button" class="btn btn-primary btn-xs" onclick="location.href='/url/analytic/${url.id}'">Analytics</button>

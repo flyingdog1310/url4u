@@ -6,3 +6,13 @@
   justify-content: center;
 }
 
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
