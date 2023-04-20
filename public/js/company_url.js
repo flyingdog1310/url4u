@@ -26,17 +26,18 @@ function renderTable(rawUrls) {
   const header = table.createTHead().insertRow();
   header.innerHTML = `
     <th>Url</th>
-    <th>Picture</th>
+    <th style="width:120px">Picture</th>
     <th>Title</th>
     <th>Description</th>
     <th>Create Time</th>
+    <th style="width:100px">Operate</th>
   `;
 
   for (let i = 0; i < rawUrls.length; i++) {
     const pwd = window.location.origin;
     const url = rawUrls[i];
-    if (!url.picture){
-      url.picture="pic-undefined.jpg"
+    if (!url.picture) {
+      url.picture = "pic-undefined.jpg";
     }
     const row = table.insertRow();
     row.innerHTML = `
@@ -47,8 +48,10 @@ function renderTable(rawUrls) {
       <td class='td'>${url.title}</td>
       <td class='td'>${url.description}</td>
       <td>${url.create_time}</td>
+      <td>
       <button type="button" class="btn btn-primary btn-xs" onclick="location.href='/url/modify/${url.id}'">Modify</button><br>
       <button type="button" class="btn btn-primary btn-xs" onclick="location.href='/url/analytic/${url.id}'">Analytics</button>
+      </td>
     `;
   }
 

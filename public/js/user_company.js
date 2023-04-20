@@ -33,6 +33,7 @@ function renderTable(companies) {
     <th>company</th>
     <th>level</th>
     <th>role</th>
+    <th style="width:100px">Operate</th>
   `;
 
   for (let i = 0; i < companies.length; i++) {
@@ -42,9 +43,10 @@ function renderTable(companies) {
       <td>${company.name}</td>
       <td>${company.level}</td>
       <td>${company.user_role}</td>
+      <td>
       <button type="button" class="btn btn-primary btn-xs" onclick="location.href='/company/${company.id}'">Url List</button><br>
       <button type="button" class="btn btn-primary btn-xs" onclick="location.href='/company/${company.id}/user'">Manage User</button><br>
-      
+      </td>
     `;
   }
 

@@ -27,6 +27,7 @@ function renderTable(users) {
     <th>Role</th>
     <th>User</th>
     <th>Email</th>
+    <th style="width:100px">Operate</th>
   `;
 
   for (let i = 0; i < users.length; i++) {
@@ -37,7 +38,9 @@ function renderTable(users) {
       <td>${user.user_role}</td>
       <td>${user.name}</td>
       <td>${user.email}</td>
+      <td>
       <button type="button" class="btn btn-primary btn-xs" onclick="location.href='#'">Adjust</button><br>
+      </td>
     `;
   }
 
