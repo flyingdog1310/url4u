@@ -29,13 +29,23 @@ function renderTable(users) {
     <th>Email</th>
     <th style="width:100px">Operate</th>
   `;
-
+  const body = table.createTBody();
   for (let i = 0; i < users.length; i++) {
     const pwd = window.location.origin;
     const user = users[i];
-    const row = table.insertRow();
+    let userRole = "";
+    if (user.user_role == 0) {
+      userRole = "admin";
+    }
+    if (user.user_role == 1) {
+      userRole = "edit";
+    }
+    if (user.user_role == 2) {
+      userRole = "view";
+    }
+    const row = body.insertRow();
     row.innerHTML = `
-      <td>${user.user_role}</td>
+      <td>${userRole}</td>
       <td>${user.name}</td>
       <td>${user.email}</td>
       <td>

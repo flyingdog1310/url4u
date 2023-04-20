@@ -32,19 +32,19 @@ function renderTable(rawUrls) {
     <th>Create Time</th>
     <th style="width:100px">Operate</th>
   `;
-
+  const body = table.createTBody();
   for (let i = 0; i < rawUrls.length; i++) {
     const pwd = window.location.origin;
     const url = rawUrls[i];
     if (!url.picture) {
       url.picture = "pic-undefined.jpg";
     }
-    const row = table.insertRow();
+    const row = body.insertRow();
     row.innerHTML = `
       <td class='td'><a href=${url.long_url}>${url.long_url}</a><br>
       https://url4u.today/${url.short_url}
       </td>
-      <td><img src=https://d2zbleiceefv1c.cloudfront.net/${url.picture} height="70px" width="100px"></td>
+      <td><img src=https://d2zbleiceefv1c.cloudfront.net/${url.picture} height="70px" width="100px" class="display"></td>
       <td class='td'>${url.title}</td>
       <td class='td'>${url.description}</td>
       <td>${url.create_time}</td>

@@ -35,10 +35,10 @@ function renderTable(companies) {
     <th>role</th>
     <th style="width:100px">Operate</th>
   `;
-
+  const body = table.createTBody();
   for (let i = 0; i < companies.length; i++) {
     const company = companies[i];
-    const row = table.insertRow();
+    const row = body.insertRow();
     row.innerHTML = `
       <td>${company.name}</td>
       <td>${company.level}</td>
