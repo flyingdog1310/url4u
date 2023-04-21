@@ -31,5 +31,4 @@ const getCompanyByUser = async (user_id) => {
   return user_company;
 };
 
-export { createUser, userSignIn ,getCompanyByUser};
-
+export { createUser, userSignIn, getCompanyByUser };

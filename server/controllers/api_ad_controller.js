@@ -75,8 +75,8 @@ const getUrlClickByTime = async (req, res) => {
     compareUrlCount = await getTimeClick(compareUrl, time);
     timeModify(compareUrlCount, method);
   }
-  console.log([urlCount,compareUrlCount])
-  return res.status(200).json([urlCount,compareUrlCount]);
+  console.log([urlCount, compareUrlCount]);
+  return res.status(200).json([urlCount, compareUrlCount]);
 };
 
 function timeModify(arr, method) {
