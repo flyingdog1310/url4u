@@ -355,12 +355,14 @@ function renderDropdown(urls) {
   select.classList.add("select");
   select.name = "url_id";
   for (let i = 0; i < urls.length; i++) {
+    const currentUrlId = window.location.pathname.split("/")[3];
     const url = urls[i];
-    const option = document.createElement("option");
-    option.value = url.id;
-    option.textContent = url.short_url;
-    select.appendChild(option);
+    if (url.id != currentUrlId) {
+      const option = document.createElement("option");
+      option.value = url.id;
+      option.textContent = url.short_url;
+      select.appendChild(option);
+    }
   }
-
   document.getElementById("compare-url").appendChild(select);
 }
