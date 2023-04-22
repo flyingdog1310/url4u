@@ -1,11 +1,9 @@
-import dotenv from "dotenv";
-dotenv.config({ path: process.env.ENV });
 import { kafka } from "./kafka.js";
 
-async function clickConsumer(topic) {
-  const consumer = kafka.consumer({ groupId: 'my-group' });
+async function clickConsumer(topic, group) {
+  const consumer = kafka.consumer({ groupId: group });
   await consumer.connect();
-  await consumer.subscribe({ topic: "clicks", fromBeginning: true });
+  await consumer.subscribe({ topic: topic, fromBeginning: true });
   await consumer.run({
     eachMessage: async ({ topic, partition, message }) => {
       console.log({
@@ -14,5 +12,6 @@ async function clickConsumer(topic) {
     },
   });
 }
-clickConsumer("clicks");
+clickConsumer("clicks", "consumer");
+
 export { clickConsumer };

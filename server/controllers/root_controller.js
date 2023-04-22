@@ -36,18 +36,18 @@ const redirectUrl = async (req, res) => {
     ip.country = "";
     ip.city = "";
   }
-  createClick(
-    url[0].id,
-    time,
-    req.headers["referer"],
-    device,
-    `${ip.country}/${ip.city}`,
-    1
-  );
-  // clickEvent(
-  //   "clicks",
-  //   `${url.id}/${time}/${req.headers["referer"]}/${req.headers["user-agent"]}/${ip}`
+  // createClick(
+  //   url[0].id,
+  //   time,
+  //   req.headers["referer"],
+  //   device,
+  //   `${ip.country}/${ip.city}`,
+  //   1
   // );
+  clickEvent(
+    "clicks",
+    `${url[0].id}/${time}/${req.headers["referer"]}/${req.headers["user-agent"]}/${ip.country}/${ip.city}`
+  );
   return res.status(307).redirect(url[0].long_url);
 };
 
