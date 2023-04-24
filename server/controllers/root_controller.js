@@ -46,7 +46,7 @@ const redirectUrl = async (req, res) => {
   // );
   clickEvent(
     "clicks",
-    `${url[0].id}/${time}/${req.headers["referer"]}/${req.headers["user-agent"]}/${ip.country}/${ip.city}`
+    `{id:${url[0].id} time:${time} referer:${req.headers["referer"]} device:${device} ip:${ip.country}/${ip.city}}`
   );
   return res.status(307).redirect(url[0].long_url);
 };

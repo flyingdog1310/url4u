@@ -25,4 +25,6 @@ if (REDIS_TLS_ENABLE == "false") {
   redisConfig.tls = undefined;
 }
 
-export const redis = new Redis(redisConfig);
+const redis = new Redis(redisConfig);
+
+export { redis };
