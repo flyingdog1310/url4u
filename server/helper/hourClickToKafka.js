@@ -7,7 +7,7 @@ getLastHourClick();
 //get from redis
 async function getLastHourClick() {
   let now = new Date();
-  //now.setHours(now.getHours() - 1);
+  now.setHours(now.getHours() - 1);
   const start =
     now.toISOString().slice(0, 19).replace("T", " ").split(":")[0] + ":00:00";
 
