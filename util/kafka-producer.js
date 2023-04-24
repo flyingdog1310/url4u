@@ -8,5 +8,5 @@ async function clickEvent(topic, value) {
   });
 }
 
-//await producer.disconnect();
+await producer.disconnect();
 export { clickEvent };

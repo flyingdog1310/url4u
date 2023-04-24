@@ -50,3 +50,12 @@ function insertSuggestion(url) {
     document.getElementById("description").value = url[0].meta.description;
   }
 }
+
+const picture = document.getElementById("picture");
+const picturePreview = document.getElementById("picturePreview");
+picture.onchange = (evt) => {
+  const [file] = picture.files;
+  if (file) {
+    picturePreview.src = URL.createObjectURL(file);
+  }
+};
