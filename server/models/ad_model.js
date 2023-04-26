@@ -23,61 +23,100 @@ const getTotalClickFromSQL = async (urls_id) => {
   );
   return totalClickCount;
 };
-const getTotalClickFromRedis = async (urls_id) =>{
+const getTotalClickFromRedis = async (urls_id) => {
   let now = new Date();
   now.setHours(now.getHours());
   const start =
     now.toISOString().slice(0, 19).replace("T", " ").split(":")[0] + ":00:00";
   console.log(start);
 
-  const result = await redis.hget(start ,urls_id);
+  const result = await redis.hget(start, urls_id);
   console.log(result);
   return result;
-}
+};
 
 const getDeviceClickFromSQL = async (urls_id) => {
-  const [device] = await pool.query(
-    "SELECT DISTINCT device FROM click Where url_id=?",
+  const [source] = await pool.query(
+    "SELECT DISTINCT device AS source FROM click Where url_id=?",
     [urls_id]
   );
-  for (let i = 0; i < device.length; i++) {
+  for (let i = 0; i < source.length; i++) {
     const [total] = await pool.query(
       "SELECT SUM(count) AS total FROM click Where url_id=? AND device = ?",
-      [urls_id, device[i].device]
+      [urls_id, source[i].source]
     );
-    device[i].total = total[0]["total"];
+    source[i].total = total[0]["total"];
   }
-  return device;
+  return source;
+};
+
+const getDeviceClickFromRedis = async (urls_id) => {
+  let now = new Date();
+  now.setHours(now.getHours());
+  const start =
+    now.toISOString().slice(0, 19).replace("T", " ").split(":")[0] + ":00:00";
+  console.log(start);
+
+  const result = await redis.hgetall(`${urls_id}/${start}/device`);
+  const resultArr = Object.entries(result);
+  console.log(resultArr);
+  return resultArr;
 };
 
 const getRegionClickFromSQL = async (urls_id) => {
-  const [region] = await pool.query(
-    "SELECT DISTINCT region FROM click Where url_id=?",
+  const [source] = await pool.query(
+    "SELECT DISTINCT region AS source FROM click Where url_id=?",
     [urls_id]
   );
-  for (let i = 0; i < region.length; i++) {
+  for (let i = 0; i < source.length; i++) {
     const [total] = await pool.query(
       "SELECT SUM(count) AS total FROM click Where url_id=? AND region = ?",
-      [urls_id, region[i].region]
+      [urls_id, source[i].source]
     );
-    region[i].total = total[0]["total"];
+    source[i].total = total[0]["total"];
   }
-  return region;
+  return source;
+};
+
+const getRegionClickFromRedis = async (urls_id) => {
+  let now = new Date();
+  now.setHours(now.getHours());
+  const start =
+    now.toISOString().slice(0, 19).replace("T", " ").split(":")[0] + ":00:00";
+  console.log(start);
+
+  const result = await redis.hgetall(`${urls_id}/${start}/ip`);
+  const resultArr = Object.entries(result);
+  console.log(resultArr);
+  return resultArr;
 };
 
 const getReferrerClickFromSQL = async (urls_id) => {
-  const [referrer] = await pool.query(
-    "SELECT DISTINCT referrer FROM click Where url_id=?",
+  const [source] = await pool.query(
+    "SELECT DISTINCT referrer AS source FROM click Where url_id=?",
     [urls_id]
   );
-  for (let i = 0; i < referrer.length; i++) {
+  for (let i = 0; i < source.length; i++) {
     const [total] = await pool.query(
       "SELECT SUM(count) AS total FROM click Where url_id=? AND referrer = ?",
-      [urls_id, referrer[i].referrer]
+      [urls_id, source[i].source]
     );
-    referrer[i].total = total[0]["total"];
+    source[i].total = total[0]["total"];
   }
-  return referrer;
+  return source;
+};
+
+const getReferrerClickFromRedis = async (urls_id) => {
+  let now = new Date();
+  now.setHours(now.getHours());
+  const start =
+    now.toISOString().slice(0, 19).replace("T", " ").split(":")[0] + ":00:00";
+  console.log(start);
+
+  const result = await redis.hgetall(`${urls_id}/${start}/referer`);
+  const resultArr = Object.entries(result);
+  console.log(resultArr);
+  return resultArr;
 };
 
 const getTimeClickFromSQL = async (urls_id, time) => {
@@ -99,7 +138,10 @@ export {
   getTotalClickFromSQL,
   getTotalClickFromRedis,
   getDeviceClickFromSQL,
+  getDeviceClickFromRedis,
   getRegionClickFromSQL,
+  getRegionClickFromRedis,
   getReferrerClickFromSQL,
+  getReferrerClickFromRedis,
   getTimeClickFromSQL,
 };

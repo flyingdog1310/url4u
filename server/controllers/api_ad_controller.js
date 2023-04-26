@@ -2,8 +2,11 @@ import {
   getTotalClickFromSQL,
   getTotalClickFromRedis,
   getDeviceClickFromSQL,
+  getDeviceClickFromRedis,
   getRegionClickFromSQL,
+  getRegionClickFromRedis,
   getReferrerClickFromSQL,
+  getReferrerClickFromRedis,
   getTimeClickFromSQL,
 } from "../models/ad_model.js";
 
@@ -14,24 +17,31 @@ const getUrlClicks = async (req, res) => {
   let sqlCount = +urlCountFromSQL[0].total;
   let urlCount = +urlCountFromRedis;
   let result = sqlCount + urlCount;
-  return res.status(200).json({ "total": result });
+  return res.status(200).json({ total: result });
 };
 
 const getUrlClickByDevice = async (req, res) => {
   const url_id = req.originalUrl.split("/")[4];
-  const urlCount = await getDeviceClickFromSQL(url_id);
-  return res.status(200).json(urlCount);
+  const urlCountFromSQL = await getDeviceClickFromSQL(url_id);
+  const urlCountFromRedis = await getDeviceClickFromRedis(url_id);
+  const result = mergeArrays(urlCountFromRedis, urlCountFromSQL);
+  return res.status(200).json(result);
 };
+
 const getUrlClickByRegion = async (req, res) => {
   const url_id = req.originalUrl.split("/")[4];
-  const urlCount = await getRegionClickFromSQL(url_id);
-  return res.status(200).json(urlCount);
+  const urlCountFromSQL = await getRegionClickFromSQL(url_id);
+  const urlCountFromRedis = await getRegionClickFromRedis(url_id);
+  const result = mergeArrays(urlCountFromRedis, urlCountFromSQL);
+  return res.status(200).json(result);
 };
 
 const getUrlClickByReferrer = async (req, res) => {
   const url_id = req.originalUrl.split("/")[4];
-  const urlCount = await getReferrerClickFromSQL(url_id);
-  return res.status(200).json(urlCount);
+  const urlCountFromSQL = await getReferrerClickFromSQL(url_id);
+  const urlCountFromRedis = await getReferrerClickFromRedis(url_id);
+  const result = mergeArrays(urlCountFromRedis, urlCountFromSQL);
+  return res.status(200).json(result);
 };
 
 const getUrlClickByTime = async (req, res) => {
@@ -101,6 +111,36 @@ function timeModify(arr, method) {
       arr[i].time = finalTime;
     }
   }
+}
+
+function mergeArrays(fromRedis, fromSql) {
+  const merged = [];
+  //將陣列fromRedis的元素加入 merged 陣列中
+  for (let i = 0; i < fromRedis.length; i++) {
+    let source = fromRedis[i][0];
+    let total = fromRedis[i][1];
+    merged.push({ source, total });
+  }
+  //將陣列fromSql的元素加入 merged 陣列中，如果 device 名稱相同，就把 total 相加
+  for (let i = 0; i < fromSql.length; i++) {
+    let source = fromSql[i].source;
+    let total = fromSql[i].total;
+    let found = false;
+
+    for (let j = 0; j < merged.length; j++) {
+      if (merged[j].source === source) {
+        merged[j].total = String(Number(merged[j].total) + Number(total));
+        found = true;
+        break;
+      }
+    }
+
+    if (!found) {
+      merged.push({ source, total });
+    }
+  }
+
+  return merged;
 }
 
 export {
