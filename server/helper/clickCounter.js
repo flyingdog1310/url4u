@@ -15,13 +15,21 @@ async function clickConsumerForRedis(topic, group) {
       const clickMeta = await changeTime(clickRawMeta);
       const id = clickMeta.match(/\d+/)[0];
       const time = clickMeta.split("time:")[1].split(" referer")[0];
+      const referrer = clickRawMeta.split("referer:")[1].split(" device")[0];
+      const device = clickRawMeta.split("device:")[1].split(" ip")[0];
+      const ip = clickRawMeta.split("ip:")[1].split("}")[0];
 
       console.log(clickMeta);
       setClickCounter(`${id}/${time}`, clickMeta);
+      setClickCounter(`${id}/${time}/device`, device);
+      setClickCounter(`${id}/${time}/referer`, referrer);
+      setClickCounter(`${id}/${time}/ip`, ip);
+      setClickCounter(time, id);
       setClickCounter(time, clickMeta);
     },
   });
 }
+
 //click storage for redis
 async function setClickCounter(key, value) {
   let counts;
