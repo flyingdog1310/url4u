@@ -2,21 +2,8 @@ import { redis } from "../../util/cache.js";
 import { kafka } from "../../util/kafka.js";
 import { insertClick, getClick } from "../../util/cassandra.js";
 
-clickConsumerForRedis("clicks", "click-counter");
+clickConsumerForRedis("clicks", "test");
 //clickConsumerForCassandra("clicks", "click-counter-cassandra");
-
-//click storage for redis
-async function setClickCounter(time, clickMeta) {
-  let counts;
-  try {
-    counts = await redis.zincrby(time, [1, clickMeta]);
-  } catch (err) {
-    console.error("setClickCounter: could not set clickMeta to redis");
-    return;
-  }
-  console.log(`${clickMeta} has value: ${counts}`);
-  redis.expire(time, 7200);
-}
 
 async function clickConsumerForRedis(topic, group) {
   const consumer = kafka.consumer({ groupId: group });
@@ -30,10 +17,22 @@ async function clickConsumerForRedis(topic, group) {
       const time = clickMeta.split("time:")[1].split(" referer")[0];
 
       console.log(clickMeta);
-      setClickCounter(id, clickMeta);
+      setClickCounter(`${id}/${time}`, clickMeta);
       setClickCounter(time, clickMeta);
     },
   });
+}
+//click storage for redis
+async function setClickCounter(key, value) {
+  let counts;
+  try {
+    counts = await redis.hincrby(key, value, 1);
+  } catch (err) {
+    console.error("setClickCounter: could not set clickMeta to redis");
+    return;
+  }
+  console.log(`key:${key}field:${value} has value: ${counts}`);
+  redis.expire(key, 7200);
 }
 
 function changeTime(clickRawMeta) {
