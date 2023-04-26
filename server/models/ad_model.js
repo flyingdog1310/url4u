@@ -30,7 +30,7 @@ const getTotalClickFromRedis = async (urls_id) => {
     now.toISOString().slice(0, 19).replace("T", " ").split(":")[0] + ":00:00";
   console.log(start);
 
-  const result = await redis.hget(start, urls_id);
+  const result = await redis.hget(`total/${start}`, urls_id);
   console.log(result);
   return result;
 };

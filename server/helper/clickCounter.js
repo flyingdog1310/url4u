@@ -2,7 +2,7 @@ import { redis } from "../../util/cache.js";
 import { kafka } from "../../util/kafka.js";
 import { insertClick, getClick } from "../../util/cassandra.js";
 
-clickConsumerForRedis("clicks", "test");
+clickConsumerForRedis("clicks", "click-counter-redis");
 //clickConsumerForCassandra("clicks", "click-counter-cassandra");
 
 async function clickConsumerForRedis(topic, group) {
@@ -24,7 +24,7 @@ async function clickConsumerForRedis(topic, group) {
       setClickCounter(`${id}/${time}/device`, device);
       setClickCounter(`${id}/${time}/referer`, referrer);
       setClickCounter(`${id}/${time}/ip`, ip);
-      setClickCounter(time, id);
+      setClickCounter(`total/${time}`, id);
       setClickCounter(time, clickMeta);
     },
   });
