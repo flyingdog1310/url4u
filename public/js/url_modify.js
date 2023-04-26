@@ -36,7 +36,7 @@ function addCrawImgs(url) {
   const imgs = document.createElement("div");
   let imgsHTML = "";
   for (let i = 0; i < url[0].meta.images.length; i++) {
-    imgsHTML += `<img src=${url[0].meta.images[i]} width="200px" class="display">`;
+    imgsHTML += `<img src=${url[0].meta.images[i]}  width="200px" class="display">`;
   }
   imgs.innerHTML = imgsHTML;
   document.getElementById("craw-img-list").appendChild(imgs);
