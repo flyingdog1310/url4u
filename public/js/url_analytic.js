@@ -9,7 +9,7 @@ function getTotalClick() {
     if (this.readyState === 4 && this.status === 200) {
       // handle success response
       console.log(xhr1.responseText);
-      const totalClicks = JSON.parse(xhr1.responseText)[0].total;
+      const totalClicks = JSON.parse(xhr1.responseText).total;
       renderTotalClicks(totalClicks);
     } else if (this.readyState === 4) {
       // handle error response

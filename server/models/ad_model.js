@@ -1,4 +1,5 @@
 import { pool } from "./mysql.js";
+import { redis } from "../../util/cache.js";
 
 const createClick = async (
   urls_id,
@@ -15,15 +16,26 @@ const createClick = async (
   return url_id;
 };
 
-const getTotalClick = async (urls_id) => {
+const getTotalClickFromSQL = async (urls_id) => {
   const [totalClickCount] = await pool.query(
     `SELECT SUM(count) AS total FROM click WHERE url_id = ?`,
     [urls_id]
   );
   return totalClickCount;
 };
+const getTotalClickFromRedis = async (urls_id) =>{
+  let now = new Date();
+  now.setHours(now.getHours());
+  const start =
+    now.toISOString().slice(0, 19).replace("T", " ").split(":")[0] + ":00:00";
+  console.log(start);
 
-const getDeviceClick = async (urls_id) => {
+  const result = await redis.hget(start ,urls_id);
+  console.log(result);
+  return result;
+}
+
+const getDeviceClickFromSQL = async (urls_id) => {
   const [device] = await pool.query(
     "SELECT DISTINCT device FROM click Where url_id=?",
     [urls_id]
@@ -38,7 +50,7 @@ const getDeviceClick = async (urls_id) => {
   return device;
 };
 
-const getRegionClick = async (urls_id) => {
+const getRegionClickFromSQL = async (urls_id) => {
   const [region] = await pool.query(
     "SELECT DISTINCT region FROM click Where url_id=?",
     [urls_id]
@@ -53,7 +65,7 @@ const getRegionClick = async (urls_id) => {
   return region;
 };
 
-const getReferrerClick = async (urls_id) => {
+const getReferrerClickFromSQL = async (urls_id) => {
   const [referrer] = await pool.query(
     "SELECT DISTINCT referrer FROM click Where url_id=?",
     [urls_id]
@@ -68,7 +80,7 @@ const getReferrerClick = async (urls_id) => {
   return referrer;
 };
 
-const getTimeClick = async (urls_id, time) => {
+const getTimeClickFromSQL = async (urls_id, time) => {
   const referer = [];
   for (let i = 0; i < time.length; i++) {
     const [total] = await pool.query(
@@ -84,9 +96,10 @@ const getTimeClick = async (urls_id, time) => {
 
 export {
   createClick,
-  getTotalClick,
-  getDeviceClick,
-  getRegionClick,
-  getReferrerClick,
-  getTimeClick,
+  getTotalClickFromSQL,
+  getTotalClickFromRedis,
+  getDeviceClickFromSQL,
+  getRegionClickFromSQL,
+  getReferrerClickFromSQL,
+  getTimeClickFromSQL,
 };

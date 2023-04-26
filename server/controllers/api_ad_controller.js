@@ -1,30 +1,36 @@
 import {
-  getTotalClick,
-  getDeviceClick,
-  getRegionClick,
-  getReferrerClick,
-  getTimeClick,
+  getTotalClickFromSQL,
+  getTotalClickFromRedis,
+  getDeviceClickFromSQL,
+  getRegionClickFromSQL,
+  getReferrerClickFromSQL,
+  getTimeClickFromSQL,
 } from "../models/ad_model.js";
 
 const getUrlClicks = async (req, res) => {
   const url_id = req.originalUrl.split("/")[4];
-  const urlCount = await getTotalClick(url_id);
-  return res.status(200).json(urlCount);
+  const urlCountFromSQL = await getTotalClickFromSQL(url_id);
+  const urlCountFromRedis = await getTotalClickFromRedis(url_id);
+  let sqlCount = +urlCountFromSQL[0].total;
+  let urlCount = +urlCountFromRedis;
+  let result = sqlCount + urlCount;
+  return res.status(200).json({ "total": result });
 };
+
 const getUrlClickByDevice = async (req, res) => {
   const url_id = req.originalUrl.split("/")[4];
-  const urlCount = await getDeviceClick(url_id);
+  const urlCount = await getDeviceClickFromSQL(url_id);
   return res.status(200).json(urlCount);
 };
 const getUrlClickByRegion = async (req, res) => {
   const url_id = req.originalUrl.split("/")[4];
-  const urlCount = await getRegionClick(url_id);
+  const urlCount = await getRegionClickFromSQL(url_id);
   return res.status(200).json(urlCount);
 };
 
 const getUrlClickByReferrer = async (req, res) => {
   const url_id = req.originalUrl.split("/")[4];
-  const urlCount = await getReferrerClick(url_id);
+  const urlCount = await getReferrerClickFromSQL(url_id);
   return res.status(200).json(urlCount);
 };
 
@@ -66,13 +72,13 @@ const getUrlClickByTime = async (req, res) => {
   }
 
   const time = timeReverse.reverse();
-  const urlCount = await getTimeClick(url_id, time);
+  const urlCount = await getTimeClickFromSQL(url_id, time);
   timeModify(urlCount, method);
   //compare url if exist
   let compareUrlCount;
   if (req.body.url_id) {
     let compareUrl = req.body.url_id;
-    compareUrlCount = await getTimeClick(compareUrl, time);
+    compareUrlCount = await getTimeClickFromSQL(compareUrl, time);
     timeModify(compareUrlCount, method);
   }
   console.log([urlCount, compareUrlCount]);
