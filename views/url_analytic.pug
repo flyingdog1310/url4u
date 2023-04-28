@@ -5,88 +5,172 @@ block content
     div(class="content-header")
       div(class="container-fluid")
         div(class="row mb-2")
+          div(class="col-md-1")
           div(class="col-sm-6")
             h1(class="m-0") Link Performance
-        div(class="row")
-          div(class="col-12 col-sm-6 col-md-3")
-            div(class="info-box")
-              span(class="info-box-icon bg-primary elevation-1")
-                i(class="fas fa-link")
-              div(class="info-box-content")
-                span(class="info-box-text") Total Clicks
-                span(class="info-box-number" id="total-clicks") 0
-          div(class="col-12 col-sm-6 col-md-3")
-            div(class="info-box")
-              span(class="info-box-icon bg-primary elevation-1")
-                i(class="fas fa-map-marker-alt")
-              div(class="info-box-content")
-                span(class="info-box-text") Top Location
-                span(class="info-box-number" id="top-region") /
-          div(class="col-12 col-sm-6 col-md-3")
-            div(class="info-box")
-              span(class="info-box-icon bg-primary elevation-1")
-                i(class="fas fa-cog")
-              div(class="info-box-content")
-                span(class="info-box-text") Top Device
-                span(class="info-box-number" id="top-device") /
-          div(class="col-12 col-sm-6 col-md-3")
-            div(class="info-box")
-              span(class="info-box-icon bg-primary elevation-1")
-                i(class="fas fa-comments")
-              div(class="info-box-content")
-                span(class="info-box-text") Top Referer
-                span(class="info-box-number" id="top-referer") /
-        div(class="row")      
-          div(class="col-md-12")
+        div(class="row")  
+          div(class="col-md-1")
+          div(class="col-md-6")
             div(class="card")
               div(class="card-header")
                 h3(class="card-title") Time-Clicks                
                 div(class="class-tools")  
-                  form(id="time-clicks" enctype='application/json')
-                    input(type="date" name="stop" id="stop")
-                    div(class="btn-group" id="scope" data-toggle="btn-toggle")
-                      input(type="radio" class="btn btn-default btn-sm active" name="method" value="day" id="day")
-                      label(for="day") day 
-                      input(type="radio" class="btn btn-default btn-sm active" name="method" value="hour" id="hour") 
-                      label(for="hour") hour 
-                      div(id="compare-url")
-                      button(type="submit" class="btn btn-secondary btn-sm") Search
+              div(class="card-body")
+                div(class="d-flex")
+                  p(class="d-flex flex-column text-left")
+                    span Clicks Today
+                    span(class="text-bold text-lg" id="click-today") 0
+                    span(class="text-success text-sm")
+                      i(class="fas" id="clicks-today-compare-i") 
+                      span(id="clicks-today-compare") 0%               
+                  p(class="d-flex flex-column ml-auto text-left")
+                    span Clicks This Hour
+                    span(class="text-bold text-lg" id="click-hour") 0
+                    span(class="text-success text-sm")
+                      i(class="fas" id="clicks-hour-compare-i") 
+                      span(id="clicks-hour-compare") 0%                    
+                  p(class="d-flex flex-column ml-auto text-left")
+                    span Total Click
+                    span(class="text-bold text-lg" id="total-click") 0
+                  p(class="d-flex flex-column ml-auto")
+                  p(class="d-flex flex-column ml-auto")
+                  p(class="d-flex flex-column ml-auto")
+                div(class="chartjs-size-monitor")
+                  div(class="chartjs-size-monitor-expand")
+                  div(class="chartjs-size-monitor-shrink")
+                  div(id="line-chart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 667px;" width="667" height="250" class="chartjs-render-monitor")
+                form(id="time-clicks" enctype='application/json' class="text-right")
+                  input(type="date" name="stop" id="stop")
+                  div(class="btn-group" id="scope" data-toggle="btn-toggle")
+                    input(type="radio" class="btn btn-default btn-sm active" name="method" value="day" id="day")
+                    label(for="day") day 
+                    input(type="radio" class="btn btn-default btn-sm active" name="method" value="hour" id="hour") 
+                    label(for="hour") hour 
+                    div(id="compare-url")
+                    button(type="submit" class="btn btn-secondary btn-sm") Search 
+            div(class="card")
+              div(class="card-header")
+                h3(class="card-title") Device
+                div(class="class-tools")
+              div(class="card-body")
+                div(class="row")
+                  div(class="col-1")
+                  div(class="chartjs-size-monitor")
+                    div(class="chartjs-size-monitor-expand")
+                    div(class="chartjs-size-monitor-shrink")
+                    div(id="device-pie-chart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block;" class="chartjs-render-monitor")
+                  div(class="col-4 ml-auto")
+                    p(class="lead")
+                    div(class="table-responsive")
+                      table(class="table table-striped")
+                        tbody 
+                          tr
+                            th(style="width:20%") 1.
+                            td iphone 
+                          tr
+                            th(style="width:20%") 2.
+                            td windows
+                          tr  
+                            th(style="width:20%") 3.
+                            td mac
+                          tr  
+                            th(style="width:20%") 4.
+                            td linux
+                          tr  
+                            th(style="width:20%") 5.
+                            td linkedin
+            div(class="card")
+              div(class="card-header")
+                h3(class="card-title") Referer
+                div(class="class-tools")
+              div(class="card-body")
+                div(class="row")
+                  div(class="col-1")
+                  div(class="chartjs-size-monitor")
+                    div(class="chartjs-size-monitor-expand")
+                    div(class="chartjs-size-monitor-shrink")
+                    div(id="referer-pie-chart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block;" class="chartjs-render-monitor")
+                  div(class="col-4 ml-auto")
+                    p(class="lead") 
+                    div(class="table-responsive")
+                      table(class="table table-striped")
+                        tbody 
+                          tr
+                            th(style="width:20%") 1.
+                            td facebook
+                          tr
+                            th(style="width:20%") 2.
+                            td instagram
+                          tr  
+                            th(style="width:20%") 3.
+                            td google
+                          tr  
+                            th(style="width:20%") 4.
+                            td linkedin
+                          tr  
+                            th(style="width:20%") 5.
+                            td linkedin
+          div(class="col-md-4")
+            div(class="card")
+              div(class="card-header")
+                h3(class="card-title") Day-Clicks                
+                div(class="class-tools")  
               div(class="card-body")
                 div(class="chartjs-size-monitor")
                   div(class="chartjs-size-monitor-expand")
                   div(class="chartjs-size-monitor-shrink")
-                  canvas(id="areaChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 667px;" width="667" height="250" class="chartjs-render-monitor")
-        div(class="row")    
-          div(class="col-md-4")
+                  div(id="heat-chart" class="chartjs-render-monitor" style="min-height: 500px; height: 500px; max-height: 500px; max-width: 100%; display: block; width: 667px;")     
+            div(class="card")
+              div(class="card-header")
+                h3(class="card-title") TopClick-Week
+                div(class="class-tools")
+              div(class="card-body")
+                div(class="chartjs-size-monitor")
+                  div(class="chartjs-size-monitor-expand")
+                  div(class="chartjs-size-monitor-shrink")
+                  div(id="column-chart" height="300" class="chartjs-render-monitor")
+            div(class="card")
+              div(class="card-header")
+                h3(class="card-title") TopClick-Day
+                div(class="class-tools")
+              div(class="card-body")
+                div(class="progress-group") 2023-01-01
+                  span(class="float-right") 20
+                  div(class="progress progress-sm")
+                    div(class="progress-bar bg-primary" style="width: 80%")
+                div(class="progress-group") 2023-01-02
+                  span(class="float-right") 14
+                  div(class="progress progress-sm")
+                    div(class="progress-bar bg-primary" style="width: 60%")
+                div(class="progress-group") 2023-01-03
+                  span(class="float-right") 10
+                  div(class="progress progress-sm")
+                    div(class="progress-bar bg-primary" style="width: 40%")
+                div(class="progress-group") 2023-01-04
+                  span(class="float-right") 7
+                  div(class="progress progress-sm")
+                    div(class="progress-bar bg-primary" style="width: 15%")
+                div(class="progress-group") 2023-01-05
+                  span(class="float-right") 3
+                  div(class="progress progress-sm")
+                    div(class="progress-bar bg-primary" style="width: 10%")
+        div(class="row")
+          div(class="col-md-1")
+          div(class="col-md-10")
             div(class="card")
               div(class="card-header")
                 h3(class="card-title") Location
                 div(class="class-tools")
               div(class="card-body")
                 div(class="chartjs-size-monitor")
-                  div(class="chartjs-size-monitor-expand")
-                  div(class="chartjs-size-monitor-shrink")
-                  canvas(id="locationPieChart" height="78" width="156" style="display: block; width: 156px; height: 78px;" class="chartjs-render-monitor")
-          div(class="col-md-4")
-            div(class="card")
-              div(class="card-header")
-                h3(class="card-title") Device
-                div(class="class-tools")
-              div(class="card-body")
-                div(class="chartjs-size-monitor")
-                  div(class="chartjs-size-monitor-expand")
-                  div(class="chartjs-size-monitor-shrink")
-                  canvas(id="devicePieChart" height="78" width="156" style="display: block; width: 156px; height: 78px;" class="chartjs-render-monitor")
-          div(class="col-md-4")
-            div(class="card ")
-              div(class="card-header")
-                h3(class="card-title") Referer
-                div(class="class-tools")
-              div(class="card-body")
-                div(class="chartjs-size-monitor")
-                  div(class="chartjs-size-monitor-expand")
-                  div(class="chartjs-size-monitor-shrink")
-                  canvas(id="refererPieChart" height="78" width="156" style="display: block; width: 156px; height: 78px;" class="chartjs-render-monitor")
-  script(src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js")
+                  div(id="map-chart" class="chartjs-render-monitor" style="min-height: 600px; height: 600px; max-height: 600px; max-width: 100%; display: block;")
+
+  script(src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.3.15/proj4.js") 
+  script(src="https://cdn.anychart.com/releases/8.11.0/js/anychart-base.min.js" type="text/javascript")
+  script(src="https://cdn.anychart.com/releases/8.11.0/js/anychart-core.min.js")
+  script(src="https://cdn.anychart.com/releases/8.11.0/js/anychart-heatmap.min.js")
+  script(src="https://cdn.anychart.com/releases/8.11.0/js/anychart-map.min.js" type="text/javascript")
+  script(src="https://cdn.anychart.com/releases/8.11.0/geodata/custom/world/world.js" type="text/javascript")
+
   script.
     import(`/js/url_analytic.js`)

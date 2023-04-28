@@ -28,10 +28,7 @@ const getTotalClickFromRedis = async (urls_id) => {
   now.setHours(now.getHours());
   const start =
     now.toISOString().slice(0, 19).replace("T", " ").split(":")[0] + ":00:00";
-  console.log(start);
-
   const result = await redis.hget(`total/${start}`, urls_id);
-  console.log(result);
   return result;
 };
 
@@ -55,11 +52,9 @@ const getDeviceClickFromRedis = async (urls_id) => {
   now.setHours(now.getHours());
   const start =
     now.toISOString().slice(0, 19).replace("T", " ").split(":")[0] + ":00:00";
-  console.log(start);
 
   const result = await redis.hgetall(`${urls_id}/${start}/device`);
   const resultArr = Object.entries(result);
-  console.log(resultArr);
   return resultArr;
 };
 
@@ -83,11 +78,9 @@ const getRegionClickFromRedis = async (urls_id) => {
   now.setHours(now.getHours());
   const start =
     now.toISOString().slice(0, 19).replace("T", " ").split(":")[0] + ":00:00";
-  console.log(start);
 
   const result = await redis.hgetall(`${urls_id}/${start}/ip`);
   const resultArr = Object.entries(result);
-  console.log(resultArr);
   return resultArr;
 };
 
@@ -111,11 +104,9 @@ const getReferrerClickFromRedis = async (urls_id) => {
   now.setHours(now.getHours());
   const start =
     now.toISOString().slice(0, 19).replace("T", " ").split(":")[0] + ":00:00";
-  console.log(start);
 
   const result = await redis.hgetall(`${urls_id}/${start}/referer`);
   const resultArr = Object.entries(result);
-  console.log(resultArr);
   return resultArr;
 };
 
