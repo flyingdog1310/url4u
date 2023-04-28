@@ -1,5 +1,9 @@
+import path from "path";
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
 import dotenv from "dotenv";
-dotenv.config();
+dotenv.config({ path: __dirname + "/../.env" });
+
+
 import Redis from "ioredis";
 
 const { REDIS_HOST, REDIS_PORT, REDIS_USER, REDIS_PASSWORD, REDIS_TLS_ENABLE } =

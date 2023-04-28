@@ -1,5 +1,7 @@
+import path from "path";
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
 import dotenv from "dotenv";
-dotenv.config();
+dotenv.config({ path: __dirname + "/../.env" });
 
 import { Kafka } from "kafkajs";
 
