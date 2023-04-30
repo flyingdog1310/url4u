@@ -57,7 +57,9 @@ const getUrlClickByTime = async (req, res) => {
     method = req.body.method;
   }
   if (req.body.range) {
-    range = req.body.range;
+    let defaultRange = req.body.range;
+    let addRange = startDate.getUTCHours();
+    range = Number(defaultRange) + Number(addRange) - 23;
   }
   const time = generateTimeRange(startDate, range, method);
   const urlCount = await getTimeClickFromSQL(url_id, time);

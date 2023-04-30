@@ -7,7 +7,7 @@ getDayClick();
 getDeviceClick();
 getRegionClick();
 getReferrerClick();
-renderMapChart([], "map-chart");
+
 renderColumnChart([], "column-chart");
 
 function getTotalClick() {
@@ -203,6 +203,7 @@ function renderHeatChart(dayClicks) {
   chart.colorScale(customColorScale);
   chart.labels().format("");
   chart.tooltip().format("{%y}:00 Clicks:{%heat}");
+  chart.legend(true);
   chart.container("heat-chart");
   chart.draw();
 }
@@ -222,6 +223,13 @@ function getDeviceClick() {
     })
     .then((data) => {
       renderPieChart(data, "device-pie-chart");
+      renderTopSource(data, [
+        "device1",
+        "device2",
+        "device3",
+        "device4",
+        "device5",
+      ]);
     })
     .catch((error) => {
       console.log(error);
@@ -242,7 +250,7 @@ function getRegionClick() {
       }
     })
     .then((data) => {
-      renderPieChart(data, "locationPieChart");
+      renderMapChart(data, "map-chart");
     })
     .catch((error) => {
       console.log(error);
@@ -264,6 +272,13 @@ function getReferrerClick() {
     })
     .then((data) => {
       renderPieChart(data, "referer-pie-chart");
+      renderTopSource(data, [
+        "referrer1",
+        "referrer2",
+        "referrer3",
+        "referrer4",
+        "referrer5",
+      ]);
     })
     .catch((error) => {
       console.log(error);
@@ -300,33 +315,42 @@ function renderColumnChart(source, renderId) {
 }
 
 function renderMapChart(source, renderId) {
-  const data = [];
+  let data = [];
+  for (let i = 0; i < source.length; i++) {
+    let region = { id: source[i].source.split("/")[0], value: source[i].total };
+    data.push(region);
+  }
+  console.log(data);
   const map = anychart.map();
   map.geoData(anychart.maps.world);
-
-  // set the series
   let series = map.choropleth(data);
-
-  // disable labels
-  series.labels(false);
-
-  // set the container
-  map.container("map-chart");
+  map.container(renderId);
   map.draw();
 }
 
-function renderTopSource(totalSourceClicks, renderId) {
-  let maxTotal = 0;
-  let maxSource = "";
+function renderTopSource(totalSourceClicks, renderIdArr) {
+  sortArrayByTotalDescending(totalSourceClicks);
 
+  const topSourceDisplay = document.getElementById(renderIdArr[0]);
+  const secondSourceDisplay = document.getElementById(renderIdArr[1]);
+  const thirdSourceDisplay = document.getElementById(renderIdArr[2]);
+  const fourthSourceDisplay = document.getElementById(renderIdArr[3]);
+  const fifthSourceDisplay = document.getElementById(renderIdArr[4]);
+  const sourceGroup = [
+    topSourceDisplay,
+    secondSourceDisplay,
+    thirdSourceDisplay,
+    fourthSourceDisplay,
+    fifthSourceDisplay,
+  ];
   for (let i = 0; i < totalSourceClicks.length; i++) {
-    if (parseInt(totalSourceClicks[i].total) > maxTotal) {
-      maxTotal = parseInt(totalSourceClicks[i].total);
-      maxSource = totalSourceClicks[i].source;
-    }
+    sourceGroup[i].innerHTML = totalSourceClicks[i].source;
   }
-  const topDeviceDisplay = document.getElementById(renderId);
-  topDeviceDisplay.innerHTML = maxSource;
+}
+function sortArrayByTotalDescending(array) {
+  return array.sort(function (a, b) {
+    return b.total - a.total;
+  });
 }
 
 if (localStorage.getItem("jwtToken") !== null) {
