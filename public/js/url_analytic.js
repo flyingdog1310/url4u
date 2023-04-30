@@ -317,7 +317,7 @@ function renderColumnChart(source, renderId) {
 function renderMapChart(source, renderId) {
   let data = [];
   for (let i = 0; i < source.length; i++) {
-    let region = { id: source[i].source.split("/")[0], value: source[i].total };
+    let region = { id: source[i].source, value: source[i].total };
     data.push(region);
   }
   console.log(data);

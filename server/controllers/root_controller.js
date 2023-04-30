@@ -41,13 +41,13 @@ const redirectUrl = async (req, res) => {
   //   time,
   //   req.headers["referer"],
   //   device,
-  //   `${ip.country}/${ip.city}`,
+  //   `${ip.country}`,
   //   1
   // );
 
   clickEvent(
     "clicks",
-    `{id:${url[0].id} time:${time} referer:${req.headers["referer"]} device:${device} ip:${ip.country}/${ip.city}}`
+    `{id:${url[0].id} time:${time} referer:${req.headers["referer"]} device:${device} ip:${ip.country}}`
   );
   return res.status(307).redirect(url[0].long_url);
 };
