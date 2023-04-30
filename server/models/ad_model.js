@@ -124,6 +124,43 @@ const getTimeClickFromSQL = async (urls_id, time) => {
   return referer;
 };
 
+const getWeekClickFromSQL = async (urls_id) => {
+  const [total] = await pool.query(
+    `
+    SELECT  
+        DAYOFWEEK(time_range) as weekday, 
+        SUM(count) as total_count
+    FROM 
+        click
+    WHERE 
+        url_id = ?
+    GROUP BY 
+        DAYOFWEEK(time_range)
+    ORDER BY 
+        weekday
+  `,
+    [urls_id]
+  );
+
+  return total;
+};
+
+const getTopClickFromSQL = async (urls_id) => {
+  const [total] = await pool.query(
+    `
+    SELECT time_range, count
+    FROM click
+    WHERE url_id = ?
+    ORDER BY count DESC, time_range ASC
+    LIMIT 5;
+  `,
+    [urls_id]
+  );
+
+  return total;
+};
+
+
 export {
   createClick,
   getTotalClickFromSQL,
@@ -135,4 +172,6 @@ export {
   getReferrerClickFromSQL,
   getReferrerClickFromRedis,
   getTimeClickFromSQL,
+  getWeekClickFromSQL,
+  getTopClickFromSQL
 };

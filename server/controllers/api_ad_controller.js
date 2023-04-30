@@ -8,6 +8,8 @@ import {
   getReferrerClickFromSQL,
   getReferrerClickFromRedis,
   getTimeClickFromSQL,
+  getWeekClickFromSQL,
+  getTopClickFromSQL
 } from "../models/ad_model.js";
 
 const getUrlClicks = async (req, res) => {
@@ -42,6 +44,19 @@ const getUrlClickByReferrer = async (req, res) => {
   const urlCountFromRedis = await getReferrerClickFromRedis(url_id);
   const result = mergeArrays(urlCountFromRedis, urlCountFromSQL);
   return res.status(200).json(result);
+};
+
+const getUrlClickByWeek = async (req, res) => {
+  const url_id = req.originalUrl.split("/")[4];
+  const urlCountFromSQL = await getWeekClickFromSQL(url_id);
+  const urlCountFromRedis = await getTotalClickFromRedis(url_id);
+  return res.status(200).json(urlCountFromSQL);
+};
+const getTopUrlClick = async (req, res) => {
+  const url_id = req.originalUrl.split("/")[4];
+  const urlCountFromSQL = await getTopClickFromSQL(url_id);
+  const urlCountFromRedis = await getTotalClickFromRedis(url_id);
+  return res.status(200).json(urlCountFromSQL);
 };
 
 const getUrlClickByTime = async (req, res) => {
@@ -181,4 +196,6 @@ export {
   getUrlClickByRegion,
   getUrlClickByReferrer,
   getUrlClickByTime,
+  getUrlClickByWeek,
+  getTopUrlClick
 };

@@ -4,11 +4,11 @@ document.getElementById("stop").setAttribute("max", today);
 getTotalClick();
 getTimeClick();
 getDayClick();
+getWeekClick();
+getTopClick();
 getDeviceClick();
 getRegionClick();
 getReferrerClick();
-
-renderColumnChart([], "column-chart");
 
 function getTotalClick() {
   fetch(`/api/1.0/total_click/${window.location.pathname.split("/")[3]}`, {
@@ -207,6 +207,84 @@ function renderHeatChart(dayClicks) {
   chart.container("heat-chart");
   chart.draw();
 }
+function getWeekClick() {
+  fetch(`/api/1.0/week_click/${window.location.pathname.split("/")[3]}`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+    },
+  })
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error(response.status);
+      }
+    })
+    .then((data) => {
+      console.log(data);
+      let week = [
+        ["Mon", 0],
+        ["Tue", 0],
+        ["Wed", 0],
+        ["Thu", 0],
+        ["Fri", 0],
+        ["Sat", 0],
+        ["Sun", 0],
+      ];
+      for (let i = 0; i < data.length; i++) {
+        week[data[i].weekday][1] = data[i].total_count;
+      }
+      renderColumnChart(week, "column-chart");
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
+function getTopClick() {
+  fetch(`/api/1.0/top_click/${window.location.pathname.split("/")[3]}`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+    },
+  })
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error(response.status);
+      }
+    })
+    .then((data) => {
+      renderTopClick(data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
+function renderTopClick(data) {
+  const displayName1 = document.getElementById("top-click1");
+  const displayName2 = document.getElementById("top-click2");
+  const displayName3 = document.getElementById("top-click3");
+  const displayName4 = document.getElementById("top-click4");
+  const displayName5 = document.getElementById("top-click5");
+  const displayNameGroup = [
+    displayName1,
+    displayName2,
+    displayName3,
+    displayName4,
+    displayName5,
+  ];
+
+  for (let i = 0; i < data.length; i++) {
+    displayNameGroup[i].innerHTML = `${data[i].time_range}
+    <span class="float-right" id="top-click-count1"> ${data[i].count}</span> 
+    <div class="progress progress-sm">
+      <div class="progress-bar bg-primary"  id="top-click-percent1" style="width:${Math.floor(
+        (data[i].count / data[i].count) * 100
+      )}%"></div>`;
+  }
+}
 
 function getDeviceClick() {
   fetch(`/api/1.0/device_click/${window.location.pathname.split("/")[3]}`, {
@@ -298,16 +376,7 @@ function renderPieChart(source, renderId) {
 }
 
 function renderColumnChart(source, renderId) {
-  const data = [
-    ["sun", 10000],
-    ["mon", 12000],
-    ["tue", 13000],
-    ["thu", 10000],
-    ["fri", 9000],
-    ["sat", 9000],
-    ["sun", 9000],
-  ];
-
+  const data = source;
   const chart = anychart.column();
   const series = chart.column(data);
   chart.container(renderId);
