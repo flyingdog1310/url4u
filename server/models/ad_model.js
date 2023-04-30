@@ -148,9 +148,10 @@ const getWeekClickFromSQL = async (urls_id) => {
 const getTopClickFromSQL = async (urls_id) => {
   const [total] = await pool.query(
     `
-    SELECT time_range, count
+    SELECT time_range, SUM(count) AS count
     FROM click
     WHERE url_id = ?
+    GROUP BY time_range
     ORDER BY count DESC, time_range ASC
     LIMIT 5;
   `,
