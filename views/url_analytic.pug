@@ -20,13 +20,13 @@ block content
                   p(class="d-flex flex-column text-left")
                     span Clicks Today
                     span(class="text-bold text-lg" id="click-today") 0
-                    span(class="text-success text-sm")
+                    span(class="text-sm" id="clicks-today-compare-color")
                       i(class="fas" id="clicks-today-compare-i") 
                       span(id="clicks-today-compare") 0%               
                   p(class="d-flex flex-column ml-auto text-left")
                     span Clicks This Hour
                     span(class="text-bold text-lg" id="click-hour") 0
-                    span(class="text-success text-sm")
+                    span(class="text-sm" id="clicks-hour-compare-color")
                       i(class="fas" id="clicks-hour-compare-i") 
                       span(id="clicks-hour-compare") 0%                    
                   p(class="d-flex flex-column ml-auto text-left")
@@ -122,7 +122,7 @@ block content
                   div(id="heat-chart" class="chartjs-render-monitor" style="min-height: 500px; height: 500px; max-height: 500px; max-width: 100%; display: block; width: 667px;")     
             div(class="card")
               div(class="card-header")
-                h3(class="card-title") TopClick-Week
+                h3(class="card-title") Week-Clicks
                 div(class="class-tools")
               div(class="card-body")
                 div(class="chartjs-size-monitor")
@@ -131,7 +131,7 @@ block content
                   div(id="column-chart" height="300" class="chartjs-render-monitor")
             div(class="card")
               div(class="card-header")
-                h3(class="card-title") TopClick-Day
+                h3(class="card-title") Top-Clicks
                 div(class="class-tools")
               div(class="card-body")
                 div(class="progress-group" id="top-click1") ---

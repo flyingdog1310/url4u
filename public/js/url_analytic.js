@@ -61,7 +61,8 @@ function getTimeClick() {
         data,
         "click-today",
         "clicks-today-compare",
-        "clicks-today-compare-i"
+        "clicks-today-compare-i",
+        "clicks-today-compare-color"
       );
     })
     .catch((error) => {
@@ -73,27 +74,38 @@ function renderClickCompare(
   data,
   clickNowDisplay,
   clickBeforeDisplay,
-  clickCompareDisplayI
+  clickCompareDisplayI,
+  clickCompareDisplayColor
 ) {
   const clickNowDisplayId = document.getElementById(clickNowDisplay);
   const clickBeforeDisplayId = document.getElementById(clickBeforeDisplay);
   const clickCompareDisplayId = document.getElementById(clickCompareDisplayI);
-  const clickNow = data[0][data[0].length - 1].total;
-  const clickBefore = data[0][data[0].length - 2].total;
-  console.log(clickNow);
+  const clickCompareColorId = document.getElementById(clickCompareDisplayColor);
+  let clickNow = data[0][data[0].length - 1].total;
+  let clickBefore = data[0][data[0].length - 2].total;
   clickNowDisplayId.innerHTML = clickNow;
+  if (clickBefore == 0 || clickBefore == null) {
+    clickBefore = 1;
+  }
+  if (clickNow == 0 || clickBefore == null) {
+    clickNow = 1;
+  }
   if (clickNow == clickBefore) {
     clickCompareDisplayId.classList.add("fa-caret-left");
-  } else if (clickNow > clickBefore) {
-    clickCompareDisplayId.classList.add("fa-caret-up");
-  } else {
-    clickCompareDisplayId.classList.add("fa-caret-down");
+    clickCompareColorId.classList.add("text-warning");
+    clickBeforeDisplayId.textContent = "-%";
   }
-
-  if (clickBefore == 0) {
-    clickBeforeDisplayId.textContent = "0%";
-  } else {
+  if (clickNow > clickBefore) {
+    clickCompareDisplayId.classList.add("fa-caret-up");
+    clickCompareColorId.classList.add("text-success");
     clickBeforeDisplayId.textContent = `${Math.floor(
+      (clickNow / clickBefore) * 100
+    )}%`;
+  }
+  if (clickNow < clickBefore) {
+    clickCompareDisplayId.classList.add("fa-caret-down");
+    clickCompareColorId.classList.add("text-danger");
+    clickBeforeDisplayId.textContent = `-${Math.floor(
       (clickNow / clickBefore) * 100
     )}%`;
   }
@@ -177,7 +189,8 @@ function getDayClick() {
         data,
         "click-hour",
         "clicks-hour-compare",
-        "clicks-hour-compare-i"
+        "clicks-hour-compare-i",
+        "clicks-hour-compare-color"
       );
     })
     .catch((error) => {
@@ -277,7 +290,9 @@ function renderTopClick(data) {
   ];
 
   for (let i = 0; i < data.length; i++) {
-    displayNameGroup[i].innerHTML = `${data[i].time_range}
+    displayNameGroup[i].innerHTML = `${data[i].time_range
+      .slice(0, 16)
+      .replace("T", " ")}
     <span class="float-right" id="top-click-count1"> ${data[i].count}</span> 
     <div class="progress progress-sm">
       <div class="progress-bar bg-primary"  id="top-click-percent1" style="width:${Math.floor(
