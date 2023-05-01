@@ -51,22 +51,25 @@ const getUrlClickByWeek = async (req, res) => {
   const urlCountFromSQL = await getWeekClickFromSQL(url_id);
   const urlCountFromRedis = await getTotalClickFromRedis(url_id);
   const today = new Date().getDay();
-  const weekdayMap = { 0: 7, 1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6 };
-  const todayWeekday = weekdayMap[today];
-  const todayDataIndex = urlCountFromSQL.findIndex(
-    (data) => data.weekday === todayWeekday
-  );
-  if (todayDataIndex !== -1) {
-    urlCountFromSQL[todayDataIndex].total_count = String(
-      parseInt(urlCountFromSQL[todayDataIndex].total_count) + urlCountFromRedis
+  if (urlCountFromRedis) {
+    const weekdayMap = { 0: 7, 1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6 };
+    const todayWeekday = weekdayMap[today];
+    const todayDataIndex = urlCountFromSQL.findIndex(
+      (data) => data.weekday === todayWeekday
     );
-  } else {
-    urlCountFromSQL.push({
-      weekday: todayWeekday,
-      total_count: String(urlCountFromRedis),
-    });
+    if (todayDataIndex !== -1) {
+      urlCountFromSQL[todayDataIndex].total_count = String(
+        parseInt(urlCountFromSQL[todayDataIndex].total_count) +
+          urlCountFromRedis
+      );
+    } else {
+      urlCountFromSQL.push({
+        weekday: todayWeekday,
+        total_count: String(urlCountFromRedis),
+      });
+    }
+    urlCountFromSQL.sort((a, b) => a.weekday - b.weekday);
   }
-  urlCountFromSQL.sort((a, b) => a.weekday - b.weekday);
   return res.status(200).json(urlCountFromSQL);
 };
 
@@ -75,13 +78,14 @@ const getTopUrlClick = async (req, res) => {
   const urlCountFromSQL = await getTopClickFromSQL(url_id);
   const urlCountFromRedis = await getTotalClickFromRedis(url_id);
   const now = new Date().toISOString().slice(0, 14) + "00:00.000Z";
-  const urlCountNow = { time_range: now, count: urlCountFromRedis };
-  urlCountFromSQL.push(urlCountNow);
-  urlCountFromSQL.sort((a, b) => b.count - a.count);
-  if (urlCountFromSQL[5]) {
-    urlCountFromSQL.pop();
+  if (urlCountFromRedis) {
+    const urlCountNow = { time_range: now, count: urlCountFromRedis };
+    urlCountFromSQL.push(urlCountNow);
+    urlCountFromSQL.sort((a, b) => b.count - a.count);
+    if (urlCountFromSQL[5]) {
+      urlCountFromSQL.pop();
+    }
   }
-
   return res.status(200).json(urlCountFromSQL);
 };
 
