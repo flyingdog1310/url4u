@@ -297,7 +297,7 @@ function renderTopClick(data) {
     <span class="float-right" id="top-click-count1"> ${data[i].count}</span> 
     <div class="progress progress-sm">
       <div class="progress-bar bg-primary"  id="top-click-percent1" style="width:${Math.floor(
-        (data[i].count / data[i].count) * 100
+        (data[i].count / data[0].count) * 100
       )}%"></div>`;
   }
 }
