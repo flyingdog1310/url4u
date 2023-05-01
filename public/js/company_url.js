@@ -42,15 +42,29 @@ function renderTable(rawUrls) {
     const row = body.insertRow();
     row.innerHTML = `
       <td class='td'><a href=${url.long_url}>${url.long_url}</a><br>
-      <a href=https://url4u.today/${url.short_url} id="${url.short_url}-link">https://url4u.today/${url.short_url}    </a><button class="copy-button btn btn-secondary btn-xs"" data-short-url="${url.short_url}"><i class="fas fa-copy"></i></button>
+      <a href=https://url4u.today/${url.short_url} id="${
+      url.short_url
+    }-link">https://url4u.today/${
+      url.short_url
+    }    </a><button class="copy-button btn btn-secondary btn-xs"" data-short-url="${
+      url.short_url
+    }"><i class="fas fa-copy"></i></button>
       </td>
-      <td><img src=https://d2zbleiceefv1c.cloudfront.net/${url.picture} height="70px" width="100px" class="display"></td>
+      <td><img src=https://d2zbleiceefv1c.cloudfront.net/${
+        url.picture
+      } height="70px" width="100px" class="display"></td>
       <td class='td'>${url.title}</td>
       <td class='td'>${url.description}</td>
-      <td>${url.create_time}</td>
+      <td>${url.create_time.slice(0, 19).split("T")[0]}<br>
+      <small>${url.create_time.slice(0, 19).split("T")[1].slice(0, 5)}</small>
+      </td>
       <td>
-      <button type="button" class="btn btn-info btn-xs" onclick="location.href='/url/modify/${url.id}'"><i class="fas fa-pencil-alt"></i> Modify</button><br>
-      <button type="button" class="btn btn-primary btn-xs" onclick="location.href='/url/analytic/${url.id}'"><i class="fas fa-folder"></i> Analytics</button>
+      <button type="button" class="btn btn-info btn-xs" onclick="location.href='/url/modify/${
+        url.id
+      }'"><i class="fas fa-pencil-alt"></i> Modify</button><br>
+      <button type="button" class="btn btn-primary btn-xs" onclick="location.href='/url/analytic/${
+        url.id
+      }'"><i class="fas fa-folder"></i> Analytics</button>
       </td>
     `;
   }

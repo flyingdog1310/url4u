@@ -50,10 +50,12 @@ function addCrawImgs(url) {
 
 function insertSuggestion(url) {
   if (!document.getElementById("title").value) {
-    document.getElementById("title").value = url[0].meta.title;
+    const title = url[0].meta.title[0];
+    document.getElementById("title").value = title.slice(0, 128);
   }
   if (!document.getElementById("description").value) {
-    document.getElementById("description").value = url[0].meta.description;
+    const description = url[0].meta.description[0];
+    document.getElementById("description").value = description.slice(0, 128);
   }
 }
 
