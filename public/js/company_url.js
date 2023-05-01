@@ -42,7 +42,7 @@ function renderTable(rawUrls) {
     const row = body.insertRow();
     row.innerHTML = `
       <td class='td'><a href=${url.long_url}>${url.long_url}</a><br>
-      <a href=${url.short_url} id="${url.short_url}-link">https://url4u.today/${url.short_url}    </a><button class="copy-button btn btn-secondary btn-xs"" data-short-url="${url.short_url}"><i class="fas fa-copy"></i></button>
+      <a href=https://url4u.today/${url.short_url} id="${url.short_url}-link">https://url4u.today/${url.short_url}    </a><button class="copy-button btn btn-secondary btn-xs"" data-short-url="${url.short_url}"><i class="fas fa-copy"></i></button>
       </td>
       <td><img src=https://d2zbleiceefv1c.cloudfront.net/${url.picture} height="70px" width="100px" class="display"></td>
       <td class='td'>${url.title}</td>
