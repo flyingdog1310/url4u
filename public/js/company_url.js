@@ -25,12 +25,12 @@ function renderTable(rawUrls) {
   table.classList.add("text-nowrap");
   const header = table.createTHead().insertRow();
   header.innerHTML = `
-    <th>Url</th>
-    <th style="width:120px">Picture</th>
-    <th>Title</th>
-    <th>Description</th>
-    <th>Create Time</th>
-    <th style="width:100px">Operate</th>
+    <th><i class="fas fa-link"></i> Url</th>
+    <th style="width:120px"><i class="fas fa-eye"></i> Picture</th>
+    <th><i class="fas fa-clipboard"></i> Title</th>
+    <th><i class="fas fa-clipboard"></i> Description</th>
+    <th><i class="fas fa-clock"></i> Create Time</th>
+    <th style="width:100px"><i class="fas fa-edit"></i> Operate</th>
   `;
   const body = table.createTBody();
   for (let i = 0; i < rawUrls.length; i++) {
@@ -61,10 +61,10 @@ function renderTable(rawUrls) {
       <td>
       <button type="button" class="btn btn-info btn-xs" onclick="location.href='/url/modify/${
         url.id
-      }'"><i class="fas fa-pencil-alt"></i> Modify</button><br>
+      }'"><i class="fas fa-edit"></i> Modify</button><br>
       <button type="button" class="btn btn-primary btn-xs" onclick="location.href='/url/analytic/${
         url.id
-      }'"><i class="fas fa-folder"></i> Analytics</button>
+      }'"><i class="fas fa-chart-line"></i> Analytics</button>
       </td>
     `;
   }
