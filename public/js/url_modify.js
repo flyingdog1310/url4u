@@ -36,10 +36,16 @@ function addCrawImgs(url) {
   const imgs = document.createElement("div");
   let imgsHTML = "";
   for (let i = 0; i < url[0].meta.images.length; i++) {
-    imgsHTML += `<img src=${url[0].meta.images[i]}  width="200px" class="display">`;
+    imgsHTML += `<button class="img-btn" data-img-url="${url[0].meta.images[i]}" style="background-image: url(${url[0].meta.images[i]});"></button>`;
   }
   imgs.innerHTML = imgsHTML;
   document.getElementById("craw-img-list").appendChild(imgs);
+
+  $(".img-btn").on("click", function () {
+    const img_url = $(this).data("img-url");
+    $("#picturePreview").attr("src", img_url);
+    $("#picture_url").val(img_url);
+  });
 }
 
 function insertSuggestion(url) {

@@ -4,7 +4,7 @@ block content
   div(class="content-wrapper")
     div(class="row align-items-center")
       div(class="col-md-1")
-      div(class="col-md-6")
+      div(class="col-md-6" style="padding-top:10px")
         h4(class="mb-0")
           i(class="fas fa-edit")
           |Edit Preview
@@ -13,26 +13,27 @@ block content
       div(class="col-md-1")
       div(class="col-md-5")
         form(method="post" enctype="multipart/form-data" id="update-short-url") 
-          div 
-            label(for="short_url") short url: 
+          div(style="padding-top:5px") 
+            label(for="short_url" style="padding-right:5px") Short url:  
             input(id="short_url" name="short_url") 
-          div
-            label(for="long_url") long url:
+          div(style="padding-top:5px") 
+            label(for="long_url" style="padding-right:5px") Long url:
             input(id="long_url" name="long_url" type="url") 
-          div(class="col")
+          div(class="col" style="padding-top:5px" )
             img(id="picturePreview" width="450px" height="250px")
             input(id="picture" name="picture" type="file" accept="image/png, image/jpeg, image/jpg") 
-          div
-            label(for="title") title:
+            input(id="picture_url" name="picture_url" type="url" style="display:none")
+          div(style="padding-top:5px") 
+            label(for="title" style="padding-right:5px") Title:
             input(id="title" name="title") 
-          div
-            label(for="description") description:
+          div(style="padding-top:5px") 
+            label(for="description" style="padding-right:5px") Description:
             input(id="description" name="description") 
           div(id="submit") 
             button(type="submit" class="btn  btn-primary btn-sm") Modify
       div(class="option col-md-6")
         div(class="mb-3")
-          i(class="fas fa-search") 
+          i(class="fas fa-search" style="padding-right:5px") 
           |Default Images
         div(class="default-container-wrapper")
           div(class="default-container" id="craw-img-list")

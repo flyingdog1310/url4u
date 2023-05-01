@@ -20,3 +20,16 @@
 .display {
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
 }
+
+.img-btn {
+  display: inline-block;
+  width: 200px;
+  height: 200px;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: none;
+  padding: 0;
+  margin: 10px;
+  overflow: hidden;
+}
