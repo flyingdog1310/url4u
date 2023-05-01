@@ -52,7 +52,7 @@ const getUrlClickByWeek = async (req, res) => {
   const urlCountFromRedis = await getTotalClickFromRedis(url_id);
   const today = new Date().getDay();
   if (urlCountFromRedis) {
-    const weekdayMap = { 0: 6, 1: 0, 2: 1, 3: 2, 4: 3, 5: 4, 6: 5 };
+    const weekdayMap = { 0: 1, 1: 2, 2: 3, 3: 4, 4: 5, 5: 6, 6: 7 };
     const todayWeekday = weekdayMap[today];
     const todayDataIndex = urlCountFromSQL.findIndex(
       (data) => data.weekday === todayWeekday

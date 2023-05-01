@@ -236,16 +236,16 @@ function getWeekClick() {
     .then((data) => {
       console.log(data);
       let week = [
+        ["Sun", 0],
         ["Mon", 0],
         ["Tue", 0],
         ["Wed", 0],
         ["Thu", 0],
         ["Fri", 0],
         ["Sat", 0],
-        ["Sun", 0],
       ];
       for (let i = 0; i < data.length; i++) {
-        week[data[i].weekday][1] = data[i].total_count;
+        week[data[i].weekday-1][1] = data[i].total_count;
       }
       renderColumnChart(week, "column-chart");
     })
