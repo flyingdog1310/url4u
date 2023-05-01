@@ -7,8 +7,8 @@ getDayClick();
 getWeekClick();
 getTopClick();
 getDeviceClick();
-getRegionClick();
 getReferrerClick();
+getRegionClick();
 
 function getTotalClick() {
   fetch(`/api/1.0/total_click/${window.location.pathname.split("/")[3]}`, {
@@ -268,6 +268,7 @@ function getTopClick() {
       }
     })
     .then((data) => {
+      console.log(data)
       renderTopClick(data);
     })
     .catch((error) => {
