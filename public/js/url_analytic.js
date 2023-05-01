@@ -1,14 +1,18 @@
 const today = new Date().toISOString().split("T")[0];
 document.getElementById("stop").setAttribute("max", today);
 
-getTotalClick();
-getTimeClick();
-getDayClick();
-getWeekClick();
-getTopClick();
-getDeviceClick();
-getReferrerClick();
-getRegionClick();
+renderPage()
+
+async function renderPage () {
+  getTotalClick();
+  getTimeClick();
+  getDayClick();
+  getWeekClick();
+  getTopClick();
+  getDeviceClick();
+  getReferrerClick();
+  getRegionClick();
+}
 
 function getTotalClick() {
   fetch(`/api/1.0/total_click/${window.location.pathname.split("/")[3]}`, {
@@ -245,7 +249,7 @@ function getWeekClick() {
         ["Sat", 0],
       ];
       for (let i = 0; i < data.length; i++) {
-        week[data[i].weekday-1][1] = data[i].total_count;
+        week[data[i].weekday - 1][1] = data[i].total_count;
       }
       renderColumnChart(week, "column-chart");
     })
