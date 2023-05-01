@@ -1,13 +1,12 @@
 extends layout.pug
 
 block content
-  div(class="content-wrapper center")
-    div(class="row")
-      div(class="col-sm-3 row")  
-        h2(class="m-0") Shorten Your Url Now!
+  div.content-wrapper.center
+    div.row
+      div.col-sm-3.row  
+        h2.m-0 Shorten Your Url Now!
           form(action="/api/1.0/url" method="POST" enctype='application/json' id="create-short-url")             
             div
-              img(src="/image/favicon.jpg" width="24")
               input(id="long_url" name="long_url" type="url" placeholder="https://" class="input-round" required )                  
             div(id="company") 
             div(id="submit")   
