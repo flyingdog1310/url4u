@@ -32,3 +32,4 @@ async function getClickCounter(time) {
   const resultArr = Object.entries(result);
   return resultArr;
 }
+process.exit(0)
