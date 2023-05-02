@@ -21,7 +21,7 @@ async function setLastHourClickToSQL() {
     const referrer = clickMeta.split("referer:")[1].split(" device")[0];
     const device = clickMeta.split("device:")[1].split(" ip")[0];
     const ip = clickMeta.split("ip:")[1].split("}")[0];
-    createClick(id, time, referrer, device, ip, count);
+    await createClick(id, time, referrer, device, ip, count);
   }
   console.log("click insert end");
   process.exit(0);
