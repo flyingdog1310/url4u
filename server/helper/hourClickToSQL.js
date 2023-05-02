@@ -1,6 +1,4 @@
 import { redis } from "../../util/cache.js";
-import { kafka } from "../../util/kafka.js";
-import { clickEvent } from "../../util/kafka-producer.js";
 import { createClick } from "../models/ad_model.js";
 //this should be triggered once a hour
 
@@ -25,6 +23,8 @@ async function setLastHourClickToSQL() {
     const ip = clickMeta.split("ip:")[1].split("}")[0];
     createClick(id, time, referrer, device, ip, count);
   }
+  console.log("click insert end");
+  process.exit(0);
 }
 
 async function getClickCounter(time) {
@@ -32,4 +32,3 @@ async function getClickCounter(time) {
   const resultArr = Object.entries(result);
   return resultArr;
 }
-process.exit(0)
