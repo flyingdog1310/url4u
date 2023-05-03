@@ -3,7 +3,6 @@ const __dirname = path.dirname(new URL(import.meta.url).pathname);
 import dotenv from "dotenv";
 dotenv.config({ path: __dirname + "/../.env" });
 
-
 import Redis from "ioredis";
 
 const { REDIS_HOST, REDIS_PORT, REDIS_USER, REDIS_PASSWORD, REDIS_TLS_ENABLE } =
@@ -31,4 +30,17 @@ if (REDIS_TLS_ENABLE == "false") {
 
 const redis = new Redis(redisConfig);
 
-export { redis };
+async function setUrlCache(short_url, long_url) {
+  let newUrl = {};
+  newUrl[short_url] = long_url;
+  const setCache = await redis.hset("url", newUrl);
+  console.log("set cache", setCache);
+}
+
+async function getUrlCache(short_url) {
+  const getCache = await redis.hget("url", short_url);
+  console.log("get cache", getCache);
+  return getCache;
+}
+
+export { redis, setUrlCache, getUrlCache };

@@ -2,6 +2,7 @@ import axios from "axios";
 import { createUrl, updateCustomUrl, getUrlById } from "../models/url_model.js";
 import { shortUrlGenerator } from "../../util/shortUrlGenerator.js";
 import { crawImgs } from "../../util/crawler.js";
+import { setUrlCache } from "../../util/cache.js";
 import dotenv from "dotenv";
 dotenv.config();
 const { AWS_BUCKET_NAME, AWS_BUCKET_REGION, AWS_ACCESS_KEY, AWS_SECRET_KEY } =
@@ -27,6 +28,8 @@ const createShortUrl = async (req, res) => {
   }
   const short_url = shortUrlGenerator();
   const url = await createUrl(company_id, short_url, long_url);
+  console.log(url);
+  const setCache = await setUrlCache(short_url, `${url.insertId} ${long_url}`);
   return res.status(200).redirect(`/url/modify/${url.insertId}`);
 };
 
@@ -62,6 +65,7 @@ const updateShortUrl = async (req, res) => {
     title,
     description
   );
+  const setCache = await setUrlCache(short_url, `${url_id} ${long_url}`);
   const urlInfo = await getUrlById(url_id);
   const companyId = urlInfo[0].company_id;
 

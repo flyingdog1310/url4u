@@ -3,16 +3,28 @@ dotenv.config({ path: process.ENV });
 import { getUrlByShortUrl } from "../models/url_model.js";
 import { createClick } from "../models/ad_model.js";
 import { clickEvent } from "../../util/kafka-producer.js";
+import { setUrlCache, getUrlCache } from "../../util/cache.js";
 import geoIp from "geoip-lite";
 
 const redirectUrl = async (req, res) => {
-  const url = await getUrlByShortUrl(req.url.split("?")[0].substring(1));
+  const requestUrl = req.url.split("?")[0].substring(1);
+  const idLongUrl = await getUrlCache(requestUrl);
+  let url = {};
+  if (!idLongUrl) {
+    url = await getUrlByShortUrl(requestUrl);
 
-  if (!url[0]) {
-    //when short url not found
-    console.log("ip:", req.ip, "notfound url:", req.url);
-    return res.status(404).render("notfound");
+    if (!url) {
+      //when short url not found
+      console.log("ip:", req.ip, "notfound url:", req.url);
+      return res.status(404).render("notfound");
+    }
+    setUrlCache(requestUrl, `${url.id} ${url.long_url}`);
   }
+  if (idLongUrl) {
+    url.id = idLongUrl.split(" ")[0];
+    url.long_url = idLongUrl.split(" ")[1];
+  }
+
   const device = req.headers["user-agent"].split("(")[1].split(";")[0] || "";
   if (!req.headers["referer"]) {
     req.headers["referer"] = "native";
@@ -47,9 +59,9 @@ const redirectUrl = async (req, res) => {
 
   clickEvent(
     "clicks",
-    `{id:${url[0].id} time:${time} referer:${req.headers["referer"]} device:${device} ip:${ip.country}}`
+    `{id:${url.id} time:${time} referer:${req.headers["referer"]} device:${device} ip:${ip.country}}`
   );
-  return res.status(307).redirect(url[0].long_url);
+  return res.status(307).redirect(url.long_url);
 };
 
 const previewUrl = async (req, res) => {

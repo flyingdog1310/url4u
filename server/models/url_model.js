@@ -32,7 +32,7 @@ const getUrlByShortUrl = async (short_url) => {
   const [url] = await pool.query("SELECT * FROM url WHERE short_url = ? ", [
     short_url,
   ]);
-  return url;
+  return url[0];
 };
 
 export { createUrl, updateCustomUrl, getUrlById, getUrlByShortUrl };
