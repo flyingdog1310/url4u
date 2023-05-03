@@ -12,8 +12,10 @@ $("#sign-in").submit(function (e) {
       console.log(data.data.access_token);
       let token = data.data.access_token;
       localStorage.setItem("jwtToken", token);
-      console.log(data);
       location.reload(true);
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      alert(jqXHR.responseText);
     },
   });
 });

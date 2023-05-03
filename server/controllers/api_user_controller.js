@@ -12,33 +12,43 @@ import { createCompany } from "../models/company_model.js";
 
 const createNewUser = async function (req, res) {
   let provider = "";
-  const { name, email, password } = req.body;
+  const { name, email, password, terms } = req.body;
+  if (terms !== "agree") {
+    res.status(400).json("please agree terms");
+    return;
+  }
   let emailValidate = await emailValidator(email);
+
+  //TODO:
   if (!emailValidate) {
     res.status(400).json("email format is wrong");
     return;
   }
-  if (!password === "") {
+  if (!password) {
     res.status(400).json("lack of password");
     return;
   }
-  if (!name === "") {
+  if (!name) {
     res.status(400).json("lack of name");
     return;
   }
   const hashedPassword = await hashPassword(password);
   if (provider == "") {
     provider = "native";
-    const newUser = await createUser(provider, name, email, hashedPassword);
+    try {
+      const newUser = await createUser(provider, name, email, hashedPassword);
+    } catch (err) {
+      if ((err.errno = 1062)) {
+        res.status(403).json("email already exist");
+        return;
+      }
+    }
     if (newUser) {
       const userId = newUser.insertId;
       const createDefaultCompany = await createCompany(userId, "My Urls");
       const access_token = await issueJWT(userId, provider);
       console.log({ data: { access_token, access_expired: 3600 } });
       res.status(200).json({ data: { access_token, access_expired: 3600 } });
-      return;
-    } else {
-      res.status(403).json("email already exist");
       return;
     }
   }
