@@ -3,7 +3,7 @@ const producer = kafka.producer({ batchSize: 1000, linger: 100 });
 
 async function clickEvent(topic, value) {
   await producer.connect();
-  await producer.send({
+  producer.send({
     topic: topic,
     messages: [{ value: value }],
   });
