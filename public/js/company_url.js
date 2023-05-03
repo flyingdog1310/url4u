@@ -25,12 +25,11 @@ function renderTable(rawUrls) {
   table.classList.add("text-nowrap");
   const header = table.createTHead().insertRow();
   header.innerHTML = `
-    <th><i class="fas fa-link"></i> Url</th>
-    <th style="width:120px"><i class="fas fa-eye"></i> Picture</th>
-    <th><i class="fas fa-clipboard"></i> Title</th>
-    <th><i class="fas fa-clipboard"></i> Description</th>
-    <th><i class="fas fa-clock"></i> Create Time</th>
-    <th style="width:100px"><i class="fas fa-edit"></i> Operate</th>
+    <th style="width:300px"><i class="fas fa-link"></i> Url</th>
+    <th style="width:150px"><i class="fas fa-eye"></i> Picture</th>
+    <th><i class="fas fa-clipboard"></i> Title & Description</th>
+    <th style="width:150px"><i class="fas fa-clock"></i> Create Time</th>
+    <th style="width:150px"><i class="fas fa-edit"></i> Operate</th>
   `;
   const body = table.createTBody();
   for (let i = 0; i < rawUrls.length; i++) {
@@ -53,12 +52,12 @@ function renderTable(rawUrls) {
     }"><i class="fas fa-copy"></i></button>
       </td>
       <td>
-      <div class="display" style="width: 100px; height: 56px; overflow: hidden;">
+      <div class="display" style="width: 120px; height: 67px; overflow: hidden;">
       <img src=https://d2zbleiceefv1c.cloudfront.net/${
         url.picture
       }  style="object-fit: cover; object-position: center center; width: 100%; height: 100%;"></div></td>
-      <td class='td'>${url.title}</td>
-      <td class='td'>${url.description}</td>
+      <td class='td'><dt>${url.title}</dt><br>
+      <dd>${url.description}</dd></td>
       <td>${url.create_time.slice(0, 19).split("T")[0]}<br>
       <small>${url.create_time.slice(0, 19).split("T")[1].slice(0, 5)}</small>
       </td>
