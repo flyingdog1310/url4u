@@ -19,4 +19,4 @@ header
               a.dropdown-item(href="/user/company") My Companies 
               a.dropdown-item(href="/user/settings") Settings 
               .dropdown-divider
-              a.dropdown-item(href="/logout") Logout
+              a.dropdown-item(href="/" onclick=`localStorage.removeItem("jwtToken")`) Logout

@@ -33,3 +33,4 @@ function renderDropdown(companies) {
 
   document.getElementById("company").appendChild(select);
 }
+
