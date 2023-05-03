@@ -26,7 +26,7 @@ const storageEngine = multerS3({
   },
   key: async function (req, file, cb) {
     const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 10000)}`;
-    const filename = `${uniqueSuffix}-${file.originalname}`;
+    const filename = `${uniqueSuffix}`;
     cb(null, filename);
   },
 });

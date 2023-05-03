@@ -41,10 +41,10 @@ function renderTable(rawUrls) {
     }
     const row = body.insertRow();
     row.innerHTML = `
-      <td class='td'><a href=${url.long_url}>${url.long_url}</a><br>
+      <td class='td'><a href=${url.long_url} target=”_blank”>${url.long_url}</a><br>
       <a href=https://url4u.today/${url.short_url} id="${
       url.short_url
-    }-link">https://url4u.today/${
+    }-link" target=”_blank”>https://url4u.today/${
       url.short_url
     }    </a><button class="copy-button btn btn-secondary btn-xs"" data-short-url="${
       url.short_url

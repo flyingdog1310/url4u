@@ -62,7 +62,10 @@ const updateShortUrl = async (req, res) => {
     title,
     description
   );
-  return res.status(200).redirect("/company/1");
+  const urlInfo = await getUrlById(url_id);
+  const companyId = urlInfo[0].company_id;
+
+  return res.status(200).redirect(`/company/${companyId}`);
 };
 
 const getShortUrl = async (req, res) => {
