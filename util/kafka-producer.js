@@ -8,9 +8,9 @@ async function clickEvent(topic, value) {
     messages: [{ value: value }],
   });
 }
-setInterval(async () => {
-  await producer.sendBatch();
-}, 1000);
+// setInterval(async () => {
+//   await producer.sendBatch();
+// }, 1000);
 
 await producer.disconnect();
 export { clickEvent };
