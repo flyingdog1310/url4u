@@ -41,7 +41,9 @@ function renderTable(rawUrls) {
     }
     const row = body.insertRow();
     row.innerHTML = `
-      <td class='td'><a href=${url.long_url} target=”_blank”>${url.long_url}</a><br>
+      <td class='td'><a href=${url.long_url} target=”_blank”>${
+      url.long_url
+    }</a><br>
       <a href=https://url4u.today/${url.short_url} id="${
       url.short_url
     }-link" target=”_blank”>https://url4u.today/${
@@ -50,9 +52,11 @@ function renderTable(rawUrls) {
       url.short_url
     }"><i class="fas fa-copy"></i></button>
       </td>
-      <td><img src=https://d2zbleiceefv1c.cloudfront.net/${
+      <td>
+      <div class="display" style="width: 100px; height: 56px; overflow: hidden;">
+      <img src=https://d2zbleiceefv1c.cloudfront.net/${
         url.picture
-      } height="70px" width="100px" class="display"></td>
+      }  style="object-fit: cover; object-position: center center; width: 100%; height: 100%;"></div></td>
       <td class='td'>${url.title}</td>
       <td class='td'>${url.description}</td>
       <td>${url.create_time.slice(0, 19).split("T")[0]}<br>

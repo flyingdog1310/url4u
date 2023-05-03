@@ -20,7 +20,8 @@ block content
             label(for="long_url" style="padding-right:5px") Long url:
             input(id="long_url" name="long_url" type="url") 
           div(class="col" style="padding-top:5px" )
-            img(id="picturePreview" width="450px" height="250px")
+            div(style="width: 466px; height: 261px; overflow: hidden;")
+              img(id="picturePreview" style="object-fit: cover; object-position:center center; width: 100%; height: 100%;")
             input(id="picture" name="picture" type="file" accept="image/png, image/jpeg, image/jpg") 
             input(id="picture_url" name="picture_url" type="url" style="display:none")
           div(style="padding-top:5px") 
