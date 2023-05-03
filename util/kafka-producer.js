@@ -1,5 +1,5 @@
 import { kafka } from "./kafka.js";
-const producer = kafka.producer({ batchSize: 1000, linger: 100 });
+const producer = kafka.producer();
 
 async function clickEvent(topic, value) {
   await producer.connect();
@@ -8,9 +8,6 @@ async function clickEvent(topic, value) {
     messages: [{ value: value }],
   });
 }
-// setInterval(async () => {
-//   await producer.sendBatch();
-// }, 1000);
 
 await producer.disconnect();
 export { clickEvent };
