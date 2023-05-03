@@ -66,7 +66,7 @@ const redirectUrl = async (req, res) => {
 
 const previewUrl = async (req, res) => {
   const url = await getUrlByShortUrl(req.url.split("?")[0].substring(1));
-  if (!url[0]) {
+  if (!url) {
     //when short url not found
     return res.status(404).render("notfound");
   }
@@ -79,11 +79,11 @@ const previewUrl = async (req, res) => {
     geoIp.lookup(req.ip)
   );
   res.status(200).render("crawler", {
-    url_title: url[0].title,
-    url_short_url: url[0].short_url,
-    url_picture: `${process.env.AWS_CLOUDFRONT}${url[0].picture}`,
-    url_description: url[0].description,
-    url_long_url: url[0].long_url,
+    url_title: url.title,
+    url_short_url: url.short_url,
+    url_picture: `${process.env.AWS_CLOUDFRONT}${url.picture}`,
+    url_description: url.description,
+    url_long_url: url.long_url,
   });
 };
 
