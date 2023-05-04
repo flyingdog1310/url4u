@@ -1,9 +1,9 @@
 const today = new Date().toISOString().split("T")[0];
 document.getElementById("stop").setAttribute("max", today);
 
-renderPage()
+renderPage();
 
-async function renderPage () {
+async function renderPage() {
   getTotalClick();
   getTimeClick();
   getDayClick();
@@ -467,6 +467,10 @@ function renderDropdown(urls) {
   const select = document.createElement("select");
   select.classList.add("select");
   select.name = "url_id";
+  const defaultOption = document.createElement("option");
+  defaultOption.value = null;
+  defaultOption.textContent = "---Compare Url---";
+  select.appendChild(defaultOption);
   for (let i = 0; i < urls.length; i++) {
     const currentUrlId = window.location.pathname.split("/")[3];
     const url = urls[i];
