@@ -56,7 +56,7 @@ const createNewUser = async function (req, res) {
 const checkUser = async function (req, res) {
   const { email, password, remember } = req.body;
   const lookup = await userSignIn(email);
-  if (!lookup) {
+  if (!lookup[0]) {
     res.status(400).json("Email is not registered");
     return;
   }
