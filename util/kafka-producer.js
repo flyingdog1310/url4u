@@ -9,5 +9,12 @@ async function clickEvent(topic, value) {
   });
 }
 
+async function clickEventBatch(topicMessages) {
+  await producer.connect();
+  producer.sendBatch({
+    topicMessages,
+  });
+}
+
 await producer.disconnect();
-export { clickEvent };
+export { clickEvent, clickEventBatch };
