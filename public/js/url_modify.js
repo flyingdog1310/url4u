@@ -10,8 +10,7 @@ xhr.onreadystatechange = function () {
     insertDefault(url);
     addCrawImgs(url);
     insertSuggestion(url);
-    renderBack(url)
-      
+    renderBack(url);
   } else if (this.readyState === 4) {
     // handle error response
     console.log(xhr.status);
@@ -51,13 +50,17 @@ function addCrawImgs(url) {
 }
 
 function insertSuggestion(url) {
-  if (document.getElementById("title").value) {
-    const title = url[0].meta.title[0];
-    document.getElementById("title").value = title.slice(0, 128);
+  if (!document.getElementById("title").value) {
+    const crawlTitle = url[0].meta.title[0];
+    if (crawlTitle) {
+      document.getElementById("title").value = crawlTitle.slice(0, 128);
+    }
   }
-  if (document.getElementById("description").value) {
-    const description = url[0].meta.description[0];
-    document.getElementById("description").value = description.slice(0, 128);
+  if (!document.getElementById("description").value) {
+    const crawlDescription = url[0].meta.description[0];
+    if (crawlDescription) {
+      document.getElementById("description").value = crawlDescription.slice(0, 128);
+    }
   }
 }
 
@@ -70,7 +73,7 @@ picture.onchange = (evt) => {
   }
 };
 
-function renderBack(url){
-  const backCompany=document.getElementById("back-company")
-  backCompany.href=`/company/${url[0].company_id}`
-  }
+function renderBack(url) {
+  const backCompany = document.getElementById("back-company");
+  backCompany.href = `/company/${url[0].company_id}`;
+}
