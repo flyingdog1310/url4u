@@ -1,6 +1,4 @@
 import argon2 from "argon2";
-import dotenv from "dotenv";
-dotenv.config({ path: process.env.ENV });
 
 async function hashPassword(password) {
   try {

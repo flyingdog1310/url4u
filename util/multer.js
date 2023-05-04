@@ -2,25 +2,24 @@ import { S3Client } from "@aws-sdk/client-s3";
 import multer from "multer";
 import multerS3 from "multer-s3";
 import path from "path";
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
 import dotenv from "dotenv";
-dotenv.config({ path: process.env.ENV });
+dotenv.config({ path: __dirname + "/../.env" });
 
-const bucketName = process.env.AWS_BUCKET_NAME;
-const region = process.env.AWS_BUCKET_REGION;
-const accessKeyId = process.env.AWS_ACCESS_KEY;
-const secretAssessKey = process.env.AWS_SECRET_KEY;
+const { AWS_BUCKET_NAME, AWS_BUCKET_REGION, AWS_ACCESS_KEY, AWS_SECRET_KEY } =
+  process.env;
 
 const s3 = new S3Client({
-  region: region,
+  region: AWS_BUCKET_REGION,
   credentials: {
-    accessKeyId: accessKeyId,
-    secretAccessKey: secretAssessKey,
+    accessKeyId: AWS_ACCESS_KEY,
+    secretAccessKey: AWS_SECRET_KEY,
   },
 });
 //multer
 const storageEngine = multerS3({
   s3: s3,
-  bucket: bucketName,
+  bucket: AWS_BUCKET_NAME,
   metadata: function (req, file, cb) {
     cb(null, { fieldName: file.fieldname });
   },

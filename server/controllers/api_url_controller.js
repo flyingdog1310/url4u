@@ -3,11 +3,8 @@ import { createUrl, updateCustomUrl, getUrlById } from "../models/url_model.js";
 import { shortUrlGenerator } from "../../util/shortUrlGenerator.js";
 import { crawImgs } from "../../util/crawler.js";
 import { setUrlCache } from "../../util/cache.js";
-import dotenv from "dotenv";
-dotenv.config();
 const { AWS_BUCKET_NAME, AWS_BUCKET_REGION, AWS_ACCESS_KEY, AWS_SECRET_KEY } =
   process.env;
-console.log(AWS_BUCKET_NAME);
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 const s3Client = new S3Client({
   region: AWS_BUCKET_REGION,

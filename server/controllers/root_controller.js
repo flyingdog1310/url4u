@@ -1,5 +1,3 @@
-import dotenv from "dotenv";
-dotenv.config({ path: process.ENV });
 import { getUrlByShortUrl } from "../models/url_model.js";
 import { createClick } from "../models/ad_model.js";
 import { clickEvent, clickEventBatch } from "../../util/kafka-producer.js";
@@ -92,10 +90,10 @@ async function dataToBatch(topic, value) {
 }
 
 setInterval(async function () {
-  if (batchCount == 0 ) {
+  if (batchCount == 0) {
     return;
   }
-  
+
   const sendingArr = dataArr;
   batchCount = 0;
   dataArr = [];

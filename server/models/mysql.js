@@ -1,5 +1,3 @@
-import dotenv from "dotenv";
-dotenv.config({ path: process.ENV });
 import mysql from "mysql2";
 
 const { MYSQL_HOST, MYSQL_USERNAME, MYSQL_PASSWORD, MYSQL_DATABASE } =

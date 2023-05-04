@@ -1,6 +1,3 @@
-import dotenv from "dotenv";
-dotenv.config();
-
 import cassandra from "cassandra-driver";
 
 const {

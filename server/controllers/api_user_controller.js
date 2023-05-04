@@ -1,8 +1,6 @@
 import { emailValidator } from "../../util/validator.js";
 import { hashPassword, verifyPassword } from "../../util/password.js";
 import { issueJWT, verifyJWT } from "../../util/token.js";
-import dotenv from "dotenv";
-dotenv.config({ path: "../../.env" });
 import {
   createUser,
   userSignIn,
