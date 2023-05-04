@@ -1,5 +1,7 @@
 import {
   createCompany,
+  checkUserCompany,
+  addCompanyUser,
   getUrlsByCompany,
   getUrlsByUrl,
   getUsersByCompany,
@@ -13,16 +15,21 @@ const createUserCompany = async (req, res) => {
   const url = await createCompany(user_id, company_name);
   return res.status(200).redirect(`/company/${url.insertId}`);
 };
+
 const createCompanyUser = async (req, res) => {
   const { user_role, user_email } = req.body;
   const user_id = res.locals.decoded.userId;
   const company_id = req.originalUrl.split("/")[4];
   const newUser = await userSignIn(user_email);
-  if(!newUser[0]){
-    return res.status(400).json("no user with such email")
+  if (!newUser[0]) {
+    return res.status(400).json("no user with such email");
   }
-  console.log(newUser)
-  //const newUser = await createCompanyUser(company_id,user_id,user_role );
+  const newUserId = newUser[0].id;
+  const userCompany = await checkUserCompany(company_id, newUserId);
+  if (userCompany[0]) {
+    return res.status(400).json("user already in url group");
+  }
+  const addUser = await addCompanyUser(company_id, newUserId, user_role);
   return res
     .status(200)
     .redirect(`/company/${req.originalUrl.split("/")[4]}/user`);

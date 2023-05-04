@@ -12,6 +12,22 @@ const createCompany = async (user_id, company_name) => {
   return company_id;
 };
 
+const addCompanyUser = async (company_id, user_id, user_role) => {
+  const [company_user] = await pool.query(
+    `INSERT INTO role SET company_id = ? ,user_id= ? ,user_role = ?`,
+    [company_id, user_id, user_role]
+  );
+  return company_user;
+};
+const checkUserCompany = async (company_id, user_id) => {
+  const [userCompany] = await pool.query(
+    `
+  SELECT * FROM role WHERE company_id= ? AND user_id= ?`,
+    [company_id, user_id]
+  );
+  return userCompany;
+};
+
 const getUrlsByCompany = async (company_id) => {
   const [urls] = await pool.query(
     `
@@ -44,4 +60,11 @@ const getUsersByCompany = async (company_id) => {
   return users;
 };
 
-export { createCompany, getUrlsByCompany, getUrlsByUrl, getUsersByCompany };
+export {
+  createCompany,
+  checkUserCompany,
+  addCompanyUser,
+  getUrlsByCompany,
+  getUrlsByUrl,
+  getUsersByCompany,
+};

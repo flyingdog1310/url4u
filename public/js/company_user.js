@@ -72,5 +72,8 @@ $("#add-company-user").submit(function (e) {
     success: function (data) {
       location.reload();
     },
+    error: function (jqXHR, textStatus, errorThrown) {
+      alert(jqXHR.responseText);
+    },
   });
 });
