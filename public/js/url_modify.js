@@ -100,3 +100,22 @@ $("#copy-url").on("click", function () {
   textArea.remove();
   alert("Copied to clipboard: " + shortUrl);
 });
+
+$("#update-short-url").submit(function (e) {
+  e.preventDefault();
+  $.ajax({
+    url: document.getElementById("update-short-url").action,
+    type: "post",
+    data: $("#update-short-url").serialize(),
+    beforeSend: function (xhr) {
+      let token = localStorage.getItem("jwtToken");
+      xhr.setRequestHeader("Authorization", `Bearer ${token}`);
+    },
+    success: function (data) {
+      location.href = document.getElementById("back-company").href;
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      alert(jqXHR.responseText);
+    },
+  });
+});
