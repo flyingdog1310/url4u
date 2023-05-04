@@ -43,11 +43,14 @@ function renderTotalClicks(totalClicks) {
 function getTimeClick() {
   const token = localStorage.getItem("jwtToken");
   const url = `/api/1.0/time_click/${window.location.pathname.split("/")[3]}`;
-  const headers = new Headers({ Authorization: `Bearer ${token}` });
+  const headers = new Headers({
+    Authorization: `Bearer ${token}`,
+    "Content-Type": "application/json",
+  });
   const options = {
     method: "POST",
     headers: headers,
-    body: JSON.stringify(),
+    body: JSON.stringify({ url_id: "0" }),
   };
 
   fetch(url, options)
@@ -171,7 +174,7 @@ function getDayClick() {
     Authorization: `Bearer ${token}`,
     "Content-Type": "application/json",
   });
-  const body = { method: "hour", range: 168 };
+  const body = { method: "hour", range: 168, url_id: "0" };
   const options = {
     method: "POST",
     headers: headers,
@@ -455,7 +458,7 @@ if (localStorage.getItem("jwtToken") !== null) {
       console.log(response);
       const urls = response;
       renderDropdown(urls);
-      renderBack(urls)
+      renderBack(urls);
     })
     .fail(function (err) {
       localStorage.removeItem("jwtToken");
@@ -463,9 +466,9 @@ if (localStorage.getItem("jwtToken") !== null) {
       location.reload();
     });
 }
-function renderBack(urls){
-const backCompany=document.getElementById("back-company")
-backCompany.href=`/company/${urls[0].company_id}`
+function renderBack(urls) {
+  const backCompany = document.getElementById("back-company");
+  backCompany.href = `/company/${urls[0].company_id}`;
 }
 
 function renderDropdown(urls) {
@@ -473,7 +476,7 @@ function renderDropdown(urls) {
   select.classList.add("select");
   select.name = "url_id";
   const defaultOption = document.createElement("option");
-  defaultOption.value = null;
+  defaultOption.value = 0;
   defaultOption.textContent = "---Compare Url---";
   select.appendChild(defaultOption);
   for (let i = 0; i < urls.length; i++) {

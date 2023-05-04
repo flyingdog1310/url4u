@@ -19,6 +19,7 @@ const addCompanyUser = async (company_id, user_id, user_role) => {
   );
   return company_user;
 };
+
 const checkUserCompany = async (company_id, user_id) => {
   const [userCompany] = await pool.query(
     `

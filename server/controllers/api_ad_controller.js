@@ -115,7 +115,7 @@ const getUrlClickByTime = async (req, res) => {
     Number(currentClick) + Number(urlClickFromRedis);
   result.push(urlCount);
   //compare url if exist
-  if (req.body.url_id) {
+  if (req.body.url_id != 0) {
     let compareUrl = req.body.url_id;
     let compareUrlCount = await getTimeClickFromSQL(compareUrl, time);
     timeModify(compareUrlCount, method);

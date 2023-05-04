@@ -1,24 +1,34 @@
-const xhr = new XMLHttpRequest();
-xhr.onreadystatechange = function () {
-  if (this.readyState === 4 && this.status === 200) {
-    // handle success response
-    console.log(xhr.responseText);
-    const url = JSON.parse(xhr.responseText);
-    if (!url[0].picture) {
-      url[0].picture = "pic-undefined.jpg";
-    }
-    insertDefault(url);
-    addCrawImgs(url);
-    insertSuggestion(url);
-    renderBack(url);
-  } else if (this.readyState === 4) {
-    // handle error response
-    console.log(xhr.status);
-  }
-};
-xhr.open("GET", `/api/1.0/url/${window.location.pathname.split("/")[3]}`);
-xhr.setRequestHeader("Authorization", `Bearer ${null}`);
-xhr.send();
+renderModifyPage();
+
+function renderModifyPage() {
+  let token = localStorage.getItem("jwtToken");
+  fetch(`/api/1.0/url/${window.location.pathname.split("/")[3]}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+      throw new Error("Network response was not ok.");
+    })
+    .then((data) => {
+      // handle success response
+      const url = data;
+      if (!url[0].picture) {
+        url[0].picture = "pic-undefined.jpg";
+      }
+      insertDefault(url);
+      addCrawImgs(url);
+      insertSuggestion(url);
+      renderBack(url);
+    })
+    .catch((error) => {
+      // handle error response
+      console.error("There was a problem with the fetch operation:", error);
+    });
+}
 
 function insertDefault(url) {
   document.getElementById(
@@ -59,7 +69,10 @@ function insertSuggestion(url) {
   if (!document.getElementById("description").value) {
     const crawlDescription = url[0].meta.description[0];
     if (crawlDescription) {
-      document.getElementById("description").value = crawlDescription.slice(0, 128);
+      document.getElementById("description").value = crawlDescription.slice(
+        0,
+        128
+      );
     }
   }
 }

@@ -1,21 +1,27 @@
-const xhr = new XMLHttpRequest();
+getCompanyUrl();
+
 function getCompanyUrl() {
   const pwd = window.location.pathname.split("/")[2];
-  xhr.onreadystatechange = function () {
-    if (this.readyState === 4 && this.status === 200) {
-      // handle success response
-      console.log(xhr.responseText);
-      const rawUrls = JSON.parse(xhr.responseText);
-      renderTable(rawUrls);
-    } else if (this.readyState === 4) {
-      // handle error response
-      console.log(xhr.status);
-    }
-  };
-  xhr.open("GET", `/api/1.0/company/${pwd}`);
   let token = localStorage.getItem("jwtToken");
-  xhr.setRequestHeader("Authorization", `Bearer ${token}`);
-  xhr.send();
+
+  fetch(`/api/1.0/company/${pwd}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(response.status);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log(data);
+      renderTable(data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 }
 
 function renderTable(rawUrls) {
@@ -82,8 +88,6 @@ function renderTable(rawUrls) {
     alert("Copied to clipboard: " + shortUrl);
   });
 }
-
-getCompanyUrl();
 
 $("#add-company-url").submit(function (e) {
   e.preventDefault();

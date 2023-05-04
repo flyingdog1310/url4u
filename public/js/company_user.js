@@ -1,20 +1,26 @@
-const xhr = new XMLHttpRequest();
+getCompanyUser();
+
 function getCompanyUser() {
   const pwd = window.location.pathname.split("/")[2];
-  xhr.onreadystatechange = function () {
-    if (this.readyState === 4 && this.status === 200) {
-      // handle success response
-      console.log(xhr.responseText);
-      const users = JSON.parse(xhr.responseText);
+  let token = localStorage.getItem("jwtToken");
+  fetch(`/api/1.0/company/${pwd}/user`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error("Error retrieving users.");
+      }
+    })
+    .then((users) => {
       renderTable(users);
-    } else if (this.readyState === 4) {
-      // handle error response
-      console.log(xhr.status);
-    }
-  };
-  xhr.open("GET", `/api/1.0/company/${pwd}/user`);
-  xhr.setRequestHeader("Authorization", `Bearer ${null}`);
-  xhr.send();
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 }
 
 function renderTable(users) {
@@ -56,8 +62,6 @@ function renderTable(users) {
 
   document.getElementById("lists").appendChild(table);
 }
-
-getCompanyUser();
 
 $("#add-company-user").submit(function (e) {
   e.preventDefault();
