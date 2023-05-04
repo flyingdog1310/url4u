@@ -30,10 +30,10 @@ function renderTable(companies) {
   table.classList.add("text-nowrap");
   const header = table.createTHead().insertRow();
   header.innerHTML = `
-    <th>company</th>
-    <th>level</th>
-    <th>role</th>
-    <th style="width:100px">Operate</th>
+    <th>Url Group</th>
+    <th>Level</th>
+    <th>Role</th>
+    <th style="width:150px">Operate</th>
   `;
   const body = table.createTBody();
   for (let i = 0; i < companies.length; i++) {
