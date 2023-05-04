@@ -56,7 +56,7 @@ function renderTable(companies) {
     const row = body.insertRow();
     row.innerHTML = `
       <td>${company.name}</td>
-      <td>${company.level}</td>
+      <td><span class="badge badge-success">${company.level}</span></td>
       <td>${company.user_role}</td>
       <td>
       <button type="button" class="btn btn-info btn-xs" onclick="location.href='/company/${company.id}'"><i class="fas fa-list"></i> Url List</button><br>

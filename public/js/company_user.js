@@ -25,7 +25,7 @@ function renderTable(users) {
   const header = table.createTHead().insertRow();
   header.innerHTML = `
     <th>Role</th>
-    <th>User</th>
+    <th>User Name</th>
     <th>Email</th>
     <th style="width:100px">Operate</th>
   `;

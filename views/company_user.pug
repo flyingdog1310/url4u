@@ -5,9 +5,10 @@ block content
     section(class="content-header row")
       div(class="col-1")
       div(class="col-10")
+        a(href="/user/company") << Back to My Url Groups
         div(class="card")
           div(class="card-header")
-            h3(class="card-title") Company Members
+            h3(class="card-title") Url Group Members
             div(class="card-tools")
               div(class="input-group input-group-sm" style="width: 150px;")
                 input(type="text" name="table_search" class="form-control float-right" placeholder="Search")
@@ -18,10 +19,10 @@ block content
             form(action="/api/1.0/company/user" method="POST" enctype='application/json' id="add-company-user") 
               div 
                 input(name="user_role" placeholder="new user role" class="input-round" required )
-                input(name="user_email"  placeholder="new user email" class="input-round" required )                 
+                input(name="user_email" placeholder="new user email" class="input-round" required )                 
                 button(type="submit" class="btn  btn-primary btn-sm") Add User
           div(class="card-body table-responsive p-0" id="lists")
 
-          
+
     script.
       import(`/js/company_user.js`)

@@ -455,12 +455,17 @@ if (localStorage.getItem("jwtToken") !== null) {
       console.log(response);
       const urls = response;
       renderDropdown(urls);
+      renderBack(urls)
     })
     .fail(function (err) {
       localStorage.removeItem("jwtToken");
       console.log(err.responseJSON);
       location.reload();
     });
+}
+function renderBack(urls){
+const backCompany=document.getElementById("back-company")
+backCompany.href=`/company/${urls[0].company_id}`
 }
 
 function renderDropdown(urls) {
