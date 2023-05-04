@@ -1,6 +1,9 @@
 import { getUrlByShortUrl } from "../models/url_model.js";
 import { createClick } from "../models/ad_model.js";
-import { clickEvent, clickEventBatch } from "../../util/kafka-producer.js";
+import {
+  clickEvent,
+  dataToBatch,
+} from "../../util/kafka-producer.js";
 import { setUrlCache, getUrlCache } from "../../util/cache.js";
 import geoIp from "geoip-lite";
 
@@ -66,39 +69,6 @@ const redirectUrl = async (req, res) => {
   );
   return res.status(307).redirect(url.long_url);
 };
-
-//Code for Batch Send
-let dataArr = [];
-let batchCount = 0;
-let sendPromise = Promise.resolve();
-
-async function dataToBatch(topic, value) {
-  let data = {};
-  data = {
-    topic: topic,
-    messages: [{ value: value }],
-  };
-  dataArr.push(data);
-  batchCount++;
-  if (batchCount >= 100) {
-    const sendingArr = dataArr;
-    batchCount = 0;
-    dataArr = [];
-    await sendPromise;
-    sendPromise = clickEventBatch(sendingArr);
-  }
-}
-
-setInterval(async function () {
-  if (batchCount == 0) {
-    return;
-  }
-
-  const sendingArr = dataArr;
-  batchCount = 0;
-  dataArr = [];
-  sendPromise = clickEventBatch(sendingArr);
-}, 1000);
 
 const previewUrl = async (req, res) => {
   const url = await getUrlByShortUrl(req.url.split("?")[0].substring(1));
