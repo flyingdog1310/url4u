@@ -1,9 +1,6 @@
 import { getUrlByShortUrl } from "../models/url_model.js";
 import { createClick } from "../models/ad_model.js";
-import {
-  clickEvent,
-  dataToBatch,
-} from "../../util/kafka-producer.js";
+import { clickEvent, dataToBatch } from "../../util/kafka-producer.js";
 import { setUrlCache, getUrlCache } from "../../util/cache.js";
 import geoIp from "geoip-lite";
 
@@ -93,6 +90,69 @@ const previewUrl = async (req, res) => {
   });
 };
 
+const loadTestUrl = async (req, res) => {
+  const requestUrl = req.url.split("?")[0].substring(6);
+  const idLongUrl = await getUrlCache(requestUrl);
+  let url = {};
+  if (!idLongUrl) {
+    url = await getUrlByShortUrl(requestUrl);
+
+    if (!url) {
+      //when short url not found
+      console.log("ip:", req.ip, "notfound url:", req.url);
+      return res.status(404).render("notfound");
+    }
+    setUrlCache(requestUrl, `${url.id} ${url.long_url}`);
+  }
+  if (idLongUrl) {
+    url.id = idLongUrl.split(" ")[0];
+    url.long_url = idLongUrl.split(" ")[1];
+  }
+
+  const device = req.headers["user-agent"].split("(")[1].split(";")[0] || "";
+  if (!req.headers["referer"]) {
+    req.headers["referer"] = "native";
+  }
+  const ip = geoIp.lookup(req.ip) || {};
+  const time = new Date().toISOString().slice(0, 19).replace("T", " ");
+
+  console.log(
+    "user-agent:",
+    req.headers["user-agent"],
+    "device",
+    device,
+    "referrer:",
+    req.headers["referer"],
+    "ip:",
+    ip,
+    "time",
+    time
+  );
+  if (!ip.country) {
+    ip.country = "";
+    ip.city = "";
+  }
+  // createClick(
+  //   url.id,
+  //   time,
+  //   req.headers["referer"],
+  //   device,
+  //   `${ip.country}`,
+  //   1
+  // );
+
+  // clickEvent(
+  //   "clicks",
+  //   `{id:${url.id} time:${time} referer:${req.headers["referer"]} device:${device} ip:${ip.country}}`
+  // );
+
+  dataToBatch(
+    "clicks",
+    `{id:${url.id} time:${time} referer:${req.headers["referer"]} device:${device} ip:${ip.country}}`
+  );
+  return res.status(200).json(url.long_url);
+};
+
 const isUserAgent = (req) => {
   if (
     req.headers["user-agent"].startsWith("facebookexternalhit") ||
@@ -113,4 +173,4 @@ const visitUrl = async (req, res) => {
   }
 };
 
-export { visitUrl };
+export { visitUrl, loadTestUrl };
