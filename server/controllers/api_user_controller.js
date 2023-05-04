@@ -32,9 +32,10 @@ const createNewUser = async function (req, res) {
   }
   const hashedPassword = await hashPassword(password);
   if (provider == "") {
+    let newUser
     provider = "native";
     try {
-      const newUser = await createUser(provider, name, email, hashedPassword);
+       newUser = await createUser(provider, name, email, hashedPassword);
     } catch (err) {
       if ((err.errno = 1062)) {
         res.status(403).json("email already exist");

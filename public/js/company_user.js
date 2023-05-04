@@ -58,3 +58,19 @@ function renderTable(users) {
 }
 
 getCompanyUser();
+
+$("#add-company-user").submit(function (e) {
+  e.preventDefault();
+  $.ajax({
+    url: `/api/1.0/company/${window.location.pathname.split("/")[2]}/user`,
+    type: "post",
+    data: $("#add-company-user").serialize(),
+    beforeSend: function (xhr) {
+      let token = localStorage.getItem("jwtToken");
+      xhr.setRequestHeader("Authorization", `Bearer ${token}`);
+    },
+    success: function (data) {
+      location.reload();
+    },
+  });
+});
