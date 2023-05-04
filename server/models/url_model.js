@@ -16,10 +16,29 @@ const updateCustomUrl = async (
   title,
   description
 ) => {
-  const [url] = await pool.query(
-    "UPDATE url SET short_url = ? ,long_url = ? , picture = ? , title = ? ,description = ? WHERE id = ? ",
-    [short_url, long_url, picture, title, description, url_id]
-  );
+  let query = "UPDATE url SET";
+  const params = [];
+  if (short_url) {
+    query += " short_url = ?,";
+    params.push(short_url);
+  }
+  if (long_url) {
+    query += " long_url = ?,";
+    params.push(long_url);
+  }
+  if (picture) {
+    query += " picture = ?,";
+    params.push(picture);
+  }
+  query += " title = ?, description = ?,";
+  params.push(title);
+  params.push(description);
+
+  query = query.slice(0, -1);
+  query += " WHERE id = ?";
+
+  params.push(url_id);
+  const [url] = await pool.query(query, params);
   return url;
 };
 

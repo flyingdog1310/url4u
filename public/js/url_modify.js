@@ -90,3 +90,13 @@ function renderBack(url) {
   const backCompany = document.getElementById("back-company");
   backCompany.href = `/company/${url[0].company_id}`;
 }
+
+$("#copy-url").on("click", function () {
+  const short_url = document.getElementById("short_url").value;
+  const shortUrl = `https://url4u.today/${short_url}`;
+  const textArea = $("<textarea>").val(shortUrl).appendTo("body");
+  textArea.select();
+  document.execCommand("copy");
+  textArea.remove();
+  alert("Copied to clipboard: " + shortUrl);
+});

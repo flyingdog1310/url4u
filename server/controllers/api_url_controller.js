@@ -23,12 +23,30 @@ const createShortUrl = async (req, res) => {
   if (req.headers["referer"].split("/")[4]) {
     company_id = req.headers["referer"].split("/")[4];
   }
-  const short_url = shortUrlGenerator();
-  const url = await createUrl(company_id, short_url, long_url);
-  console.log(url);
-  const setCache = await setUrlCache(short_url, `${url.insertId} ${long_url}`);
-  return res.status(200).redirect(`/url/modify/${url.insertId}`);
+
+  const uniqueUrl = await generateUniqueUrl(company_id, long_url);
+
+  const setCache = await setUrlCache(
+    uniqueUrl,
+    `${uniqueUrl.insertId} ${long_url}`
+  );
+  return res.status(200).redirect(`/url/modify/${uniqueUrl.insertId}`);
 };
+
+async function generateUniqueUrl(company_id, long_url) {
+  let short_url;
+  let url;
+  while (!url || url.errno === 1062) {
+    try {
+      short_url = shortUrlGenerator();
+      url = await createUrl(company_id, short_url, long_url);
+    } catch (error) {
+      console.error(error);
+      continue;
+    }
+  }
+  return url;
+}
 
 const updateShortUrl = async (req, res) => {
   const url_id = req.originalUrl.split("/")[4];
