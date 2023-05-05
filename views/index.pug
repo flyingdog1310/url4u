@@ -1,19 +1,25 @@
 extends layout.pug
 
 block content
-  div.content-wrapper.center
+  div.content-wrapper
     div.row
-      div.col-sm-3.row  
-        h2.m-0 Shorten Your Url Now!
-          form(action="/api/1.0/url" method="POST" enctype='application/json' id="create-short-url")             
-            div
-              input(id="long_url" name="long_url" type="url" placeholder="https://" class="input-round" required )                  
-            div(id="company") 
-            div(id="submit")   
-              button(type="submit" class="btn  btn-primary btn-sm") Shorten
+      div.col-lg-6.d-flex.flex-column.justify-content-center.align-items-center  
+        div.typewriter
+          h1.m-0.font-weight-bold.text-center Paste Your Url Now!
+          p.m-0.text-muted.text-center Short Url With Tracking and Customize Preview
+        form(action="/api/1.0/url" method="POST" enctype='application/json' id="create-short-url")             
+          div(class="input-group input-group-sm" style="padding-top:10px;")
+            input(id="long_url" name="long_url" type="url" placeholder="https://" required style="width:300px;")
+            div(class="input-group-append")   
+              button(type="submit" class="btn  btn-primary btn-sm") Shorten                 
+          div(id="company")   
+            
+      div.col-lg-6
+        div(style="max-width:450px")
+          include index-svg.pug
     script.
       import(`/js/index.js`)
 
- 
+
 
 

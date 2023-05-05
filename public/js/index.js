@@ -20,6 +20,7 @@ if (localStorage.getItem("jwtToken") !== null) {
 }
 
 function renderDropdown(companies) {
+  const tag = document.createElement("tag");
   const select = document.createElement("select");
   select.classList.add("select");
   select.name = "company_id";
