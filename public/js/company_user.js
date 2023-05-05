@@ -41,13 +41,13 @@ function renderTable(users) {
     const user = users[i];
     let userRole = "";
     if (user.user_role == 0) {
-      userRole = "admin";
+      userRole = "Admin";
     }
     if (user.user_role == 1) {
-      userRole = "edit";
+      userRole = "Editor";
     }
     if (user.user_role == 2) {
-      userRole = "view";
+      userRole = "Viewer";
     }
     const row = body.insertRow();
     row.innerHTML = `
@@ -55,7 +55,8 @@ function renderTable(users) {
       <td>${user.name}</td>
       <td>${user.email}</td>
       <td>
-      <button type="button" class="btn btn-primary btn-xs" onclick="location.href='#'">Adjust</button><br>
+      <button type="button" class="btn btn-info btn-xs" onclick="location.href='#'">Modify</button><br>
+      <button type="button" class="btn btn-danger btn-xs" onclick="location.href='#'">Remove</button>
       </td>
     `;
   }

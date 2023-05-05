@@ -2,6 +2,12 @@ extends layout.pug
 
 block content
   div(class="content-wrapper")
+    section(class="breadcrumb") 
+      div.container
+        ol.breadcrumb   
+          li.breadcrumb-item 
+            a(href="/") Home 
+          li.breadcrumb-item.active My Url Groups
     section(class="content-header row")
       div(class="col-1")
       div(class="col-10")
@@ -9,18 +15,14 @@ block content
           div(class="card-header")
             h3(class="card-title") My Url Groups
             div(class="card-tools")
-              div(class="input-group input-group-sm" style="width: 150px;")
-                input(type="text" name="table_search" class="form-control float-right" placeholder="Search")
-                div(class="input-group-append")
-                  button(type="submit" class="btn btn-default")
-                    i(class="fas fa-search")
+              form(action="/api/1.0/company" method="POST" enctype='application/json' id="create-company") 
+                div(class="input-group input-group-sm" style="width: 200px;")
+                  input.form-control(id="company_name" name="company_name" placeholder="New Url Group"  required )                  
+                  button(type="submit" class="btn  btn-primary btn-sm") Create
           div
-            form(action="/api/1.0/company" method="POST" enctype='application/json' id="create-company") 
-              div
-                input(id="company_name" name="company_name"  placeholder="New Url Group" class="input-round" required )                  
-                button(type="submit" class="btn  btn-primary btn-sm") Create
+
           div(class="card-body table-responsive p-0" id="lists")
 
-          
+
     script.
       import(`/js/user_company.js`)

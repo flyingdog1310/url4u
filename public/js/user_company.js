@@ -45,13 +45,13 @@ function renderTable(companies) {
       company.level = "premium";
     }
     if (company.user_role == 0) {
-      company.user_role = "admin";
+      company.user_role = "Admin";
     }
     if (company.user_role == 1) {
-      company.user_role = "edit";
+      company.user_role = "Editor";
     }
     if (company.user_role == 2) {
-      company.user_role = "view";
+      company.user_role = "Viewer";
     }
     const row = body.insertRow();
     row.innerHTML = `

@@ -2,15 +2,19 @@ extends layout.pug
 
 block content 
   div(class="content-wrapper")
-    div(class="content-header")
-      div(class="container-fluid")
-        div(class="row mb-2")
-          div(class="col-md-1")
-          a(id="back-company") << Back to Url Group
-        div(class="row mb-2")
-          div(class="col-md-1")
-          div(class="col-sm-6")
-            h1(class="m-0") Link Performance
+    section(class="breadcrumb") 
+      div.container
+        ol.breadcrumb   
+          li.breadcrumb-item 
+            a(href="/") Home 
+          li.breadcrumb-item.active 
+            a(href="/user/company") My Url Groups
+          li.breadcrumb-item.active 
+            a(id="back-company") My Url Group
+          li.breadcrumb-item.active Modify Url 
+        h2(class="m-0") Link Performance
+  
+    section(class="content-header")
         div(class="row")  
           div(class="col-md-1")
           div(class="col-md-6")
@@ -18,6 +22,16 @@ block content
               div(class="card-header")
                 h3(class="card-title") Time-Clicks                
                 div(class="class-tools")  
+                  form(id="time-clicks" enctype='application/json' class="text-right")
+                    div.input-group.input-group-sm
+                      input.form-control(type="date" name="stop" id="stop")
+                      select.form-control(name="method" style="width:30px;")
+                        option(value="day") by day
+                        option(value="hour") by hour
+                      select.form-control(name="url_id" id="compare-url")
+                        option(value=0) ---Compare Url---
+                      div
+                        button.btn.btn-secondary.btn-sm(type="submit") Search 
               div(class="card-body")
                 div(class="d-flex")
                   p(class="d-flex flex-column text-left")
@@ -42,15 +56,6 @@ block content
                   div(class="chartjs-size-monitor-expand")
                   div(class="chartjs-size-monitor-shrink")
                   div(id="line-chart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 667px;" width="667" height="250" class="chartjs-render-monitor")
-                form(id="time-clicks" enctype='application/json' class="text-right")
-                  input(type="date" name="stop" id="stop")
-                  div(class="btn-group" id="scope" data-toggle="btn-toggle")
-                    input(type="radio" class="btn btn-default btn-sm active" name="method" value="day" id="day")
-                    label(for="day" style="padding-right:10px") Day 
-                    input(type="radio" class="btn btn-default btn-sm active" name="method" value="hour" id="hour") 
-                    label(for="hour" style="padding-right:10px") Hour 
-                    div(id="compare-url")
-                    button(type="submit" class="btn btn-secondary btn-sm" style="padding-right:10px") Search 
             div(class="card")
               div(class="card-header")
                 h3(class="card-title") Device

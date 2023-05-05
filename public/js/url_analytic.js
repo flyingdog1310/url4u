@@ -472,13 +472,7 @@ function renderBack(urls) {
 }
 
 function renderDropdown(urls) {
-  const select = document.createElement("select");
-  select.classList.add("select");
-  select.name = "url_id";
-  const defaultOption = document.createElement("option");
-  defaultOption.value = 0;
-  defaultOption.textContent = "---Compare Url---";
-  select.appendChild(defaultOption);
+  const select = document.getElementById("compare-url");
   for (let i = 0; i < urls.length; i++) {
     const currentUrlId = window.location.pathname.split("/")[3];
     const url = urls[i];
@@ -489,5 +483,4 @@ function renderDropdown(urls) {
       select.appendChild(option);
     }
   }
-  document.getElementById("compare-url").appendChild(select);
 }
