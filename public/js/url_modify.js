@@ -14,7 +14,6 @@ function renderModifyPage() {
       throw new Error("Network response was not ok.");
     })
     .then((data) => {
-      // handle success response
       const url = data;
       if (!url[0].picture) {
         url[0].picture = "pic-undefined.jpg";
@@ -25,7 +24,6 @@ function renderModifyPage() {
       renderBack(url);
     })
     .catch((error) => {
-      // handle error response
       console.error("There was a problem with the fetch operation:", error);
     });
 }
