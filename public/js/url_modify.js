@@ -101,10 +101,13 @@ $("#copy-url").on("click", function () {
 
 $("#update-short-url").submit(function (e) {
   e.preventDefault();
+  let formData = new FormData(this);
   $.ajax({
-    url: document.getElementById("update-short-url").action,
+    url: this.action,
     type: "post",
-    data: $("#update-short-url").serialize(),
+    data: formData,
+    processData: false,
+    contentType: false,
     beforeSend: function (xhr) {
       let token = localStorage.getItem("jwtToken");
       xhr.setRequestHeader("Authorization", `Bearer ${token}`);
