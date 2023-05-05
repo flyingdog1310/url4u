@@ -1,10 +1,11 @@
 extends layout.pug
 
 block content
-  div(class="login-page" style="min-height: 466px;")
+  div(class="login-page" )
     div(class="login-box")
       div(class="card")
         div(class="card-body")
+          img(src="/image/header-logo.jpg" width="100%")
           p(class="login-box-msg") Sign in to start your session
           form(action="/api/1.0/user" method="post" id="sign-in")
             div(class="input-group mb-3")
