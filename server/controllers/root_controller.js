@@ -23,9 +23,9 @@ const redirectUrl = async (req, res) => {
     url.long_url = idLongUrl.split(" ")[1];
   }
 
-  const device = req.headers["user-agent"].split("(")[1].split(";")[0] || "";
+  const device = parseUserAgent(req.headers["user-agent"]);
   if (!req.headers["referer"]) {
-    req.headers["referer"] = "native";
+    req.headers["referer"] = "Direct";
   }
   const ip = geoIp.lookup(req.ip) || {};
   const time = new Date().toISOString().slice(0, 19).replace("T", " ");
@@ -109,9 +109,9 @@ const loadTestUrl = async (req, res) => {
     url.long_url = idLongUrl.split(" ")[1];
   }
 
-  const device = req.headers["user-agent"].split("(")[1].split(";")[0] || "";
+  const device = parseUserAgent(req.headers["user-agent"]);
   if (!req.headers["referer"]) {
-    req.headers["referer"] = "native";
+    req.headers["referer"] = "Direct";
   }
   const ip = geoIp.lookup(req.ip) || {};
   const time = new Date().toISOString().slice(0, 19).replace("T", " ");
@@ -164,6 +164,24 @@ const isUserAgent = (req) => {
   }
   return false;
 };
+
+function parseUserAgent(userAgent) {
+  if (/Windows/.test(userAgent)) {
+    return "Windows";
+  } else if (/Macintosh/.test(userAgent)) {
+    return "Macintosh";
+  } else if (/iPhone/.test(userAgent)) {
+    return "iPhone";
+  } else if (/Android/.test(userAgent)) {
+    return "Android";
+  } else if (/iPad/.test(userAgent)) {
+    return "iPad";
+  } else if (/k6.io/.test(userAgent)) {
+    return "K6";
+  } else {
+    return "Unknown";
+  }
+}
 
 const visitUrl = async (req, res) => {
   if (isUserAgent(req, res)) {

@@ -45,14 +45,17 @@ function renderTable(rawUrls) {
     }
     const row = body.insertRow();
     row.innerHTML = `
-      <td class='td'><div style="text-overflow: ellipsis;white-space: nowrap;overflow: hidden;margin-bottom: 8px;"><a href=${
-        url.long_url
-      } target=”_blank” style="color: #858585;">${url.long_url}</a></div>
+      <td class='td'>
+      <div style="text-overflow: ellipsis;white-space: nowrap;overflow: hidden;margin-bottom: 8px;">
+      <a href=${url.long_url} target=”_blank” style="color: #858585;" referrerpolicy="origin">${
+      url.long_url
+    }</a>
+      </div>
       <a href=https://url4u.today/${url.short_url} id="${
       url.short_url
-    }-link" target=”_blank”>https://url4u.today/${
+    }-link" target=”_blank” referrerpolicy="origin">https://url4u.today/${
       url.short_url
-    }    </a><button class="copy-button btn btn-secondary btn-xs"" data-short-url="${
+    }    </a><button class="copy-button btn btn-secondary btn-xs" data-short-url="${
       url.short_url
     }"><i class="fas fa-copy"></i></button>
       </td>
@@ -62,8 +65,12 @@ function renderTable(rawUrls) {
         url.picture
       }  style="object-fit: cover; object-position: center center; width: 100%; height: 100%;"></div></td>
       <td class='td'>
-      <dt style="display: -webkit-box;-webkit-line-clamp: 1;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;">${url.title}</dt>
-      <dd style="display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;color: #858585;">${url.description}</dd>
+      <dt style="display: -webkit-box;-webkit-line-clamp: 1;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;">${
+        url.title
+      }</dt>
+      <dd style="display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;color: #858585;">${
+        url.description
+      }</dd>
       </td>
       <td>${url.create_time.slice(0, 19).split("T")[0]}<br>
       <small>${url.create_time.slice(0, 19).split("T")[1].slice(0, 5)}</small>
