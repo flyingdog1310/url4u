@@ -55,8 +55,8 @@ function renderTable(users) {
       <td>${user.name}</td>
       <td>${user.email}</td>
       <td>
-      <button type="button" style="margin-right:10px;" class="btn btn-info btn-xs" onclick="location.href='#'">Modify</button>
-      <button type="button" class="btn btn-danger btn-xs" onclick="location.href='#'">Remove</button>
+      <button type="button" style="margin-right:10px;" class="btn btn-info btn-xs" onclick="location.href='#'"><i class="fas fa-edit"></i> Modify</button>
+      <button type="button" class="btn btn-danger btn-xs" onclick="location.href='#'"><i class="far fa-trash-alt"></i> Remove</button>
       </td>
     `;
   }

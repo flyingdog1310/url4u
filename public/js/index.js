@@ -31,6 +31,5 @@ function renderDropdown(companies) {
     option.textContent = company.name;
     select.appendChild(option);
   }
-
   document.getElementById("company").appendChild(select);
 }
