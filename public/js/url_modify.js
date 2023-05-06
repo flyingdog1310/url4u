@@ -74,10 +74,17 @@ function addCrawImgs(url) {
   const imgs = document.createElement("div");
   let imgsHTML = "";
   for (let i = 0; i < url[0].meta.images.length; i++) {
-    imgsHTML += `<button class="img-btn" data-img-url="${url[0].meta.images[i]}" style="background-image: url(${url[0].meta.images[i]});"></button>`;
+    const img = new Image();
+    img.src = url[0].meta.images[i];
+    img.onload = function () {
+      imgsHTML += `<button class="img-btn" data-img-url="${url[0].meta.images[i]}" style="background-image: url(${url[0].meta.images[i]});"></button>`;
+      imgs.innerHTML = imgsHTML;
+      document.getElementById("craw-img-list").appendChild(imgs);
+    };
+    img.onerror = function () {
+      imgs.remove();
+    };
   }
-  imgs.innerHTML = imgsHTML;
-  document.getElementById("craw-img-list").appendChild(imgs);
 
   $(".img-btn").on("click", function () {
     const img_url = $(this).data("img-url");
