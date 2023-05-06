@@ -1,4 +1,5 @@
 renderModifyPage();
+renderCrawlImage();
 
 function renderModifyPage() {
   let token = localStorage.getItem("jwtToken");
@@ -11,7 +12,7 @@ function renderModifyPage() {
       if (response.ok) {
         return response.json();
       }
-      throw new Error("Network response was not ok.");
+      throw new Error("Network response not ok.");
     })
     .then((data) => {
       const url = data;
@@ -20,11 +21,34 @@ function renderModifyPage() {
       }
       insertDefault(url);
       renderBack(url);
-      addCrawImgs(url);
-      insertSuggestion(url);
     })
     .catch((error) => {
-      console.error("There was a problem with the fetch operation:", error);
+      console.error("Fetch error:", error);
+    });
+}
+
+function renderCrawlImage() {
+  let token = localStorage.getItem("jwtToken");
+  fetch(`/api/1.0/url/crawl/${window.location.pathname.split("/")[3]}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+      throw new Error("Network response not ok.");
+    })
+    .then((data) => {
+      const url = data;
+      if (url[0].meta) {
+        addCrawImgs(url);
+        insertSuggestion(url);
+      }
+    })
+    .catch((error) => {
+      console.error("Fetch error:", error);
     });
 }
 
@@ -39,6 +63,11 @@ function insertDefault(url) {
   document.getElementById("long_url").value = url[0].long_url;
   document.getElementById("title").value = url[0].title;
   document.getElementById("description").value = url[0].description;
+}
+
+function renderBack(url) {
+  const backCompany = document.getElementById("back-company");
+  backCompany.href = `/company/${url[0].company_id}`;
 }
 
 function addCrawImgs(url) {
@@ -83,11 +112,6 @@ picture.onchange = (evt) => {
     picturePreview.src = URL.createObjectURL(file);
   }
 };
-
-function renderBack(url) {
-  const backCompany = document.getElementById("back-company");
-  backCompany.href = `/company/${url[0].company_id}`;
-}
 
 $("#copy-url").on("click", function () {
   const short_url = document.getElementById("short_url").value;

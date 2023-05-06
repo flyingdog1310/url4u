@@ -1,26 +1,58 @@
 import * as cheerio from "cheerio";
 import axios from "axios";
+import playwright from "playwright";
 
 async function crawImgs(url) {
-  console.log("Visiting page " + url);
-  try {
-    const pageHTML = await axios.get(url, {
-      headers: {
-        "User-Agent":
-          "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
-      },
-      timeout: 1000,
-    });
-    const $ = cheerio.load(pageHTML.data);
-    const images = await collectImages(url, $);
-    const meta = collectTitleDescription($);
-    meta.images = images;
-    return meta;
-  } catch (err) {
-    console.log(err);
+  const pageHTML = await fetchData(url);
+  if (!pageHTML) {
     return;
   }
+  const $ = cheerio.load(pageHTML);
+  const images = await collectImages(url, $);
+  const meta = collectTitleDescription($);
+  meta.images = images;
+  return meta;
 }
+
+async function fetchData(url) {
+  console.log("Visiting page " + url);
+  let response;
+  try {
+    response = await getHtmlAxios(url);
+    return response;
+  } catch (err) {
+    try {
+      response = await getHtmlPlaywright(url);
+      return response;
+    } catch (err) {
+      console.log(err);
+      return;
+    }
+  }
+}
+
+const getHtmlAxios = async (url) => {
+  const { data } = await axios.get(url, {
+    headers: {
+      Accept: "text/plain,text/html,*/*",
+      "User-Agent":
+        "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+      "Accept-Encoding": "gzip,deflate,br",
+    },
+    timeout: 700,
+  });
+  return data;
+};
+
+const getHtmlPlaywright = async (url) => {
+  const browser = await playwright.chromium.launch();
+  const context = await browser.newContext();
+  const page = await context.newPage();
+  await page.goto(url);
+  let data = await page.content();
+  await browser.close();
+  return data;
+};
 
 function collectImages(url, $) {
   let images = $("meta[property = 'og:image']")

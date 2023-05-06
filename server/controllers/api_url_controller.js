@@ -95,9 +95,19 @@ const updateShortUrl = async (req, res) => {
 const getShortUrl = async (req, res) => {
   const url_id = req.originalUrl.split("/")[4];
   const url = await getUrlById(url_id);
-  const meta = await crawImgs(url[0].long_url);
-  url[0].meta = meta;
   res.status(200).json(url);
 };
 
-export { createShortUrl, updateShortUrl, getShortUrl };
+const getCrawImgs = async (req, res) => {
+  const url_id = req.originalUrl.split("/")[5];
+  console.log(url_id)
+  const url = await getUrlById(url_id);
+  console.log(url)
+  const meta = await crawImgs(url[0].long_url);
+  if (meta) {
+    url[0].meta = meta;
+  }
+  res.status(200).json(url);
+};
+
+export { createShortUrl, updateShortUrl, getShortUrl, getCrawImgs };
