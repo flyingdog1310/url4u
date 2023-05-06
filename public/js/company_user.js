@@ -33,7 +33,7 @@ function renderTable(users) {
     <th>Role</th>
     <th>User Name</th>
     <th>Email</th>
-    <th style="width:100px">Operate</th>
+    <th style="width:300px">Operate</th>
   `;
   const body = table.createTBody();
   for (let i = 0; i < users.length; i++) {
@@ -55,7 +55,7 @@ function renderTable(users) {
       <td>${user.name}</td>
       <td>${user.email}</td>
       <td>
-      <button type="button" class="btn btn-info btn-xs" onclick="location.href='#'">Modify</button><br>
+      <button type="button" style="margin-right:10px;" class="btn btn-info btn-xs" onclick="location.href='#'">Modify</button>
       <button type="button" class="btn btn-danger btn-xs" onclick="location.href='#'">Remove</button>
       </td>
     `;

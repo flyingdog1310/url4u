@@ -28,14 +28,13 @@ function renderTable(rawUrls) {
   const table = document.createElement("table");
   table.classList.add("table");
   table.classList.add("table-hover");
-  table.classList.add("text-nowrap");
   const header = table.createTHead().insertRow();
   header.innerHTML = `
     <th style="width:300px"><i class="fas fa-link"></i> Url</th>
     <th style="width:150px"><i class="fas fa-eye"></i> Picture</th>
-    <th><i class="fas fa-clipboard"></i> Title & Description</th>
+    <th style="width:40%"><i class="fas fa-clipboard"></i> Title & Description</th>
     <th style="width:150px"><i class="fas fa-clock"></i> Create Time</th>
-    <th style="width:150px"><i class="fas fa-edit"></i> Operate</th>
+    <th style="width:250px"><i class="fas fa-edit"></i> Operate</th>
   `;
   const body = table.createTBody();
   for (let i = 0; i < rawUrls.length; i++) {
@@ -46,9 +45,9 @@ function renderTable(rawUrls) {
     }
     const row = body.insertRow();
     row.innerHTML = `
-      <td class='td'><a href=${url.long_url} target=”_blank”>${
-      url.long_url
-    }</a><br>
+      <td class='td'><div style="text-overflow: ellipsis;white-space: nowrap;overflow: hidden;margin-bottom: 8px;"><a href=${
+        url.long_url
+      } target=”_blank” style="color: #858585;">${url.long_url}</a></div>
       <a href=https://url4u.today/${url.short_url} id="${
       url.short_url
     }-link" target=”_blank”>https://url4u.today/${
@@ -62,15 +61,17 @@ function renderTable(rawUrls) {
       <img src=https://d2zbleiceefv1c.cloudfront.net/${
         url.picture
       }  style="object-fit: cover; object-position: center center; width: 100%; height: 100%;"></div></td>
-      <td class='td'><dt>${url.title}</dt><br>
-      <dd>${url.description}</dd></td>
+      <td class='td'>
+      <dt style="display: -webkit-box;-webkit-line-clamp: 1;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;">${url.title}</dt>
+      <dd style="display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;color: #858585;">${url.description}</dd>
+      </td>
       <td>${url.create_time.slice(0, 19).split("T")[0]}<br>
       <small>${url.create_time.slice(0, 19).split("T")[1].slice(0, 5)}</small>
       </td>
       <td>
-      <button type="button" class="btn btn-info btn-xs" onclick="location.href='/url/modify/${
+      <button  style="margin-right:10px;" type="button" class="btn btn-info btn-xs" onclick="location.href='/url/modify/${
         url.id
-      }'"><i class="fas fa-edit"></i> Modify</button><br>
+      }'"><i class="fas fa-edit"></i> Modify</button>
       <button type="button" class="btn btn-primary btn-xs" onclick="location.href='/url/analytic/${
         url.id
       }'"><i class="fas fa-chart-line"></i> Analytics</button>

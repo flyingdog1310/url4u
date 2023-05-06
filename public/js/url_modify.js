@@ -19,9 +19,9 @@ function renderModifyPage() {
         url[0].picture = "pic-undefined.jpg";
       }
       insertDefault(url);
+      renderBack(url);
       addCrawImgs(url);
       insertSuggestion(url);
-      renderBack(url);
     })
     .catch((error) => {
       console.error("There was a problem with the fetch operation:", error);

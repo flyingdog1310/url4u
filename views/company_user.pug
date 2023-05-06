@@ -11,21 +11,19 @@ block content
               a(href="/user/company") My Url Groups
             li.breadcrumb-item.active Manage Url Group
   
-    section(class="content-header row")
-      div(class="col-1")
-      div(class="col-10")
+    section(class="content-header row" style="display: flex;justify-content: center;")
+      div(class="col-10" style="flex: 0 0 70%;max-width: 70%;")
+        div(class="card-header" style="background-color: #f4f6f9;padding-bottom: 25px;border: 1px solid #f4f6f9;")
+          div(class="card-tools")
+            form(action=`/api/1.0/company/user` method="POST" enctype='application/json' id="add-company-user") 
+              div(style="display: flex;")
+                select.form-control(name="user_role" required style="margin-right: 10px; width:100px;")
+                  option(value=0) Admin 
+                  option(value=1) Editor 
+                  option(value=2) Viewer
+                input.form-control(name="user_email" placeholder="new user email" required style="margin-right: 10px; width:200px;")                 
+                button(type="submit" class="btn  btn-warning btn-sm"  style="color: white;") Add User
         div(class="card")
-          div(class="card-header")
-            h3(class="card-title") Url Group Members
-            div(class="card-tools")
-              form(action=`/api/1.0/company/user` method="POST" enctype='application/json' id="add-company-user") 
-                div.input-group.input-group-sm 
-                  select.form-control(name="user_role" required style="min-width:50px")
-                    option(value=0) Admin 
-                    option(value=1) Editor 
-                    option(value=2) Viewer
-                  input(name="user_email" placeholder="new user email" class="form-control" required style="min-width:200px")                 
-                  button(type="submit" class="btn  btn-primary btn-sm") Add User
           div
           div(class="card-body table-responsive p-0" id="lists")
 

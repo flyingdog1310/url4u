@@ -8,19 +8,15 @@ block content
           li.breadcrumb-item 
             a(href="/") Home 
           li.breadcrumb-item.active My Url Groups
-    section(class="content-header row")
-      div(class="col-1")
-      div(class="col-10")
+    section(class="content-header row" style="display: flex;justify-content: center;")
+      div(class="col-10" style="flex: 0 0 70%;max-width: 70%;")
+        div(class="card-header" style="background-color: #f4f6f9;padding-bottom: 25px;border: 1px solid #f4f6f9;")
+          div(class="card-tools")
+            form(action="/api/1.0/company" method="POST" enctype='application/json' id="create-company") 
+              div(style="display: flex;")
+                input.form-control(id="company_name" name="company_name" placeholder="New Group Name"  required style="margin-right: 10px;width: 250px;")                  
+                button(type="submit" class="btn  btn-warning btn-sm" style="color: white;") Create New group
         div(class="card")
-          div(class="card-header")
-            h3(class="card-title") My Url Groups
-            div(class="card-tools")
-              form(action="/api/1.0/company" method="POST" enctype='application/json' id="create-company") 
-                div(class="input-group input-group-sm" style="width: 200px;")
-                  input.form-control(id="company_name" name="company_name" placeholder="New Url Group"  required )                  
-                  button(type="submit" class="btn  btn-primary btn-sm") Create
-          div
-
           div(class="card-body table-responsive p-0" id="lists")
 
 

@@ -32,8 +32,8 @@ function renderTable(companies) {
   header.innerHTML = `
     <th>Url Group</th>
     <th>Level</th>
-    <th>Role</th>
-    <th style="width:150px">Operate</th>
+    <th style="width:250px">Role</th>
+    <th style="width:300px">Operate</th>
   `;
   const body = table.createTBody();
   for (let i = 0; i < companies.length; i++) {
@@ -59,7 +59,7 @@ function renderTable(companies) {
       <td><span class="badge badge-success">${company.level}</span></td>
       <td>${company.user_role}</td>
       <td>
-      <button type="button" class="btn btn-info btn-xs" onclick="location.href='/company/${company.id}'"><i class="fas fa-list"></i> Url List</button><br>
+      <button type="button" style="margin-right:10px;" class="btn btn-info btn-xs" onclick="location.href='/company/${company.id}'"><i class="fas fa-list"></i> Url List</button>
       <button type="button" class="btn btn-primary btn-xs" onclick="location.href='/company/${company.id}/user'"><i class="fas fa-user"></i> Members</button><br>
       </td>
     `;

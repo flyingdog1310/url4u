@@ -11,18 +11,17 @@ block content
             a(href="/user/company") My Url Groups
           li.breadcrumb-item.active 
             a(id="back-company") My Url Group
-    section(class="content-header row")
-      div(class="col-1")
+    section(class="content-header row" style="justify-content: center;")
+
       div(class="col-10")
+        div(class="card-header" style="background-color: #f4f6f9;padding-bottom: 25px;border: 1px solid #f4f6f9;")
+          div(class="card-tools")
+            form(action="#" method="POST" enctype='application/json' id="add-company-url") 
+              div(style="display: flex;")
+                input.form-control(name="long_url" placeholder="https://" type="url" required style="margin-right: 10px;width: 250px;")  
+                button(type="submit" class="btn  btn-warning btn-sm" style="color: white;") Shorten Url
         div(class="card")
-          div(class="card-header")
-            h3(class="card-title") Links in Url Group
-            div(class="card-tools")
-              form(action="#" method="POST" enctype='application/json' id="add-company-url") 
-                div.input-group.input-group-sm(style="width: 300px;")
-                  input(name="long_url" placeholder="https://" class="form-control" type="url" required )  
-                  button(type="submit" class="btn  btn-primary btn-sm") Shorten Url
+
           div(class="card-body table-responsive p-0" id="lists")
     script.
       import(`/js/company_url.js`)
-      
