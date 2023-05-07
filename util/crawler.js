@@ -1,6 +1,12 @@
 import * as cheerio from "cheerio";
 import axios from "axios";
 import playwright from "playwright";
+import path from "path";
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
+import dotenv from "dotenv";
+dotenv.config({ path: __dirname + "/../.env" });
+
+const { USE_PLAYWRIGHT } = process.env;
 
 async function crawImgs(url) {
   const pageHTML = await fetchData(url);
@@ -15,18 +21,21 @@ async function crawImgs(url) {
 }
 
 async function fetchData(url) {
-  console.log("Visiting page " + url);
-  let response;
-  try {
-    response = await getHtmlAxios(url);
-    return response;
-  } catch (err) {
+  if (USE_PLAYWRIGHT == "false") {
+    console.log("Visiting page " + url);
     try {
-      response = await getHtmlPlaywright(url);
+      const response = await getHtmlAxios(url);
       return response;
     } catch (err) {
-      console.log(err);
-      return;
+      console.log("Error while using Axios to fetch HTML:", err);
+    }
+  } else {
+    console.log("Using Playwright to fetch HTML...");
+    try {
+      const response = await getHtmlPlaywright(url);
+      return response;
+    } catch (err) {
+      console.log("Error while using Playwright to fetch HTML:", err);
     }
   }
 }
