@@ -86,10 +86,12 @@ function addCrawImgs(url) {
     };
   }
 
-  $(".img-btn").on("click", function () {
-    const img_url = $(this).data("img-url");
-    $("#picturePreview").attr("src", img_url);
-    $("#picture_url").val(img_url);
+  $(document).ready(function() {
+    $(document).on("click", ".img-btn", function () {
+      const img_url = $(this).data("img-url");
+      $("#picturePreview").attr("src", img_url);
+      $("#picture_url").val(img_url);
+    });
   });
 }
 
