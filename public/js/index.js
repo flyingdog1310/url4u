@@ -20,7 +20,6 @@ if (localStorage.getItem("jwtToken") !== null) {
 }
 
 function renderDropdown(companies) {
-  const tag = document.createElement("tag");
   const select = document.createElement("select");
   select.classList.add("select");
   select.name = "company_id";
@@ -31,5 +30,6 @@ function renderDropdown(companies) {
     option.textContent = company.name;
     select.appendChild(option);
   }
+  document.getElementById("company-tag").innerText = "Add to group :    ";
   document.getElementById("company").appendChild(select);
 }
