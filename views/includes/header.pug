@@ -1,15 +1,9 @@
 header
-  nav.main-header.navbar.navbar-expand.navbar-light
-    .container
-      a.brand-link(href="/")
-        img.brand-image(src='/image/header-logo.jpg', alt="url4u logo", style="opacity:.9;")
-        span.brand-text.font-weight-light 
-      button.navbar-toggler(type="button", data-toggle="collapse", data-target="#navbarNav", aria-controls="navbarNav", aria-expanded="false", aria-label="Toggle navigation")
-        span.navbar-toggler-icon
-      #navbarNav.collapse.navbar-collapse
-        ul.navbar-nav.mr-auto
-          li.nav-item
-            a.nav-link(href="/user/company") My Url Groups
-        ul#user-state.navbar-nav.ml-auto.row
-          li.nav-item
-            a.btn.btn-primary(id="user" role="button") 
+  nav.main-header.navbar.navbar-expand.navbar-light(style="display: flex;justify-content: center;height: 75px;")
+    div(style="width: 75vw;display: flex;justify-content: space-between;")
+      div(style="display: flex;align-items: center;")
+        a(href="/")
+          img(src='/image/header-logo.jpg' alt="url4u logo" style="opacity:.9;display:flex;width:100px;")
+          span.brand-text.font-weight-light 
+        a.nav-link(href="/user/company" style="color: rgba(0,0,0,.5);") My Url Groups
+      a.btn.btn-primary(id="user" role="button") 
