@@ -223,7 +223,7 @@ function renderHeatChart(dayClicks) {
   chart.colorScale(customColorScale);
   chart.labels().format("");
   chart.tooltip().format("{%y}:00 Clicks:{%heat}");
-  chart.legend(true);
+  chart.legend(true)
   chart.container("heat-chart");
   chart.draw();
 }
@@ -394,6 +394,7 @@ function renderPieChart(source, renderId) {
     data[i].value = source[i].total;
   }
   const chart = anychart.pie(data);
+  chart.legend().enabled(false)
   chart.container(renderId);
   chart.draw();
 }

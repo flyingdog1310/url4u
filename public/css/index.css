@@ -33,6 +33,9 @@
   margin: 10px;
   overflow: hidden;
 }
+.anychart-credits {
+  display: none;
+}
 
 .typewriter p {
   overflow: hidden; /* Ensures the content is not revealed until the animation */
