@@ -2,21 +2,21 @@ extends layout.pug
 
 block content
   div.content-wrapper
-    div.row
-      div.col-lg-6.d-flex.flex-column.justify-content-center.align-items-center  
-        div.typewriter
-          h1.m-0.font-weight-bold.text-center Paste Your Url Now!
-          p.m-0.text-muted.text-center Short Url With Tracking and Customize Preview
-        form(action="/api/1.0/url" method="POST" enctype='application/json' id="create-short-url")             
-          div(class="input-group input-group-sm" style="padding-top:10px;")
-            input(id="long_url" name="long_url" type="url" placeholder="https://" required style="width:300px;")
-            div(class="input-group-append")   
-              button(type="submit" class="btn  btn-primary btn-sm") Shorten                 
-          div(id="company")   
-            
-      div.col-lg-6
-        div(style="max-width:450px")
-          include index-svg.pug
+    div(style="display: flex;width: 60vw;align-items: center;padding-top: 10vh;justify-content: space-between;margin: auto;")
+      div(style="width:50%")
+        div.typewriter(style="margin: 0 auto 30px;width: fit-content;")
+          h1.font-weight-bold.text-center(style="font-size: 2.4vw;") Paste Your Url Now!
+          p.text-muted.text-center(style="width: fit-content;") Short Url With Tracking and Customize Preview
+        form(action="/api/1.0/url" method="POST" enctype='application/json' id="create-short-url" style="text-align:center")             
+          div(style="margin-bottom: 10px;")
+            input(id="long_url" name="long_url" type="url" placeholder="https://" required style="width:90%;")
+          div(style="display:flex;justify-content: center;align-items: center;")
+            button(type="submit" class="btn  btn-primary btn-sm" style="margin-right: 20px;") Shorten URL4U                
+            div(id="company" style="color: #6c757d;") Add to group :    
+
+
+      div(style="width:50%")
+        include index-svg.pug
     script.
       import(`/js/index.js`)
 
