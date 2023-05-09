@@ -162,7 +162,9 @@ function renderLineChart(timeClicks) {
   const series = chart.line(data);
   if (data1[0]) {
     const series1 = chart.line(data1);
+    series1.tooltip().format("compare: {%value}")
   }
+  series.tooltip().format("origin: {%value}")
   chart.container("line-chart");
   chart.draw();
 }
