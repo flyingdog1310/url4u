@@ -216,7 +216,6 @@ function renderHeatChart(dayClicks) {
     }
     data.push({ x: day, y: hour, heat: total });
   }
-  console.log(data);
   const chart = anychart.heatMap(data);
   const customColorScale = anychart.scales.linearColor();
   customColorScale.colors(["#bae0ef", "#7a93c5"]);
@@ -433,10 +432,15 @@ function renderTopSource(totalSourceClicks, renderIdArr) {
     fourthSourceDisplay,
     fifthSourceDisplay,
   ];
+
+  if (totalSourceClicks.length > 5) {
+    totalSourceClicks = totalSourceClicks.slice(0, 5);
+  }
   for (let i = 0; i < totalSourceClicks.length; i++) {
     sourceGroup[i].innerHTML = totalSourceClicks[i].source;
   }
 }
+
 function sortArrayByTotalDescending(array) {
   return array.sort(function (a, b) {
     return b.total - a.total;

@@ -11,9 +11,8 @@ if (localStorage.getItem("jwtToken") !== null) {
       xhr.setRequestHeader("Authorization", `Bearer ${token}`);
     },
   })
-    .done(function (response) {
-      console.log(response);
-      const companies = response;
+    .done(function (data) {
+      const companies = data;
       renderTable(companies);
     })
     .fail(function (err) {
