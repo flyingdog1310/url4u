@@ -9,7 +9,7 @@ const createUser = async (provider, name, email, password) => {
 };
 
 async function userSignIn(email) {
-  const [signInResult] = await pool.query(
+  const [user] = await pool.query(
     `
   SELECT *
   FROM user
@@ -17,15 +17,15 @@ async function userSignIn(email) {
   `,
     [email]
   );
-  return signInResult;
+  return user[0];
 }
 const getCompanyByUser = async (user_id) => {
   const [user_company] = await pool.query(
     `SELECT role.user_id, role.user_role ,company.id ,company.name,company.level
-        FROM role 
-        LEFT JOIN company 
-        ON role.company_id = company.id
-        WHERE user_id = ? `,
+    FROM role 
+    LEFT JOIN company 
+    ON role.company_id = company.id
+    WHERE user_id = ? `,
     [user_id]
   );
   return user_company;

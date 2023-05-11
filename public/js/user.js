@@ -9,7 +9,6 @@ $("#sign-in").submit(function (e) {
     type: "post",
     data: $("#sign-in").serialize(),
     success: function (data) {
-      console.log(data.data.access_token);
       let token = data.data.access_token;
       localStorage.setItem("jwtToken", token);
       location.reload(true);

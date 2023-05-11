@@ -25,15 +25,14 @@ async function verifyJWT(req, res, next) {
   try {
     token = await reqHeader.authorization.split(" ")[1];
   } catch (err) {
-    res.status(401).json("no token");
+    res.status(401).json("No token");
     return;
   }
   jwt.verify(token, JWT_SECRET, async function (err, decoded) {
     if (err) {
-      res.status(403).json("invalid token");
+      res.status(403).json("Invalid token");
       return;
     }
-    console.log(decoded);
     res.locals.decoded = decoded;
     next();
   });

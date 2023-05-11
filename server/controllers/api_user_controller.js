@@ -12,22 +12,21 @@ const createNewUser = async function (req, res) {
   let provider = "";
   const { name, email, password, terms } = req.body;
   if (terms !== "agree") {
-    res.status(400).json("please agree terms");
+    res.status(400).json("Please agree terms");
     return;
   }
-  let emailValidate = await emailValidator(email);
 
-  //TODO:
-  if (!emailValidate) {
-    res.status(400).json("email format is wrong");
+  let emailValidate = await emailValidator(email);
+  if (emailValidate == false) {
+    res.status(400).json("Email format invalid");
     return;
   }
   if (!password) {
-    res.status(400).json("lack of password");
+    res.status(400).json("Lack of password");
     return;
   }
   if (!name) {
-    res.status(400).json("lack of name");
+    res.status(400).json("Lack of name");
     return;
   }
   const hashedPassword = await hashPassword(password);
@@ -38,7 +37,7 @@ const createNewUser = async function (req, res) {
       newUser = await createUser(provider, name, email, hashedPassword);
     } catch (err) {
       if ((err.errno = 1062)) {
-        res.status(403).json("email already exist");
+        res.status(403).json("Email already exist");
         return;
       }
     }
@@ -46,38 +45,35 @@ const createNewUser = async function (req, res) {
       const userId = newUser.insertId;
       const createDefaultCompany = await createCompany(userId, "My Urls");
       const access_token = await issueJWT(userId, provider);
-      console.log({ data: { access_token, access_expired: 3600 } });
       res.status(200).json({ data: { access_token, access_expired: 3600 } });
       return;
     }
   }
 };
 
-const checkUser = async function (req, res) {
+const checkIsUser = async function (req, res) {
   const { email, password, remember } = req.body;
-  const lookup = await userSignIn(email);
-  if (!lookup[0]) {
-    res.status(400).json("Email is not registered");
+  const user = await userSignIn(email);
+  if (!user) {
+    res.status(400).json("Email not registered");
     return;
   }
-  const hashedPassword = lookup[0].password;
-  console.log(lookup);
+  const hashedPassword = user.password;
   const verify = await verifyPassword(hashedPassword, password);
   if (verify) {
-    const userId = lookup[0].id;
-    const provider = lookup[0].provider;
+    const userId = user.id;
+    const provider = user.provider;
     const access_token = await issueJWT(userId, provider, remember);
     let access_expired = process.env.JWT_SHORT_EXPIRE;
     if (remember == "on") {
       access_expired = process.env.JWT_LONG_EXPIRE;
     }
-    console.log({ data: { access_token, access_expired: access_expired } });
     res
       .status(200)
       .json({ data: { access_token, access_expired: access_expired } });
     return;
   } else {
-    res.status(403).json("Password is wrong");
+    res.status(403).json("Password incorrect");
     return;
   }
 };
@@ -85,8 +81,7 @@ const checkUser = async function (req, res) {
 const getUserCompany = async (req, res) => {
   const user_id = res.locals.decoded.userId;
   const user_company = await getCompanyByUser(user_id);
-  console.log(user_company);
   return res.status(200).json(user_company);
 };
 
-export { createNewUser, checkUser, getUserCompany };
+export { createNewUser, checkIsUser, getUserCompany };
