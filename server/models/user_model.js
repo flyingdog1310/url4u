@@ -34,4 +34,15 @@ const getCompanyByUser = async (user_id) => {
   return user_company;
 };
 
-export { createUser, userSignIn, getCompanyByUser };
+const getRoleByUserCompany = async (user_id, company_id) => {
+  const [user_role] = await pool.query(
+    `
+    SELECT role.user_role 
+    FROM role 
+    WHERE user_id = ? AND company_id = ? `,
+    [user_id, company_id]
+  );
+  return user_role[0];
+};
+
+export { createUser, userSignIn, getCompanyByUser, getRoleByUserCompany };

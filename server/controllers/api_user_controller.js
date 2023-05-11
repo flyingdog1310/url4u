@@ -5,6 +5,7 @@ import {
   createUser,
   userSignIn,
   getCompanyByUser,
+  getRoleByUserCompany
 } from "../models/user_model.js";
 import { createCompany } from "../models/company_model.js";
 
@@ -84,4 +85,13 @@ const getUserCompany = async (req, res) => {
   return res.status(200).json(user_company);
 };
 
-export { createNewUser, checkIsUser, getUserCompany };
+
+const getUserRole = async (req, res) => {
+  const user_id = res.locals.decoded.userId;
+  const company_id=1
+  const user_role = await getRoleByUserCompany(user_id, company_id);
+  console.log(user_role)
+  return res.status(200).json(user_role);
+};
+
+export { createNewUser, checkIsUser, getUserCompany, getUserRole };

@@ -6,7 +6,7 @@ import {
   createShortUrl,
   updateShortUrl,
   getShortUrl,
-  getCrawImgs
+  getCrawImgs,
 } from "../controllers/api_url_controller.js";
 import { wrapAsync } from "../middlewares/error_handler.js";
 

@@ -16,10 +16,10 @@ const getUrlClicks = async (req, res) => {
   const url_id = req.originalUrl.split("/")[4];
   const urlCountFromSQL = await getTotalClickFromSQL(url_id);
   const urlCountFromRedis = await getTotalClickFromRedis(url_id);
-  let sqlCount = +urlCountFromSQL[0].total;
+  let sqlCount = +urlCountFromSQL.total;
   let urlCount = +urlCountFromRedis;
-  let result = sqlCount + urlCount;
-  return res.status(200).json({ total: result });
+  let total = sqlCount + urlCount;
+  return res.status(200).json({ total });
 };
 
 const getUrlClickByDevice = async (req, res) => {

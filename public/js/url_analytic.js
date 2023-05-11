@@ -1,3 +1,7 @@
+if (localStorage.getItem("jwtToken") == null) {
+  window.location.href = "/user";
+}
+
 const today = new Date().toISOString().split("T")[0];
 document.getElementById("stop").setAttribute("max", today);
 
@@ -15,9 +19,10 @@ async function renderPage() {
 }
 
 function getTotalClick() {
+  const token = localStorage.getItem("jwtToken");
   fetch(`/api/1.0/total_click/${window.location.pathname.split("/")[3]}`, {
     headers: {
-      Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+      Authorization: `Bearer ${token}`,
     },
   })
     .then((response) => {
@@ -260,9 +265,10 @@ function getWeekClick() {
 }
 
 function getTopClick() {
+  let token=localStorage.getItem("jwtToken")
   fetch(`/api/1.0/top_click/${window.location.pathname.split("/")[3]}`, {
     headers: {
-      Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+      Authorization: `Bearer ${token}`,
     },
   })
     .then((response) => {
@@ -307,9 +313,10 @@ function renderTopClick(data) {
 }
 
 function getDeviceClick() {
+  let token=localStorage.getItem("jwtToken")
   fetch(`/api/1.0/device_click/${window.location.pathname.split("/")[3]}`, {
     headers: {
-      Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+      Authorization: `Bearer ${token}`,
     },
   })
     .then((response) => {
@@ -335,9 +342,10 @@ function getDeviceClick() {
 }
 
 function getRegionClick() {
+  let token=localStorage.getItem("jwtToken")
   fetch(`/api/1.0/region_click/${window.location.pathname.split("/")[3]}`, {
     headers: {
-      Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+      Authorization: `Bearer ${token}`,
     },
   })
     .then((response) => {
@@ -356,9 +364,10 @@ function getRegionClick() {
 }
 
 function getReferrerClick() {
+  let token=localStorage.getItem("jwtToken")
   fetch(`/api/1.0/referrer_click/${window.location.pathname.split("/")[3]}`, {
     headers: {
-      Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+      Authorization: `Bearer ${token}`,
     },
   })
     .then((response) => {

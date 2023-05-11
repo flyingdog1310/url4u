@@ -1,3 +1,7 @@
+if (localStorage.getItem("jwtToken") == null) {
+  window.location.href = "/user";
+}
+
 getCompanyUser();
 
 function getCompanyUser() {

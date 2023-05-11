@@ -26,7 +26,7 @@ const getTotalClickFromSQL = async (urls_id) => {
     WHERE url_id = ?`,
     [urls_id]
   );
-  return totalClickCount;
+  return totalClickCount[0];
 };
 
 const getTotalClickFromRedis = async (urls_id) => {

@@ -1,6 +1,9 @@
 import { redis } from "../server/database/redis";
 import { createClick } from "../server/models/ad_model.js";
-//this should be triggered once a hour
+
+//this script should be triggered once a hour
+//set crontab as below >>
+//1 * * * * /home/ubuntu/.nvm/versions/node/v18.15.0/bin/node /home/ubuntu/url4u/scripts/hourClickToSQL.js
 
 setLastHourClickToSQL();
 
@@ -9,9 +12,7 @@ async function setLastHourClickToSQL() {
   now.setHours(now.getHours() - 1);
   const start =
     now.toISOString().slice(0, 19).replace("T", " ").split(":")[0] + ":00:00";
-  console.log(start);
-  const lastHour = await getClickCounter(start);
-  console.log(lastHour);
+  const lastHour = await getLastHourClickFromRedis(start);
 
   for (let i = 0; i < lastHour.length; i++) {
     const clickMeta = lastHour[i][0];
@@ -23,11 +24,12 @@ async function setLastHourClickToSQL() {
     const ip = clickMeta.split("ip:")[1].split("}")[0];
     await createClick(id, time, referrer, device, ip, count);
   }
-  console.log("click insert end");
+  
+  console.log("-----click insert end-----");
   process.exit(0);
 }
 
-async function getClickCounter(time) {
+async function getLastHourClickFromRedis(time) {
   const result = await redis.hgetall(time);
   const resultArr = Object.entries(result);
   return resultArr;
