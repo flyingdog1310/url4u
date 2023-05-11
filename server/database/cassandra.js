@@ -1,3 +1,8 @@
+import path from "path";
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
+import dotenv from "dotenv";
+dotenv.config({ path: __dirname + "/../../.env" });
+
 import cassandra from "cassandra-driver";
 
 const {
@@ -12,6 +17,7 @@ const authProvider = new cassandra.auth.PlainTextAuthProvider(
   CASSANDRA_USER,
   CASSANDRA_PASS
 );
+
 export const client = new cassandra.Client({
   contactPoints: [
     CASSANDRA_CONTACT_POINT,
@@ -30,7 +36,6 @@ const insertClick = async (urlId, time, referrer, device, region) => {
   const result = await client.execute(query, params, options);
   return result;
 };
-
 
 //FIXME: modify later
 const getClick = async (start, end) => {

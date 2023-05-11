@@ -1,7 +1,7 @@
 import { getUrlByShortUrl } from "../models/url_model.js";
 import { createClick } from "../models/ad_model.js";
-import { clickEvent, dataToBatch } from "../../util/kafka-producer.js";
-import { setUrlCache, getUrlCache } from "../../util/cache.js";
+import { clickEvent, dataToBatch } from "../services/kafka-producer.js";
+import { setUrlCache, getUrlCache } from "../database/redis.js";
 import geoIp from "geoip-lite";
 
 const redirectUrl = async (req, res) => {

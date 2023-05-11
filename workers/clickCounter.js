@@ -1,6 +1,6 @@
-import { redis } from "../../util/cache.js";
-import { kafka } from "../../util/kafka.js";
-import { insertClick, getClick } from "../../util/cassandra.js";
+import { redis } from "../server/database/redis.js";
+import { kafka } from "../server/services/kafka.js";
+import { insertClick, getClick } from "../server/database/cassandra.js";
 
 clickConsumerForRedis("clicks", "click-counter-redis");
 //clickConsumerForCassandra("clicks", "click-counter-cassandra");

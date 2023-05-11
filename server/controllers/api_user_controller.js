@@ -1,6 +1,6 @@
-import { emailValidator } from "../../util/validator.js";
-import { hashPassword, verifyPassword } from "../../util/password.js";
-import { issueJWT, verifyJWT } from "../../util/token.js";
+import { emailValidator } from "../../utils/validator.js";
+import { hashPassword, verifyPassword } from "../../utils/password.js";
+import { issueJWT, verifyJWT } from "../middlewares/token.js";
 import {
   createUser,
   userSignIn,
@@ -32,10 +32,10 @@ const createNewUser = async function (req, res) {
   }
   const hashedPassword = await hashPassword(password);
   if (provider == "") {
-    let newUser
+    let newUser;
     provider = "native";
     try {
-       newUser = await createUser(provider, name, email, hashedPassword);
+      newUser = await createUser(provider, name, email, hashedPassword);
     } catch (err) {
       if ((err.errno = 1062)) {
         res.status(403).json("email already exist");

@@ -1,5 +1,5 @@
-import { pool } from "./mysql.js";
-import { redis } from "../../util/cache.js";
+import { pool } from "../database/mysql.js";
+import { redis } from "../database/redis.js";
 
 const createClick = async (
   urls_id,

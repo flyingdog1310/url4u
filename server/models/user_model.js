@@ -1,4 +1,4 @@
-import { pool } from "./mysql.js";
+import { pool } from "../database/mysql.js";
 
 const createUser = async (provider, name, email, password) => {
   const [user_id] = await pool.query(

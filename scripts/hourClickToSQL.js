@@ -1,5 +1,5 @@
-import { redis } from "../../util/cache.js";
-import { createClick } from "../models/ad_model.js";
+import { redis } from "../server/database/redis";
+import { createClick } from "../server/models/ad_model.js";
 //this should be triggered once a hour
 
 setLastHourClickToSQL();

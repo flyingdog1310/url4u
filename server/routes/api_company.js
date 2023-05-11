@@ -8,14 +8,14 @@ import {
   getShortUrlListByUrl,
   getCompanyUser,
 } from "../controllers/api_company_controller.js";
-import { verifyJWT } from "../../util/token.js";
-import { wrapAsync } from "../../util/util.js";
+import { verifyJWT } from "../middlewares/token.js";
+import { wrapAsync } from "../middlewares/error_handler.js";
 
 router.route("/company").post(verifyJWT,wrapAsync(createUserCompany));
-router.route("/company/*/user").post(verifyJWT,wrapAsync(createCompanyUser));
-router.route("/company/*/user").get(wrapAsync(getCompanyUser));
-router.route("/company/url/*").get(wrapAsync(getShortUrlListByUrl));
-router.route("/company/*").get(wrapAsync(getShortUrlListByCompany));
+router.route("/company/:company_id/user").post(verifyJWT,wrapAsync(createCompanyUser));
+router.route("/company/:company_id/user").get(wrapAsync(getCompanyUser));
+router.route("/company/url/:url_id").get(wrapAsync(getShortUrlListByUrl));
+router.route("/company/:company_id").get(wrapAsync(getShortUrlListByCompany));
 
 
 export default router;

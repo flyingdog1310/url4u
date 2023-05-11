@@ -1,4 +1,4 @@
-import { pool } from "./mysql.js";
+import { pool } from "../database/mysql.js";
 
 const createUrl = async (company_id, short_url, long_url) => {
   const [url_id] = await pool.query(

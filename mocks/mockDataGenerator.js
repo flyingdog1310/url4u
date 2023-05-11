@@ -1,4 +1,4 @@
-import { createClick } from "../models/ad_model.js";
+import { createClick } from "../server/models/ad_model.js";
 
 let idArr = [1];
 let method = 1;

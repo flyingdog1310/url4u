@@ -1,6 +1,6 @@
 import express from "express";
 const router = express.Router();
-import { wrapAsync } from "../../util/util.js";
+import { wrapAsync } from "../middlewares/error_handler.js";
 
 router.route("/").get(
   wrapAsync(async (req, res) => {
@@ -26,25 +26,25 @@ router.route("/user/company").get(
   })
 );
 
-router.route("/company/*/user").get(
+router.route("/company/:company_id/user").get(
   wrapAsync(async (req, res) => {
     res.render("company_user");
   })
 );
 
-router.route("/company/*").get(
+router.route("/company/:company_id").get(
   wrapAsync(async (req, res) => {
     res.render("company_url");
   })
 );
 
-router.route("/url/modify/*").get(
+router.route("/url/modify/:url_id").get(
   wrapAsync(async (req, res) => {
     res.render("url_modify");
   })
 );
 
-router.route("/url/analytic/*").get(
+router.route("/url/analytic/:url_id").get(
   wrapAsync(async (req, res) => {
     res.render("url_analytic");
   })

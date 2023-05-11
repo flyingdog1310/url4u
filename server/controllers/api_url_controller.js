@@ -1,10 +1,14 @@
+//TODO:把爬蟲拆出去
+
 import axios from "axios";
 import { createUrl, updateCustomUrl, getUrlById } from "../models/url_model.js";
-import { shortUrlGenerator } from "../../util/shortUrlGenerator.js";
-import { crawImgs } from "../../util/crawler.js";
-import { setUrlCache } from "../../util/cache.js";
+import { shortUrlGenerator } from "../../utils/shortUrlGenerator.js";
+import { crawImgs } from "../services/crawler.js";
+import { setUrlCache } from "../database/redis.js";
+
 const { AWS_BUCKET_NAME, AWS_BUCKET_REGION, AWS_ACCESS_KEY, AWS_SECRET_KEY } =
   process.env;
+
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 const s3Client = new S3Client({
   region: AWS_BUCKET_REGION,
@@ -100,9 +104,9 @@ const getShortUrl = async (req, res) => {
 
 const getCrawImgs = async (req, res) => {
   const url_id = req.originalUrl.split("/")[5];
-  console.log(url_id)
+  console.log(url_id);
   const url = await getUrlById(url_id);
-  console.log(url)
+  console.log(url);
   const meta = await crawImgs(url[0].long_url);
   if (meta) {
     url[0].meta = meta;

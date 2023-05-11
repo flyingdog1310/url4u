@@ -1,7 +1,8 @@
 import path from "path";
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 import dotenv from "dotenv";
-dotenv.config({ path: __dirname + "/../.env" });
+dotenv.config({ path: __dirname + "/../../.env" });
+
 import jwt from "jsonwebtoken";
 
 const { JWT_SHORT_EXPIRE, JWT_LONG_EXPIRE, JWT_SECRET } = process.env;

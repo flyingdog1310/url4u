@@ -1,4 +1,4 @@
-import { pool } from "./mysql.js";
+import { pool } from "../database/mysql.js";
 
 const createCompany = async (user_id, company_name) => {
   const [company_id] = await pool.query(
