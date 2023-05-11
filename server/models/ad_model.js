@@ -10,7 +10,9 @@ const createClick = async (
   count
 ) => {
   const [url_id] = await pool.query(
-    `INSERT INTO click SET url_id = ?,time_range = ?,referrer = ?,device = ?,region = ?,count = ?`,
+    `
+    INSERT INTO click 
+    SET url_id = ?,time_range = ?,referrer = ?,device = ?,region = ?,count = ?`,
     [urls_id, time_range, referrer, device, region, count]
   );
   return url_id;
@@ -18,11 +20,15 @@ const createClick = async (
 
 const getTotalClickFromSQL = async (urls_id) => {
   const [totalClickCount] = await pool.query(
-    `SELECT SUM(count) AS total FROM click WHERE url_id = ?`,
+    `
+    SELECT SUM(count) AS total 
+    FROM click 
+    WHERE url_id = ?`,
     [urls_id]
   );
   return totalClickCount;
 };
+
 const getTotalClickFromRedis = async (urls_id) => {
   let now = new Date();
   now.setHours(now.getHours());
@@ -34,12 +40,18 @@ const getTotalClickFromRedis = async (urls_id) => {
 
 const getDeviceClickFromSQL = async (urls_id) => {
   const [source] = await pool.query(
-    "SELECT DISTINCT device AS source FROM click Where url_id=?",
+    `
+    SELECT DISTINCT device AS source 
+    FROM click 
+    Where url_id= ? `,
     [urls_id]
   );
   for (let i = 0; i < source.length; i++) {
     const [total] = await pool.query(
-      "SELECT SUM(count) AS total FROM click Where url_id=? AND device = ?",
+      `
+      SELECT SUM(count) AS total 
+      FROM click 
+      Where url_id = ? AND device = ?`,
       [urls_id, source[i].source]
     );
     source[i].total = total[0]["total"];
@@ -60,12 +72,18 @@ const getDeviceClickFromRedis = async (urls_id) => {
 
 const getRegionClickFromSQL = async (urls_id) => {
   const [source] = await pool.query(
-    "SELECT DISTINCT region AS source FROM click Where url_id=?",
+    `
+    SELECT DISTINCT region AS source 
+    FROM click 
+    Where url_id = ?`,
     [urls_id]
   );
   for (let i = 0; i < source.length; i++) {
     const [total] = await pool.query(
-      "SELECT SUM(count) AS total FROM click Where url_id=? AND region = ?",
+      `
+      SELECT SUM(count) AS total 
+      FROM click 
+      Where url_id = ? AND region = ?`,
       [urls_id, source[i].source]
     );
     source[i].total = total[0]["total"];
@@ -86,12 +104,18 @@ const getRegionClickFromRedis = async (urls_id) => {
 
 const getReferrerClickFromSQL = async (urls_id) => {
   const [source] = await pool.query(
-    "SELECT DISTINCT referrer AS source FROM click Where url_id=?",
+    `
+    SELECT DISTINCT referrer AS source 
+    FROM click 
+    Where url_id = ?`,
     [urls_id]
   );
   for (let i = 0; i < source.length; i++) {
     const [total] = await pool.query(
-      "SELECT SUM(count) AS total FROM click Where url_id=? AND referrer = ?",
+      `
+      SELECT SUM(count) AS total 
+      FROM click 
+      Where url_id = ? AND referrer = ?`,
       [urls_id, source[i].source]
     );
     source[i].total = total[0]["total"];
@@ -114,7 +138,7 @@ const getTimeClickFromSQL = async (urls_id, time) => {
   const referer = [];
   for (let i = 0; i < time.length; i++) {
     const [total] = await pool.query(
-      "SELECT SUM(count) AS total FROM click Where url_id=? AND time_range BETWEEN ? AND ? ",
+      `SELECT SUM(count) AS total FROM click Where url_id = ? AND time_range BETWEEN ? AND ? `,
       [urls_id, time[i].start, time[i].stop]
     );
     referer[i] = {};
@@ -127,17 +151,11 @@ const getTimeClickFromSQL = async (urls_id, time) => {
 const getWeekClickFromSQL = async (urls_id) => {
   const [total] = await pool.query(
     `
-    SELECT  
-        DAYOFWEEK(time_range) as weekday, 
-        SUM(count) as total_count
-    FROM 
-        click
-    WHERE 
-        url_id = ?
-    GROUP BY 
-        DAYOFWEEK(time_range)
-    ORDER BY 
-        weekday
+    SELECT  DAYOFWEEK(time_range) as weekday, SUM(count) as total_count
+    FROM click
+    WHERE url_id = ?
+    GROUP BY DAYOFWEEK(time_range)
+    ORDER BY weekday ;
   `,
     [urls_id]
   );
@@ -153,14 +171,13 @@ const getTopClickFromSQL = async (urls_id) => {
     WHERE url_id = ?
     GROUP BY time_range
     ORDER BY count DESC, time_range ASC
-    LIMIT 5;
+    LIMIT 5 ;
   `,
     [urls_id]
   );
 
   return total;
 };
-
 
 export {
   createClick,
@@ -174,5 +191,5 @@ export {
   getReferrerClickFromRedis,
   getTimeClickFromSQL,
   getWeekClickFromSQL,
-  getTopClickFromSQL
+  getTopClickFromSQL,
 };

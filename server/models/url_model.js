@@ -2,7 +2,9 @@ import { pool } from "../database/mysql.js";
 
 const createUrl = async (company_id, short_url, long_url) => {
   const [url_id] = await pool.query(
-    "INSERT INTO url SET company_id = ? ,short_url = ? ,long_url = ? ",
+    `
+    INSERT INTO url 
+    SET company_id = ? ,short_url = ? ,long_url = ? `,
     [company_id, short_url, long_url]
   );
   return url_id;
@@ -43,12 +45,12 @@ const updateCustomUrl = async (
 };
 
 const getUrlById = async (url_id) => {
-  const [url] = await pool.query("SELECT * FROM url WHERE id = ? ", [url_id]);
+  const [url] = await pool.query(`SELECT * FROM url WHERE id = ? `, [url_id]);
   return url;
 };
 
 const getUrlByShortUrl = async (short_url) => {
-  const [url] = await pool.query("SELECT * FROM url WHERE short_url = ? ", [
+  const [url] = await pool.query(`SELECT * FROM url WHERE short_url = ? `, [
     short_url,
   ]);
   return url[0];

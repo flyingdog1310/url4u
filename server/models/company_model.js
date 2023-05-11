@@ -2,11 +2,15 @@ import { pool } from "../database/mysql.js";
 
 const createCompany = async (user_id, company_name) => {
   const [company_id] = await pool.query(
-    `INSERT INTO company SET name = ? , level = ? `,
+    `
+    INSERT INTO company 
+    SET name = ? , level = ? `,
     [company_name, 0]
   );
   const [user_company] = await pool.query(
-    `INSERT INTO role SET company_id = ? ,user_id= ? ,user_role = ?`,
+    `
+    INSERT INTO role 
+    SET company_id = ? ,user_id= ? ,user_role = ?`,
     [company_id.insertId, user_id, 0]
   );
   return company_id;
@@ -14,7 +18,9 @@ const createCompany = async (user_id, company_name) => {
 
 const addCompanyUser = async (company_id, user_id, user_role) => {
   const [company_user] = await pool.query(
-    `INSERT INTO role SET company_id = ? ,user_id= ? ,user_role = ?`,
+    `
+    INSERT INTO role 
+    SET company_id = ? ,user_id= ? ,user_role = ?`,
     [company_id, user_id, user_role]
   );
   return company_user;
@@ -23,16 +29,20 @@ const addCompanyUser = async (company_id, user_id, user_role) => {
 const checkUserCompany = async (company_id, user_id) => {
   const [userCompany] = await pool.query(
     `
-  SELECT * FROM role WHERE company_id= ? AND user_id= ?`,
+    SELECT * 
+    FROM role 
+    WHERE company_id= ? AND user_id= ?`,
     [company_id, user_id]
   );
-  return userCompany;
+  return userCompany[0];
 };
 
 const getUrlsByCompany = async (company_id) => {
   const [urls] = await pool.query(
     `
-  SELECT * FROM url WHERE company_id= ?`,
+    SELECT * 
+    FROM url 
+    WHERE company_id= ?`,
     [company_id]
   );
   return urls;
@@ -41,9 +51,9 @@ const getUrlsByCompany = async (company_id) => {
 const getUrlsByUrl = async (url_id) => {
   const [urls] = await pool.query(
     `
-  SELECT * FROM url 
-  WHERE company_id = 
-  (SELECT company_id FROM url WHERE id = ?)`,
+  SELECT * 
+  FROM url 
+  WHERE company_id = (SELECT company_id FROM url WHERE id = ?)`,
     [url_id]
   );
   return urls;

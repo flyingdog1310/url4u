@@ -11,7 +11,6 @@ import { userSignIn } from "../models/user_model.js";
 const createUserCompany = async (req, res) => {
   const { company_name } = req.body;
   const user_id = res.locals.decoded.userId;
-  console.log(res.locals.decoded);
   const url = await createCompany(user_id, company_name);
   return res.status(200).redirect(`/company/${url.insertId}`);
 };
@@ -21,13 +20,13 @@ const createCompanyUser = async (req, res) => {
   const user_id = res.locals.decoded.userId;
   const company_id = req.originalUrl.split("/")[4];
   const newUser = await userSignIn(user_email);
-  if (!newUser[0]) {
-    return res.status(400).json("no user with such email");
+  if (!newUser) {
+    return res.status(400).json("No user with such email");
   }
-  const newUserId = newUser[0].id;
+  const newUserId = newUser.id;
   const userCompany = await checkUserCompany(company_id, newUserId);
-  if (userCompany[0]) {
-    return res.status(400).json("user already in url group");
+  if (userCompany) {
+    return res.status(400).json("User already in group");
   }
   const addUser = await addCompanyUser(company_id, newUserId, user_role);
   return res

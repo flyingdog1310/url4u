@@ -2,7 +2,9 @@ import { pool } from "../database/mysql.js";
 
 const createUser = async (provider, name, email, password) => {
   const [user_id] = await pool.query(
-    "INSERT INTO user SET provider = ? ,name = ? ,email = ?,password = ? ",
+    `
+    INSERT INTO user 
+    SET provider = ? ,name = ? ,email = ? ,password = ? `,
     [provider, name, email, password]
   );
   return user_id;
@@ -21,7 +23,8 @@ async function userSignIn(email) {
 }
 const getCompanyByUser = async (user_id) => {
   const [user_company] = await pool.query(
-    `SELECT role.user_id, role.user_role ,company.id ,company.name,company.level
+    `
+    SELECT role.user_id, role.user_role ,company.id ,company.name,company.level
     FROM role 
     LEFT JOIN company 
     ON role.company_id = company.id
