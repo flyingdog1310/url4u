@@ -16,7 +16,6 @@ function getCompanyUrl() {
       return response.json();
     })
     .then((data) => {
-      console.log(data);
       renderTable(data);
     })
     .catch((error) => {

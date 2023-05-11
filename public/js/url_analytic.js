@@ -62,7 +62,6 @@ function getTimeClick() {
       }
     })
     .then((data) => {
-      console.log(data);
       renderLineChart(data);
       renderClickCompare(
         data,
@@ -162,9 +161,9 @@ function renderLineChart(timeClicks) {
   const series = chart.line(data);
   if (data1[0]) {
     const series1 = chart.line(data1);
-    series1.tooltip().format("compare: {%value}")
+    series1.tooltip().format("compare: {%value}");
   }
-  series.tooltip().format("origin: {%value}")
+  series.tooltip().format("origin: {%value}");
   chart.container("line-chart");
   chart.draw();
 }
@@ -192,7 +191,6 @@ function getDayClick() {
       }
     })
     .then((data) => {
-      console.log(data);
       renderHeatChart(data);
       renderClickCompare(
         data,
@@ -225,7 +223,7 @@ function renderHeatChart(dayClicks) {
   chart.colorScale(customColorScale);
   chart.labels().format("");
   chart.tooltip().format("{%y}:00 Clicks:{%heat}");
-  chart.legend(true)
+  chart.legend(true);
   chart.container("heat-chart");
   chart.draw();
 }
@@ -243,7 +241,6 @@ function getWeekClick() {
       }
     })
     .then((data) => {
-      console.log(data);
       let week = [
         ["Sun", 0],
         ["Mon", 0],
@@ -277,7 +274,6 @@ function getTopClick() {
       }
     })
     .then((data) => {
-      console.log(data);
       renderTopClick(data);
     })
     .catch((error) => {
@@ -396,7 +392,7 @@ function renderPieChart(source, renderId) {
     data[i].value = source[i].total;
   }
   const chart = anychart.pie(data);
-  chart.legend().enabled(false)
+  chart.legend().enabled(false);
   chart.container(renderId);
   chart.draw();
 }
@@ -415,7 +411,6 @@ function renderMapChart(source, renderId) {
     let region = { id: source[i].source, value: source[i].total };
     data.push(region);
   }
-  console.log(data);
   const map = anychart.map();
   map.geoData(anychart.maps.world);
   let series = map.choropleth(data);
@@ -457,9 +452,8 @@ if (localStorage.getItem("jwtToken") !== null) {
       xhr.setRequestHeader("Authorization", `Bearer ${token}`);
     },
   })
-    .done(function (response) {
-      console.log(response);
-      const urls = response;
+    .done(function (data) {
+      const urls = data;
       renderDropdown(urls);
       renderBack(urls);
     })
@@ -469,6 +463,7 @@ if (localStorage.getItem("jwtToken") !== null) {
       location.reload();
     });
 }
+
 function renderBack(urls) {
   const backCompany = document.getElementById("back-company");
   backCompany.href = `/company/${urls[0].company_id}`;
