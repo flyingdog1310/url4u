@@ -46,7 +46,7 @@ const getShortUrlListByCompany = async (req, res) => {
   const user_id = res.locals.decoded.userId;
   const company_id = req.originalUrl.split("/")[4];
   const isAuthorized = await getRoleByUserCompany(user_id, company_id);
-  if (isAuthorized) {
+  if (!isAuthorized) {
     return res.status(403).json("Unauthorized");
   }
   const url = await getUrlsByCompany(company_id);
