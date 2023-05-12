@@ -11,9 +11,16 @@ import {
   getWeekClickFromSQL,
   getTopClickFromSQL,
 } from "../models/ad_model.js";
+import { getRoleByUserUrl } from "../models/user_model.js";
 
 const getUrlClicks = async (req, res) => {
+  const user_id = res.locals.decoded.userId;
   const url_id = req.originalUrl.split("/")[4];
+  const isAuthorized = await getRoleByUserUrl(user_id, url_id);
+  if (!isAuthorized) {
+    return res.status(403).json("Unauthorized");
+  }
+
   const urlCountFromSQL = await getTotalClickFromSQL(url_id);
   const urlCountFromRedis = await getTotalClickFromRedis(url_id);
   let sqlCount = +urlCountFromSQL.total;
@@ -23,7 +30,12 @@ const getUrlClicks = async (req, res) => {
 };
 
 const getUrlClickByDevice = async (req, res) => {
+  const user_id = res.locals.decoded.userId;
   const url_id = req.originalUrl.split("/")[4];
+  const isAuthorized = await getRoleByUserUrl(user_id, url_id);
+  if (!isAuthorized) {
+    return res.status(403).json("Unauthorized");
+  }
   const urlCountFromSQL = await getDeviceClickFromSQL(url_id);
   const urlCountFromRedis = await getDeviceClickFromRedis(url_id);
   const result = mergeArrays(urlCountFromRedis, urlCountFromSQL);
@@ -31,7 +43,12 @@ const getUrlClickByDevice = async (req, res) => {
 };
 
 const getUrlClickByRegion = async (req, res) => {
+  const user_id = res.locals.decoded.userId;
   const url_id = req.originalUrl.split("/")[4];
+  const isAuthorized = await getRoleByUserUrl(user_id, url_id);
+  if (!isAuthorized) {
+    return res.status(403).json("Unauthorized");
+  }
   const urlCountFromSQL = await getRegionClickFromSQL(url_id);
   const urlCountFromRedis = await getRegionClickFromRedis(url_id);
   const result = mergeArrays(urlCountFromRedis, urlCountFromSQL);
@@ -39,7 +56,12 @@ const getUrlClickByRegion = async (req, res) => {
 };
 
 const getUrlClickByReferrer = async (req, res) => {
+  const user_id = res.locals.decoded.userId;
   const url_id = req.originalUrl.split("/")[4];
+  const isAuthorized = await getRoleByUserUrl(user_id, url_id);
+  if (!isAuthorized) {
+    return res.status(403).json("Unauthorized");
+  }
   const urlCountFromSQL = await getReferrerClickFromSQL(url_id);
   const urlCountFromRedis = await getReferrerClickFromRedis(url_id);
   const result = mergeArrays(urlCountFromRedis, urlCountFromSQL);
@@ -47,7 +69,12 @@ const getUrlClickByReferrer = async (req, res) => {
 };
 
 const getUrlClickByWeek = async (req, res) => {
+  const user_id = res.locals.decoded.userId;
   const url_id = req.originalUrl.split("/")[4];
+  const isAuthorized = await getRoleByUserUrl(user_id, url_id);
+  if (!isAuthorized) {
+    return res.status(403).json("Unauthorized");
+  }
   const urlCountFromSQL = await getWeekClickFromSQL(url_id);
   const urlCountFromRedis = await getTotalClickFromRedis(url_id);
   const today = new Date().getDay();
@@ -74,7 +101,12 @@ const getUrlClickByWeek = async (req, res) => {
 };
 
 const getTopUrlClick = async (req, res) => {
+  const user_id = res.locals.decoded.userId;
   const url_id = req.originalUrl.split("/")[4];
+  const isAuthorized = await getRoleByUserUrl(user_id, url_id);
+  if (!isAuthorized) {
+    return res.status(403).json("Unauthorized");
+  }
   const urlCountFromSQL = await getTopClickFromSQL(url_id);
   const urlCountFromRedis = await getTotalClickFromRedis(url_id);
   const now = new Date().toISOString().slice(0, 14) + "00:00.000Z";
@@ -90,7 +122,12 @@ const getTopUrlClick = async (req, res) => {
 };
 
 const getUrlClickByTime = async (req, res) => {
+  const user_id = res.locals.decoded.userId;
   const url_id = req.originalUrl.split("/")[4];
+  const isAuthorized = await getRoleByUserUrl(user_id, url_id);
+  if (!isAuthorized) {
+    return res.status(403).json("Unauthorized");
+  }
   let range = 30;
   let startDate = new Date();
   let method = "day";
