@@ -1,11 +1,11 @@
 import { emailValidator } from "../../utils/validator.js";
 import { hashPassword, verifyPassword } from "../../utils/password.js";
-import { issueJWT, verifyJWT } from "../middlewares/token.js";
+import { issueJWT } from "../../utils/token.js";
 import {
   createUser,
   userSignIn,
   getCompanyByUser,
-  getRoleByUserCompany
+  getRoleByUserCompany,
 } from "../models/user_model.js";
 import { createCompany } from "../models/company_model.js";
 
@@ -85,12 +85,11 @@ const getUserCompany = async (req, res) => {
   return res.status(200).json(user_company);
 };
 
-
 const getUserRole = async (req, res) => {
   const user_id = res.locals.decoded.userId;
-  const company_id=1
+  const company_id = 1;
   const user_role = await getRoleByUserCompany(user_id, company_id);
-  console.log(user_role)
+  console.log(user_role);
   return res.status(200).json(user_role);
 };
 

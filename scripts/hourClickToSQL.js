@@ -1,4 +1,4 @@
-import { redis } from "../server/database/redis";
+import { redis } from "../server/database/redis.js";
 import { createClick } from "../server/models/ad_model.js";
 
 //this script should be triggered once a hour
@@ -24,8 +24,8 @@ async function setLastHourClickToSQL() {
     const ip = clickMeta.split("ip:")[1].split("}")[0];
     await createClick(id, time, referrer, device, ip, count);
   }
-  
-  console.log("-----click insert end-----");
+
+  console.log("-----click transfer end-----");
   process.exit(0);
 }
 
