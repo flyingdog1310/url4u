@@ -26,4 +26,18 @@ async function verifyJWT(req, res, next) {
   });
 }
 
-export { verifyJWT };
+async function softVerifyJWT(req, res, next) {
+  let reqHeader = req.headers;
+  let token;
+  try {
+    token = await reqHeader.authorization.split(" ")[1];
+    jwt.verify(token, JWT_SECRET, async function (err, decoded) {
+      res.locals.decoded = decoded;
+      next();
+    });
+  } catch (err) {
+    next();
+  }
+}
+
+export { verifyJWT, softVerifyJWT };

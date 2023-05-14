@@ -2,6 +2,10 @@
 
 import axios from "axios";
 import { createUrl, updateCustomUrl, getUrlById } from "../models/url_model.js";
+import {
+  getRoleByUserCompany,
+  getRoleByUserUrl,
+} from "../models/user_model.js";
 import { shortUrlGenerator } from "../../utils/shortUrlGenerator.js";
 import { crawImgs } from "../services/crawler.js";
 import { setUrlCache } from "../database/redis.js";
@@ -21,11 +25,19 @@ const s3Client = new S3Client({
 const createShortUrl = async (req, res) => {
   const { long_url } = req.body;
   let company_id = 1;
+  let user_id = 1;
+  if (res.locals.decoded.userId) {
+    user_id = res.locals.decoded.userId;
+  }
   if (req.body.company_id) {
     company_id = req.body.company_id;
   }
   if (req.headers["referer"].split("/")[4]) {
     company_id = req.headers["referer"].split("/")[4];
+  }
+  const isAuthorized = await getRoleByUserCompany(user_id, company_id);
+  if (isAuthorized.user_role != 0 && isAuthorized.user_role != 1) {
+    return res.status(403).json("Only Admin & Editor can add url");
   }
 
   const uniqueUrl = await generateUniqueUrl(company_id, long_url);
@@ -54,6 +66,15 @@ async function generateUniqueUrl(company_id, long_url) {
 
 const updateShortUrl = async (req, res) => {
   const url_id = req.originalUrl.split("/")[4];
+  let user_id = 1;
+  if (res.locals.decoded.userId) {
+    user_id = res.locals.decoded.userId;
+  }
+  const isAuthorized = await getRoleByUserUrl(user_id, url_id);
+  if (isAuthorized.user_role != 0 && isAuthorized.user_role != 1) {
+    return res.status(403).json("Only Admin & Editor can edit url");
+  }
+
   const { short_url, long_url, title, description, picture_url } = req.body;
   let picture = "";
   if (req.file) {

@@ -12,7 +12,6 @@ import { updateUrlCompany } from "../models/url_model.js";
 
 const createNewUser = async function (req, res) {
   let provider = "";
-  console.log(req.body);
   const { name, email, password, terms, createdUrl } = req.body;
   if (terms !== "agree") {
     res.status(400).json("Please agree terms");

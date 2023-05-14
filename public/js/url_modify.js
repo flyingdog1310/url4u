@@ -151,11 +151,11 @@ $("#update-short-url").submit(function (e) {
       if (!token) {
         localStorage.setItem("createdUrl", data.url_id);
         alert(
-          ` Successfully create ${shortUrl}\n Register now to store and track your Url`
+          ` Successfully modify ${shortUrl}\n Register now to store and track your Url`
         );
         location.href = "/user/register";
       } else {
-        alert(`Successfully create ${shortUrl}`);
+        alert(`Successfully modify ${shortUrl}`);
         location.href = document.getElementById("back-company").href;
       }
     },

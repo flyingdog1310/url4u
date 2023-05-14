@@ -50,7 +50,9 @@ function renderTable(rawUrls) {
     row.innerHTML = `
       <td class='td'>
       <div style="text-overflow: ellipsis;white-space: nowrap;overflow: hidden;margin-bottom: 8px;">
-      <a href=${url.long_url} target=”_blank” style="color: #858585;" referrerpolicy="origin">${
+      <a href=${
+        url.long_url
+      } target=”_blank” style="color: #858585;" referrerpolicy="origin">${
       url.long_url
     }</a>
       </div>
@@ -112,6 +114,9 @@ $("#add-company-url").submit(function (e) {
     },
     success: function (data) {
       location.reload();
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      alert(jqXHR.responseText);
     },
   });
 });
