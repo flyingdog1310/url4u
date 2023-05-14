@@ -4,11 +4,15 @@ if (localStorage.getItem("jwtToken") !== null) {
 
 $("#register").submit(function (e) {
   e.preventDefault();
+  let data = $("#register").serializeArray();
+  let createdUrl = localStorage.getItem("createdUrl");
+  data.push({name: "createdUrl", value: createdUrl});
   $.ajax({
     url: "/api/1.0/user/register",
     type: "post",
-    data: $("#register").serialize(),
+    data: data,
     success: function (data) {
+      localStorage.removeItem("createdUrl");
       let token = data.data.access_token;
       localStorage.setItem("jwtToken", token);
       location.reload(true);

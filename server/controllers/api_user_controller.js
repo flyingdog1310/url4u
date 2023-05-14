@@ -8,15 +8,16 @@ import {
   getRoleByUserCompany,
 } from "../models/user_model.js";
 import { createCompany } from "../models/company_model.js";
+import { updateUrlCompany } from "../models/url_model.js";
 
 const createNewUser = async function (req, res) {
   let provider = "";
-  const { name, email, password, terms } = req.body;
+  console.log(req.body);
+  const { name, email, password, terms, createdUrl } = req.body;
   if (terms !== "agree") {
     res.status(400).json("Please agree terms");
     return;
   }
-
   let emailValidate = await emailValidator(email);
   if (emailValidate == false) {
     res.status(400).json("Email format invalid");
@@ -45,6 +46,9 @@ const createNewUser = async function (req, res) {
     if (newUser) {
       const userId = newUser.insertId;
       const createDefaultCompany = await createCompany(userId, "My Urls");
+      if (createdUrl) {
+        await updateUrlCompany(createdUrl, createDefaultCompany.insertId);
+      }
       const access_token = await issueJWT(userId, provider);
       res.status(200).json({ data: { access_token, access_expired: 3600 } });
       return;

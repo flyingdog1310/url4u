@@ -86,7 +86,7 @@ function addCrawImgs(url) {
     };
   }
 
-  $(document).ready(function() {
+  $(document).ready(function () {
     $(document).on("click", ".img-btn", function () {
       const img_url = $(this).data("img-url");
       $("#picturePreview").attr("src", img_url);
@@ -134,6 +134,9 @@ $("#copy-url").on("click", function () {
 
 $("#update-short-url").submit(function (e) {
   e.preventDefault();
+  const short_url = document.getElementById("short_url").value;
+  const shortUrl = `https://url4u.today/${short_url}`;
+  let token = localStorage.getItem("jwtToken");
   let formData = new FormData(this);
   $.ajax({
     url: this.action,
@@ -142,11 +145,19 @@ $("#update-short-url").submit(function (e) {
     processData: false,
     contentType: false,
     beforeSend: function (xhr) {
-      let token = localStorage.getItem("jwtToken");
       xhr.setRequestHeader("Authorization", `Bearer ${token}`);
     },
     success: function (data) {
-      location.href = document.getElementById("back-company").href;
+      if (!token) {
+        localStorage.setItem("createdUrl", data.url_id);
+        alert(
+          ` Successfully create ${shortUrl}\n Register now to store and track your Url`
+        );
+        location.href = "/user/register";
+      } else {
+        alert(`Successfully create ${shortUrl}`);
+        location.href = document.getElementById("back-company").href;
+      }
     },
     error: function (jqXHR, textStatus, errorThrown) {
       alert(jqXHR.responseText);

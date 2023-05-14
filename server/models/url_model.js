@@ -10,6 +10,12 @@ const createUrl = async (company_id, short_url, long_url) => {
   return url_id;
 };
 
+const updateUrlCompany = async (url_id, company_id) => {
+  let query = `UPDATE url SET company_id = ? WHERE id = ? `;
+  const [result] = await pool.query(query, [company_id, url_id]);
+  return result
+};
+
 const updateCustomUrl = async (
   url_id,
   short_url,
@@ -56,4 +62,4 @@ const getUrlByShortUrl = async (short_url) => {
   return url[0];
 };
 
-export { createUrl, updateCustomUrl, getUrlById, getUrlByShortUrl };
+export { createUrl,updateUrlCompany, updateCustomUrl, getUrlById, getUrlByShortUrl };
