@@ -1,4 +1,4 @@
-import {sum} from "./sample.js" 
+import { sum } from "./sample.js";
 
 //sample test
 it("adds 1 + 2 to equal 3", () => {
