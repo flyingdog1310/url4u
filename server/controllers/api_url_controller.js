@@ -26,7 +26,7 @@ const createShortUrl = async (req, res) => {
   const { long_url } = req.body;
   let company_id = 1;
   let user_id = 1;
-  if (res.locals.decoded.userId) {
+  if (res.locals.decoded!= undefined) {
     user_id = res.locals.decoded.userId;
   }
   if (req.body.company_id) {
@@ -36,6 +36,7 @@ const createShortUrl = async (req, res) => {
     company_id = req.headers["referer"].split("/")[4];
   }
   const isAuthorized = await getRoleByUserCompany(user_id, company_id);
+  console.log(isAuthorized)
   if (isAuthorized.user_role != 0 && isAuthorized.user_role != 1) {
     return res.status(403).json("Only Admin & Editor can add url");
   }
@@ -67,7 +68,7 @@ async function generateUniqueUrl(company_id, long_url) {
 const updateShortUrl = async (req, res) => {
   const url_id = req.originalUrl.split("/")[4];
   let user_id = 1;
-  if (res.locals.decoded.userId) {
+  if (res.locals.decoded!= undefined) {
     user_id = res.locals.decoded.userId;
   }
   const isAuthorized = await getRoleByUserUrl(user_id, url_id);
