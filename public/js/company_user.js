@@ -59,13 +59,38 @@ function renderTable(users) {
       <td>${user.name}</td>
       <td>${user.email}</td>
       <td>
-      <button type="button" style="margin-right:10px;" class="btn btn-info btn-xs" onclick="location.href='#'"><i class="fas fa-edit"></i> Modify</button>
-      <button type="button" class="btn btn-danger btn-xs" onclick="location.href='#'"><i class="far fa-trash-alt"></i> Remove</button>
+      <button type="button" class="btn btn-danger btn-xs remove" data-email="${user.email}"><i class="far fa-trash-alt"></i> Remove</button>
       </td>
     `;
   }
 
   document.getElementById("lists").appendChild(table);
+  $(document).ready(function () {
+    $(document).on("click", ".remove", function () {
+      const email = $(this).data("email");
+      if (
+        confirm(`Are you sure you want to remove ${email} from this group ?`)
+      ) {
+        $.ajax({
+          url: `/api/1.0/company/${
+            window.location.pathname.split("/")[2]
+          }/user?user=${email}`,
+          type: "delete",
+          beforeSend: function (xhr) {
+            let token = localStorage.getItem("jwtToken");
+            xhr.setRequestHeader("Authorization", `Bearer ${token}`);
+          },
+          success: function (data) {
+            alert(`${email} has been removed from the group`);
+            location.reload();
+          },
+          error: function (jqXHR, textStatus, errorThrown) {
+            alert(jqXHR.responseText);
+          },
+        });
+      }
+    });
+  });
 }
 
 $("#add-company-user").submit(function (e) {
