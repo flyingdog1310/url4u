@@ -26,6 +26,16 @@ const addCompanyUser = async (company_id, user_id, user_role) => {
   return company_user;
 };
 
+const delCompanyUser= async (company_id, user_id) => {
+  const [company_user] = await pool.query(
+    `
+    DELETE FROM role 
+    WHERE company_id = ? AND user_id= ? `,
+    [company_id, user_id]
+  );
+  return company_user;
+};
+
 const checkUserCompany = async (company_id, user_id) => {
   const [userCompany] = await pool.query(
     `
@@ -75,6 +85,7 @@ export {
   createCompany,
   checkUserCompany,
   addCompanyUser,
+  delCompanyUser,
   getUrlsByCompany,
   getUrlsByUrl,
   getUsersByCompany,

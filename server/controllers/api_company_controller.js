@@ -2,6 +2,7 @@ import {
   createCompany,
   checkUserCompany,
   addCompanyUser,
+  delCompanyUser,
   getUrlsByCompany,
   getUrlsByUrl,
   getUsersByCompany,
@@ -37,6 +38,25 @@ const createCompanyUser = async (req, res) => {
     return res.status(400).json("User already in group");
   }
   const addUser = await addCompanyUser(company_id, newUserId, user_role);
+  return res
+    .status(200)
+    .redirect(`/company/${req.originalUrl.split("/")[4]}/user`);
+};
+
+const deleteCompanyUser = async (req, res) => {
+  const { user_email } = req.body;
+  const user_id = res.locals.decoded.userId;
+  const company_id = req.originalUrl.split("/")[4];
+  const isAuthorized = await getRoleByUserCompany(user_id, company_id);
+  if (isAuthorized.user_role != 0) {
+    return res.status(403).json("Only Admin can delete member");
+  }
+  const newUser = await userSignIn(user_email);
+  if (!newUser) {
+    return res.status(400).json("No user with such email");
+  }
+  const newUserId = newUser.id;
+  const deleteUser = await delCompanyUser(company_id, newUserId);
   return res
     .status(200)
     .redirect(`/company/${req.originalUrl.split("/")[4]}/user`);
@@ -78,6 +98,7 @@ const getCompanyUser = async (req, res) => {
 export {
   createUserCompany,
   createCompanyUser,
+  deleteCompanyUser,
   getShortUrlListByCompany,
   getShortUrlListByUrl,
   getCompanyUser,
