@@ -35,16 +35,16 @@ app.use("/", redirect);
 
 // Page not found
 app.use(function (req, res, next) {
-  res.status(404).json("404 Not Found");
+    res.status(404).json("404 Not Found");
 });
 
 // Error handling
 app.use(function (err, req, res, next) {
-  console.log(err);
-  res.status(500).json("500 Internal Server Error");
+    console.log(err);
+    res.status(500).json("500 Internal Server Error");
 });
 
 // Start the server
 app.listen(port, () => {
-  console.log(`Listening on port: ${port}`);
+    console.log(`Listening on port: ${port}`);
 });
