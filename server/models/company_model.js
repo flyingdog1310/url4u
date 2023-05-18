@@ -26,7 +26,7 @@ const addCompanyUser = async (company_id, user_id, user_role) => {
   return company_user;
 };
 
-const delCompanyUser= async (company_id, user_id) => {
+const delCompanyUser = async (company_id, user_id) => {
   const [company_user] = await pool.query(
     `
     DELETE FROM role 

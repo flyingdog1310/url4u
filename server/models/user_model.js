@@ -56,4 +56,4 @@ const getRoleByUserUrl = async (user_id, url_id) => {
   return user_role[0];
 };
 
-export { createUser, userSignIn, getCompanyByUser, getRoleByUserCompany ,getRoleByUserUrl};
+export { createUser, userSignIn, getCompanyByUser, getRoleByUserCompany, getRoleByUserUrl };

@@ -1,14 +1,7 @@
 import { pool } from "../database/mysql.js";
 import { redis } from "../database/redis.js";
 
-const createClick = async (
-  urls_id,
-  time_range,
-  referrer,
-  device,
-  region,
-  count
-) => {
+const createClick = async (urls_id, time_range, referrer, device, region, count) => {
   const [url_id] = await pool.query(
     `
     INSERT INTO click 
@@ -32,8 +25,7 @@ const getTotalClickFromSQL = async (urls_id) => {
 const getTotalClickFromRedis = async (urls_id) => {
   let now = new Date();
   now.setHours(now.getHours());
-  const start =
-    now.toISOString().slice(0, 19).replace("T", " ").split(":")[0] + ":00:00";
+  const start = now.toISOString().slice(0, 19).replace("T", " ").split(":")[0] + ":00:00";
   const result = await redis.hget(`total/${start}`, urls_id);
   return result;
 };
@@ -62,8 +54,7 @@ const getDeviceClickFromSQL = async (urls_id) => {
 const getDeviceClickFromRedis = async (urls_id) => {
   let now = new Date();
   now.setHours(now.getHours());
-  const start =
-    now.toISOString().slice(0, 19).replace("T", " ").split(":")[0] + ":00:00";
+  const start = now.toISOString().slice(0, 19).replace("T", " ").split(":")[0] + ":00:00";
 
   const result = await redis.hgetall(`${urls_id}/${start}/device`);
   const resultArr = Object.entries(result);
@@ -94,8 +85,7 @@ const getRegionClickFromSQL = async (urls_id) => {
 const getRegionClickFromRedis = async (urls_id) => {
   let now = new Date();
   now.setHours(now.getHours());
-  const start =
-    now.toISOString().slice(0, 19).replace("T", " ").split(":")[0] + ":00:00";
+  const start = now.toISOString().slice(0, 19).replace("T", " ").split(":")[0] + ":00:00";
 
   const result = await redis.hgetall(`${urls_id}/${start}/ip`);
   const resultArr = Object.entries(result);
@@ -126,8 +116,7 @@ const getReferrerClickFromSQL = async (urls_id) => {
 const getReferrerClickFromRedis = async (urls_id) => {
   let now = new Date();
   now.setHours(now.getHours());
-  const start =
-    now.toISOString().slice(0, 19).replace("T", " ").split(":")[0] + ":00:00";
+  const start = now.toISOString().slice(0, 19).replace("T", " ").split(":")[0] + ":00:00";
 
   const result = await redis.hgetall(`${urls_id}/${start}/referer`);
   const resultArr = Object.entries(result);

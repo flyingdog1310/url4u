@@ -44,8 +44,7 @@ const getHtmlAxios = async (url) => {
   const { data } = await axios.get(url, {
     headers: {
       Accept: "text/plain,text/html,*/*",
-      "User-Agent":
-        "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+      "User-Agent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
       "Accept-Encoding": "gzip,deflate,br",
     },
     timeout: 1000,

@@ -6,8 +6,7 @@ const __dirname = path.dirname(new URL(import.meta.url).pathname);
 import dotenv from "dotenv";
 dotenv.config({ path: __dirname + "/../../.env" });
 
-const { AWS_BUCKET_NAME, AWS_BUCKET_REGION, AWS_ACCESS_KEY, AWS_SECRET_KEY } =
-  process.env;
+const { AWS_BUCKET_NAME, AWS_BUCKET_REGION, AWS_ACCESS_KEY, AWS_SECRET_KEY } = process.env;
 
 const s3 = new S3Client({
   region: AWS_BUCKET_REGION,
