@@ -1,31 +1,31 @@
 extends layout.pug
 
 block content
-  div(class="login-page" )
-    div(class="login-box")
-      div(class="card")
-        div(class="card-body")
+  div.login-page
+    div.login-box
+      div.card
+        div.card-body
           img(src="/image/header-logo.jpg" width="100%")
-          p(class="login-box-msg") Sign in to start your session
+          p.login-box-msg Sign in to start your session
           form(action="/api/1.0/user" method="post" id="sign-in")
-            div(class="input-group mb-3")
-              input(type="email" class="form-control" placeholder="Email" name="email")
-              div(class="input-group-append")
-                div(class="input-group-text")
-                  span(class="fas fa-envelope" )
-            div(class="input-group mb-3")
-              input(type="password" class="form-control" placeholder="Password" name="password")
-              div(class="input-group-append")
-                div(class="input-group-text")
-                  span(class="fas fa-lock" )
-            div(class="row")
-              div(class="col-8")
-                div(class="icheck-primary")
+            div.input-group.mb-3
+              input.form-control(type="email" placeholder="Email" name="email")
+              div.input-group-append
+                div.input-group-text
+                  span.fas.fa-envelope
+            div.input-group.mb-3
+              input.form-control(type="password" placeholder="Password" name="password")
+              div.input-group-append
+                div.input-group-text
+                  span.fas.fa-lock
+            div.row
+              div.col-8
+                div.icheck-primary
                   input(type="checkbox" id="remember" name="remember")
                   label(for="remember" style="padding-left:5px;") Remember Me
-              div(class="col-4")
-                button(type="submit" class="btn btn-primary btn-block") Sign In 
-          p(class="mb-1")
+              div.col-4
+                button.btn.btn-primary.btn-block(type="submit") Sign In 
+          p.mb-1
             a(href="/user/register") Register a new Membership
 
   script.

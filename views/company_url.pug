@@ -1,8 +1,8 @@
 extends layout.pug
 
 block content
-  div(class="content-wrapper")
-    section(class="breadcrumb") 
+  div.content-wrapper
+    section.breadcrumb
       div.container
         ol.breadcrumb(style="margin-bottom: 0;padding: 0;")   
           li.breadcrumb-item 
@@ -11,17 +11,17 @@ block content
             a(href="/user/company") Groups
           li.breadcrumb-item.active 
             a(id="back-company") Urls
-    section(class="content-header row" style="justify-content: center;")
+    section.content-header.row(style="justify-content: center;")
 
-      div(class="col-10")
-        div(class="card-header" style="background-color: #f4f6f9;padding-bottom: 25px;border: 1px solid #f4f6f9;")
-          div(class="card-tools")
+      div.col-10
+        div.card-header(style="background-color: #f4f6f9;padding-bottom: 25px;border: 1px solid #f4f6f9;")
+          div.card-tools
             form(action="#" method="POST" enctype='application/json' id="add-company-url") 
               div(style="display: flex;")
                 input.form-control(name="long_url" placeholder="https://" type="url" required style="margin-right: 10px;width: 250px;")  
-                button(type="submit" class="btn  btn-warning btn-sm" style="color: white;") Shorten Url
-        div(class="card")
+                button.btn.btn-warning.btn-sm(type="submit" style="color: white;") Shorten Url
+        div.card
 
-          div(class="card-body table-responsive p-0" id="lists")
+          div.card-body.table-responsive.p-0(id="lists")
     script.
       import(`/js/company_url.js`)

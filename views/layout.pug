@@ -13,8 +13,8 @@ html(lang="en")
     script(src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous")
     script(src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js")
     script(src=`/js/layout.js`)
-  body(class="layout-top-nav" style="height: auto;")
-    div(class="wrapper")
+  body.layout-top-nav(style="height: auto;")
+    div.wrapper
       include includes/header.pug
       block content
       include includes/footer.pug

@@ -1,38 +1,38 @@
 extends layout.pug
 
 block content
-  div(class="register-page")
-    div(class="register-box")
-      div(class="card")
-        div(class="card-body")
+  div.register-page
+    div.register-box
+      div.card
+        div.card-body
           img(src="/image/header-logo.jpg" width="100%")
-          p(class="login-box-msg") Register a new membership
+          p.login-box-msg Register a new membership
           form(action="/api/1.0/user/register" method="post" id="register")
-            div(class="input-group mb-3")
-              input(type="text" class="form-control" placeholder="Name" name="name")
-              div(class="input-group-append")
-                div(class="input-group-text")
-                  span(class="fas fa-user")
-            div(class="input-group mb-3")
-              input(type="email" class="form-control" placeholder="Email" name="email")
-              div(class="input-group-append")
-                div(class="input-group-text")
-                  span(class="fas fa-envelope")
-            div(class="input-group mb-3")
-              input(type="password" class="form-control" placeholder="Password" name="password")
-              div(class="input-group-append")
-                div(class="input-group-text")
-                  span(class="fas fa-lock")
-            div(class="row")
-              div(class="col-8")
-                div(class="icheck-primary")
+            div.input-group.mb-3
+              input.form-control(type="text" placeholder="Name" name="name")
+              div.input-group-append
+                div.input-group-text
+                  span.fas.fa-user
+            div.input-group.mb-3
+              input.form-control(type="email" placeholder="Email" name="email")
+              div.input-group-append
+                div.input-group-text
+                  span.fas.fa-envelope
+            div.input-group.mb-3
+              input.form-control(type="password" placeholder="Password" name="password")
+              div.input-group-append
+                div.input-group-text
+                  span.fas.fa-lock
+            div.row
+              div.col-8
+                div.icheck-primary
                   input(type="checkbox" id="agreeTerms" name="terms" value="agree")
                   label(for="agreeTerms" style="padding-left:5px;")  I agree to the 
                     a(href="#") terms
-              div(class="col-4")
-                button(type="submit" class="btn btn-primary btn-block") Register
-          p(class="mb-1")
+              div.col-4
+                button.btn.btn-primary.btn-block(type="submit") Register
+          p.mb-1
             a(href="/user") I already have a membership
 
   script.
-      import(`/js/user_register.js`)
+    import(`/js/user_register.js`)

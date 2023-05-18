@@ -72,10 +72,8 @@ async function clickConsumerForCassandra(topic, group) {
 async function getClickFromCassandra(Time) {
   let now = new Date();
   now.setHours(now.getHours() - 1);
-  const start =
-    now.toISOString().slice(0, 19).replace("T", " ").split(":")[0] + ":00:00";
-  const stop =
-    now.toISOString().slice(0, 19).replace("T", " ").split(":")[0] + ":59:59";
+  const start = now.toISOString().slice(0, 19).replace("T", " ").split(":")[0] + ":00:00";
+  const stop = now.toISOString().slice(0, 19).replace("T", " ").split(":")[0] + ":59:59";
 
   let result = await getClick(stop, start);
   console.log(result);
