@@ -2,16 +2,12 @@
 
 import axios from "axios";
 import { createUrl, updateCustomUrl, getUrlById } from "../models/url_model.js";
-import {
-  getRoleByUserCompany,
-  getRoleByUserUrl,
-} from "../models/user_model.js";
+import { getRoleByUserCompany, getRoleByUserUrl } from "../models/user_model.js";
 import { shortUrlGenerator } from "../../utils/shortUrlGenerator.js";
 import { crawImgs } from "../services/crawler.js";
 import { setUrlCache } from "../database/redis.js";
 
-const { AWS_BUCKET_NAME, AWS_BUCKET_REGION, AWS_ACCESS_KEY, AWS_SECRET_KEY } =
-  process.env;
+const { AWS_BUCKET_NAME, AWS_BUCKET_REGION, AWS_ACCESS_KEY, AWS_SECRET_KEY } = process.env;
 
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 const s3Client = new S3Client({
@@ -26,7 +22,7 @@ const createShortUrl = async (req, res) => {
   const { long_url } = req.body;
   let company_id = 1;
   let user_id = 1;
-  if (res.locals.decoded!= undefined) {
+  if (res.locals.decoded != undefined) {
     user_id = res.locals.decoded.userId;
   }
   if (req.body.company_id) {
@@ -36,17 +32,14 @@ const createShortUrl = async (req, res) => {
     company_id = req.headers["referer"].split("/")[4];
   }
   const isAuthorized = await getRoleByUserCompany(user_id, company_id);
-  console.log(isAuthorized)
+  console.log(isAuthorized);
   if (isAuthorized.user_role != 0 && isAuthorized.user_role != 1) {
     return res.status(403).json("Only Admin & Editor can add url");
   }
 
   const uniqueUrl = await generateUniqueUrl(company_id, long_url);
 
-  const setCache = await setUrlCache(
-    uniqueUrl,
-    `${uniqueUrl.insertId} ${long_url}`
-  );
+  const setCache = await setUrlCache(uniqueUrl, `${uniqueUrl.insertId} ${long_url}`);
   return res.status(200).redirect(`/url/modify/${uniqueUrl.insertId}`);
 };
 
@@ -68,7 +61,7 @@ async function generateUniqueUrl(company_id, long_url) {
 const updateShortUrl = async (req, res) => {
   const url_id = req.originalUrl.split("/")[4];
   let user_id = 1;
-  if (res.locals.decoded!= undefined) {
+  if (res.locals.decoded != undefined) {
     user_id = res.locals.decoded.userId;
   }
   const isAuthorized = await getRoleByUserUrl(user_id, url_id);
@@ -98,14 +91,7 @@ const updateShortUrl = async (req, res) => {
     }
   }
   try {
-    const url = await updateCustomUrl(
-      url_id,
-      short_url,
-      long_url,
-      picture,
-      title,
-      description
-    );
+    const url = await updateCustomUrl(url_id, short_url, long_url, picture, title, description);
   } catch (err) {
     if (err.errno == 1062) {
       return res.status(403).json("Short Url Already Exist");

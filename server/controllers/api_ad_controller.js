@@ -81,13 +81,10 @@ const getUrlClickByWeek = async (req, res) => {
   if (urlCountFromRedis) {
     const weekdayMap = { 0: 1, 1: 2, 2: 3, 3: 4, 4: 5, 5: 6, 6: 7 };
     const todayWeekday = weekdayMap[today];
-    const todayDataIndex = urlCountFromSQL.findIndex(
-      (data) => data.weekday === todayWeekday
-    );
+    const todayDataIndex = urlCountFromSQL.findIndex((data) => data.weekday === todayWeekday);
     if (todayDataIndex !== -1) {
       urlCountFromSQL[todayDataIndex].total_count = String(
-        Number(urlCountFromSQL[todayDataIndex].total_count) +
-          Number(urlCountFromRedis)
+        Number(urlCountFromSQL[todayDataIndex].total_count) + Number(urlCountFromRedis)
       );
     } else {
       urlCountFromSQL.push({
@@ -148,8 +145,7 @@ const getUrlClickByTime = async (req, res) => {
   timeModify(urlCount, method);
   let urlClickFromRedis = await getTotalClickFromRedis(url_id);
   let currentClick = urlCount[urlCount.length - 1].total;
-  urlCount[urlCount.length - 1].total =
-    Number(currentClick) + Number(urlClickFromRedis);
+  urlCount[urlCount.length - 1].total = Number(currentClick) + Number(urlClickFromRedis);
   result.push(urlCount);
   //compare url if exist
   if (req.body.url_id != 0) {
@@ -157,8 +153,7 @@ const getUrlClickByTime = async (req, res) => {
     let compareUrlCount = await getTimeClickFromSQL(compareUrl, time);
     timeModify(compareUrlCount, method);
     let compareUrlClickFromRedis = await getTotalClickFromRedis(compareUrl);
-    let compareUrlCurrentClick =
-      compareUrlCount[compareUrlCount.length - 1].total;
+    let compareUrlCurrentClick = compareUrlCount[compareUrlCount.length - 1].total;
     compareUrlCount[compareUrlCount.length - 1].total =
       Number(compareUrlCurrentClick) + Number(compareUrlClickFromRedis);
     result.push(compareUrlCount);
@@ -196,12 +191,8 @@ function generateTimeRange(startDate, range, method) {
   }
   if (method == "hour") {
     for (let i = 0; i < range; i++) {
-      const startTime =
-        now.toISOString().slice(0, 19).replace("T", " ").split(":")[0] +
-        ":00:00";
-      const stopTime =
-        now.toISOString().slice(0, 19).replace("T", " ").split(":")[0] +
-        ":59:59";
+      const startTime = now.toISOString().slice(0, 19).replace("T", " ").split(":")[0] + ":00:00";
+      const stopTime = now.toISOString().slice(0, 19).replace("T", " ").split(":")[0] + ":59:59";
       timeReverse[i] = { start: startTime, stop: stopTime };
       now.setHours(now.getHours() - 1);
     }

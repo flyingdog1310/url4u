@@ -1,12 +1,7 @@
 import { emailValidator } from "../../utils/validator.js";
 import { hashPassword, verifyPassword } from "../../utils/password.js";
 import { issueJWT } from "../../utils/token.js";
-import {
-  createUser,
-  userSignIn,
-  getCompanyByUser,
-  getRoleByUserCompany,
-} from "../models/user_model.js";
+import { createUser, userSignIn, getCompanyByUser, getRoleByUserCompany } from "../models/user_model.js";
 import { createCompany } from "../models/company_model.js";
 import { updateUrlCompany } from "../models/url_model.js";
 
@@ -72,9 +67,7 @@ const checkIsUser = async function (req, res) {
     if (remember == "on") {
       access_expired = process.env.JWT_LONG_EXPIRE;
     }
-    res
-      .status(200)
-      .json({ data: { access_token, access_expired: access_expired } });
+    res.status(200).json({ data: { access_token, access_expired: access_expired } });
     return;
   } else {
     res.status(403).json("Password incorrect");

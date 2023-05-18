@@ -5,18 +5,10 @@ dotenv.config({ path: __dirname + "/../../.env" });
 
 import cassandra from "cassandra-driver";
 
-const {
-  CASSANDRA_USER,
-  CASSANDRA_PASS,
-  CASSANDRA_CONTACT_POINT,
-  CASSANDRA_LOCAL_DATA_CENTER,
-  CASSANDRA_KEY_SPACE,
-} = process.env;
+const { CASSANDRA_USER, CASSANDRA_PASS, CASSANDRA_CONTACT_POINT, CASSANDRA_LOCAL_DATA_CENTER, CASSANDRA_KEY_SPACE } =
+  process.env;
 
-const authProvider = new cassandra.auth.PlainTextAuthProvider(
-  CASSANDRA_USER,
-  CASSANDRA_PASS
-);
+const authProvider = new cassandra.auth.PlainTextAuthProvider(CASSANDRA_USER, CASSANDRA_PASS);
 
 export const client = new cassandra.Client({
   contactPoints: [

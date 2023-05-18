@@ -8,10 +8,7 @@ import {
   getUsersByCompany,
 } from "../models/company_model.js";
 import { userSignIn } from "../models/user_model.js";
-import {
-  getRoleByUserCompany,
-  getRoleByUserUrl,
-} from "../models/user_model.js";
+import { getRoleByUserCompany, getRoleByUserUrl } from "../models/user_model.js";
 
 const createUserCompany = async (req, res) => {
   const { company_name } = req.body;

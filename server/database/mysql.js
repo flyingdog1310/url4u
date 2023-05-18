@@ -5,8 +5,7 @@ dotenv.config({ path: __dirname + "/../../.env" });
 
 import mysql from "mysql2";
 
-const { MYSQL_HOST, MYSQL_USERNAME, MYSQL_PASSWORD, MYSQL_DATABASE } =
-  process.env;
+const { MYSQL_HOST, MYSQL_USERNAME, MYSQL_PASSWORD, MYSQL_DATABASE } = process.env;
 
 const mysqlConfig = {
   host: MYSQL_HOST,

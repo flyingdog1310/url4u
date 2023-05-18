@@ -5,8 +5,7 @@ dotenv.config({ path: __dirname + "/../../.env" });
 
 import Redis from "ioredis";
 
-const { REDIS_HOST, REDIS_PORT, REDIS_USER, REDIS_PASSWORD, REDIS_TLS_ENABLE } =
-  process.env;
+const { REDIS_HOST, REDIS_PORT, REDIS_USER, REDIS_PASSWORD, REDIS_TLS_ENABLE } = process.env;
 
 const redisConfig = {
   host: REDIS_HOST,
