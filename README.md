@@ -7,14 +7,14 @@ Website Link : https://url4u.today/
 Project Demo : https://url4u.today/YouTube_demo      
 
 ## Table of Contents  
-* [Features](https://github.com/flyingdog1310/url4u/edit/document/README.md#-features)
-* [System Architecture Challenges](https://github.com/flyingdog1310/url4u/edit/document/README.md#-system-architecture-challenges)
-  * [How to handle high read loads](https://github.com/flyingdog1310/url4u/edit/document/README.md#-how-to-handle-high-read-loads)
-  * [How to handle high write loads](https://github.com/flyingdog1310/url4u/edit/document/README.md#-how-to-handle-high-write-loads)
-  * [How to offer suggestion images by serverside crawler](https://github.com/flyingdog1310/url4u/edit/document/README.md#-how-to-offer-suggestion-images-by-serverside-crawler)
-* [Load Test](https://github.com/flyingdog1310/url4u/edit/document/README.md#-load-test)
-* [Resorces planning](https://github.com/flyingdog1310/url4u/edit/document/README.md#-resorces-planning)
-* [Table Schema](https://github.com/flyingdog1310/url4u/edit/document/README.md#-resorces-planning)
+* [Features](#-features)
+* [System Architecture Challenges](#-system-architecture-challenges)
+  * [How to handle high read loads](#-how-to-handle-high-read-loads)
+  * [How to handle high write loads](#-how-to-handle-high-write-loads)
+  * [How to offer suggestion images by serverside crawler](#-how-to-offer-suggestion-images-by-serverside-crawler)
+* [Load Test](#-load-test)
+* [Resorces planning](#-resorces-planning)
+* [Table Schema](#-resorces-planning)
 
 ## 💻 Features
 ---
