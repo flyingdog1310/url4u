@@ -1,12 +1,12 @@
 # URL4U ![license](https://badgen.net/badge/license/MIT/blue)  ![release](https://badgen.net/github/release/flyingdog1310/url4u/)  
----
+
 An easy-to-use URL shortener service with customizable preview and tracking feature, designed specifically for digital marketing. 
 
-Website Link : https://url4u.today/
+Website Link <a href="https://url4u.today/" target="_blank">https://url4u.today/</a>
 
-Project Demo : https://url4u.today/YouTube_demo      
+Project Demo <a href="https://url4u.today/YouTube_demo" target="_blank">https://url4u.today/YouTube_demo</a>
 
-## Table of Contents  
+## Table of Contents   
 * [Features](#-features)
 * [System Architecture Challenges](#-system-architecture-challenges)
   * [How to handle high read loads](#-how-to-handle-high-read-loads)
@@ -14,10 +14,11 @@ Project Demo : https://url4u.today/YouTube_demo
   * [How to offer suggestion images by serverside crawler](#-how-to-offer-suggestion-images-by-serverside-crawler)
 * [Load Test](#-load-test)
 * [Resorces planning](#-resorces-planning)
-* [Table Schema](#-resorces-planning)
+* [Table Schema](#-table-schema)
+* [Contact](#-contact)
 
 ## 💻 Features
----
+
 1. Instantly shorten URLs with a single click.
 2. Customize preview images and titles for short URLs on Facebook, Line, Discord, and Twitter.
 3. Server-side crawler provides suggested previews for URL links.
@@ -28,9 +29,9 @@ Project Demo : https://url4u.today/YouTube_demo
 
 
 ## 💪 System Architecture Challenges
----
-#### 📖 How to handle high read loads
----
+
+### 📖 How to handle high read loads
+
 The reason I want to challenge this problem is because I want to tackle a high-traffic scenario.
 Before the project, I collaborated with colleagues on three different URL shortening systems (as shown below). At that time, the functionality we implemented was URL generation and retrieval.
 To allow for the freedom to define and modify short URLs, URL4U has chosen sharding as the mechanism for generating and storing short URLs.  
@@ -42,8 +43,8 @@ To allow for the freedom to define and modify short URLs, URL4U has chosen shard
 In a simple URL shortening scenario, the database read operations (retrieving long URL) far outnumbered the write operations (generating short URL). We were able to address the high read load simply by using MySQL replication, where we set up a database for writing and multiple backup databases for reading.
 However, high write load is much more complex to handle ...
 
-#### 📝 How to handle high write loads
----
+### 📝 How to handle high write loads
+
 URL tracking involves a large amount of click data that needs to be written and organized in real time.  
 Since MySQL Replication cannot solve the write load issue, I decided to adopt the following system architecture: 
 
@@ -61,8 +62,8 @@ After completing the planning and setup of Kafka and Cassandra, I began studying
 
 I replaced the original tasks that were supposed to be done with Apache Flink by using Redis and crontab. I utilized Redis, known for its fast read and write capabilities, to organize and store real-time data for one hour. Then, I scheduled a crontab job to fetch the aggregated data and store it in MySQL every hour. This way, I completed my backend architecture.  
 
-#### 🔍 How to offer suggestion images by serverside crawler
----
+### 🔍 How to offer suggestion images by serverside crawler
+
 In this project, two different methods can be chosen to fetch web page images for user reference, which can be configured in the .env file.
 
 1. Axios with Googlebot header: This method involves directly requesting the HTML of the target web page using Axios with a Googlebot header. It offers fast response times and low server resource consumption. However, it has a limitation in that it cannot retrieve images that require running JavaScript or making API calls.
@@ -70,7 +71,7 @@ In this project, two different methods can be chosen to fetch web page images fo
 2. Playwright: This method involves using a headless browser, such as Playwright, on the server to access the target web page. The crawling process waits for the JavaScript and CSS to render completely before extracting the images. The advantage of this approach is that it can crawl images from almost any website. However, it comes with the drawback of slower speed and higher consumption of server CPU and RAM resources.  
 
 ## 🚀 Load Test
----
+
 
 To ensure the stability of the URL shortening service under high redirect traffic, I conducted stress testing using k6. Since my development environment on Mac couldn't handle more than 50,000 requests per minute, I used an Amazon EC2 Ubuntu instance to install k6 for testing.
 
@@ -81,13 +82,21 @@ The servers were able to handle peak loads of 120,000 redirect requests per minu
 If there is a need to increase load performance, it is worth considering adding more servers to the setup.
 
 ## 🔑 Resorces Planning
----
-URL duplicate rate
 
-Redis storage
+### URL collision rate
 
-## Table Schema
----
 
-## Contact
----
+### Redis storage
+
+
+## 📋 Table Schema
+
+![TableSchema](/tableSchema.jpg)
+
+## 📱 Contact
+
+Email : liudahsing84@gmail.com  
+
+Linkedin : https://url4u.today/Ed_Linkedin  
+
+Phone : (+886) 923-588-981  
