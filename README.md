@@ -13,7 +13,7 @@ An easy-to-use URL shortener service with customizable preview and tracking feat
 
 ## System Architecture challenges
 ---
-### How to Handle high read loads
+#### How to Handle high read loads
 ---
 The reason I want to challenge this problem is because I want to tackle a high-traffic scenario.
 Before the project, I collaborated with colleagues on three different URL shortening systems (as shown below). At that time, the functionality we implemented was URL generation and retrieval.
@@ -21,13 +21,10 @@ Before the project, I collaborated with colleagues on three different URL shorte
 ![UGS](https://github.com/flyingdog1310/url4u/assets/116939147/6ad2b104-9f16-4d1f-95fa-aafa03e07b5b)
 ![AutoIncrement](https://github.com/flyingdog1310/url4u/assets/116939147/77547b68-fcce-4ba7-b09f-57b9bd659bf7)
 
-
-
-
 In a simple URL shortening scenario, the database read operations (retrieving long URL) far outnumbered the write operations (generating short URL). We were able to address the high read load simply by using MySQL replication, where we set up a database for writing and multiple backup databases for reading.
 However, high write load is much more complex to handle ...
 
-### How to handle high write loads
+#### How to handle high write loads
 ---
 URL tracking involves a large amount of click data that needs to be written and organized in real time.  
 Since MySQL Replication cannot solve the write load issue, I decided to adopt the following system architecture: 
@@ -47,6 +44,14 @@ I replaced the original tasks that were supposed to be done with Apache Flink by
 
 ## Reliability
 ---
+To ensure the stability of the URL shortening service under high redirect traffic, I conducted stress testing using k6. Since my development environment on Mac couldn't handle more than 50,000 requests per minute, I used an Amazon EC2 Ubuntu instance to install k6 for testing.
+
+Based on the usage of five t2.micro servers, I observed that the servers were capable of consistently handling 90,000 redirect requests per minute, writing analytical data, and maintaining response times below one second for the median. Additionally, I monitored the CPU and RAM usage of each server and found it to remain stable below 80%.
+
+The servers were able to handle peak loads of 120,000 redirect requests per minute , writing analytical data, and maintaining response times below one second for the median. However, it was observed that the server's RAM usage gradually increased after one minute, eventually reaching 100% utilization and necessitating a restart.
+
+If there is a need to increase load performance, it is worth considering adding more servers to the setup.
+
 ## How to set up dev
 ---
 ## Contact
