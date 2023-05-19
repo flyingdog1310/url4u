@@ -2,9 +2,9 @@
 
 An easy-to-use URL shortener service with customizable preview and tracking feature, designed specifically for digital marketing. 
 
-Website Link <a href="https://url4u.today/" target="_blank">https://url4u.today/</a>
+Website Link: <a href="https://url4u.today/" target="_blank">https://url4u.today/</a>
 
-Project Demo <a href="https://url4u.today/YouTube_demo" target="_blank">https://url4u.today/YouTube_demo</a>
+Project Demo: <a href="https://url4u.today/YouTube_demo" target="_blank">https://url4u.today/YouTube_demo</a>
 
 ## Table of Contents   
 * [Features](#-features)
@@ -83,10 +83,25 @@ If there is a need to increase load performance, it is worth considering adding 
 
 ## 🔑 Resorces Planning
 
-### URL collision rate
+### URL collision rate  
 
+7 letter base62 = 3.5216146e+12 unique short URL
+assume 200 URL is generated per second
+=> 17,280,000 URL is generated per day
+=> 6,307,200,000 URL is gernerated per year
 
-### Redis storage
+6,307,200,000/3.5216146e+12=0.00179099666
+collision rate in one year is roughly 0.002
+
+### Redis storage  
+
+According to [Redis.io](https://redis.io/docs/getting-started/faq/)
+Redis can handle up to 2^32 keys, and was tested in practice to handle at least 250 million keys per instance.
+Every hash, list, set, and sorted set, can hold 2^32 elements.
+
+URL4U use redis for
+1. current hour click tracking data(expires in 2 hours)
+2. cache for last used long url(expires in 1 hours)
 
 
 ## 📋 Table Schema
