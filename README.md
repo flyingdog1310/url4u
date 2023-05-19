@@ -11,9 +11,9 @@ Project Demo: <a href="https://url4u.today/YouTube_demo" target="_blank">https:/
 * [System Architecture Challenges](#-system-architecture-challenges)
   * [How to handle high read loads](#-how-to-handle-high-read-loads)
   * [How to handle high write loads](#-how-to-handle-high-write-loads)
-  * [How to offer suggestion images by serverside crawler](#-how-to-offer-suggestion-images-by-serverside-crawler)
+  * [How to offer suggestion images by server-side crawler](#-how-to-offer-suggestion-images-by-serverside-crawler)
 * [Load Test](#-load-test)
-* [Resorces planning](#-resorces-planning)
+* [Resources planning](#-resources-planning)
 * [Table Schema](#-table-schema)
 * [Contact](#-contact)
 
@@ -62,7 +62,7 @@ After completing the planning and setup of Kafka and Cassandra, I began studying
 
 I replaced the original tasks that were supposed to be done with Apache Flink by using Redis and crontab. I utilized Redis, known for its fast read and write capabilities, to organize and store real-time data for one hour. Then, I scheduled a crontab job to fetch the aggregated data and store it in MySQL every hour. This way, I completed my backend architecture.  
 
-### 🔍 How to offer suggestion images by serverside crawler
+### 🔍 How to offer suggestion images by server-side crawler
 
 In this project, two different methods can be chosen to fetch web page images for user reference, which can be configured in the .env file.
 
@@ -81,7 +81,7 @@ The servers were able to handle peak loads of 120,000 redirect requests per minu
 
 If there is a need to increase load performance, it is worth considering adding more servers to the setup.
 
-## 🔑 Resorces Planning
+## 🔑 Resources Planning
 
 ### URL collision rate  
 
