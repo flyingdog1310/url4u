@@ -1,7 +1,6 @@
-import { sum } from "./sample.js";
 import { hashPassword, verifyPassword } from "../utils/password.js";
 import { shortUrlGenerator } from "../utils/shortUrlGenerator.js";
-
+import { emailValidator } from "../utils/validator.js";
 
 //sample test
 it("adds 1 + 2 to equal 3", () => {
@@ -20,6 +19,22 @@ it("hashedPassword verify should be false", async () => {
 });
 
 //shortUrlGenerator.js
-it("shortUrlGenerator should generate 7 letter base64 string",  () => {
-  expect(shortUrlGenerator()).toMatch(/^[0-9A-Za-z_-]{7}$/gm);
-})
+it("should generate 7 letter base62 string", () => {
+  const shortUrl = shortUrlGenerator();
+  expect(shortUrl).toMatch(/^[0-9A-Za-z]{7}$/);
+});
+
+//validator.js
+describe("emailValidator", () => {
+  it("should return true for a valid email", async () => {
+    const validEmail = "test@example.com";
+    const isValid = await emailValidator(validEmail);
+    expect(isValid).toBeTruthy();
+  });
+
+  it("should return false for an invalid email", async () => {
+    const invalidEmail = "invalid_email";
+    const isValid = await emailValidator(invalidEmail);
+    expect(isValid).toBeFalsy();
+  });
+});

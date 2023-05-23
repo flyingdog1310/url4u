@@ -1,3 +1,8 @@
+import path from "path";
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
+import dotenv from "dotenv";
+dotenv.config({ path: __dirname + "/../.env" });
+
 const { SHORT_URL_LENGTH } = process.env;
 
 const base62 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
