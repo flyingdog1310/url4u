@@ -2,11 +2,6 @@ import { hashPassword, verifyPassword } from "../utils/password.js";
 import { shortUrlGenerator } from "../utils/shortUrlGenerator.js";
 import { emailValidator } from "../utils/validator.js";
 
-//sample test
-it("adds 1 + 2 to equal 3", () => {
-  expect(sum(1, 2)).toBe(3);
-});
-
 //password.js
 it("hashedPassword verify should be true", async () => {
   const hashedPassword = await hashPassword("abc");
